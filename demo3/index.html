@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LANZ Technology — Micro Coaxial Dual-Rotor UAVs · World-Class Aerial Robotic Systems</title>
+<meta name="description" content="LANZ Technology: ultra-quiet, high-performance, intelligent and modular micro coaxial dual-rotor UAVs, dedicated to building world-class aerial robotic systems." />
+<style>
+/* ============================================================
+   demo-3 — ON.energy(028) 版式与布局的忠实复刻，仅配色翻为浅色主题
+   栅格/排版/留白/圆角/字重/动效结构 = 028；字体 = 028 本地 Univers + Monument Mono
+   ============================================================ */
+@font-face{font-family:"Univers Next Pro";font-style:normal;font-weight:100;font-display:swap;src:url(assets/fonts/UniversNextPro-Thin.woff2) format("woff2"),url(assets/fonts/UniversNextPro-Thin.woff) format("woff")}
+@font-face{font-family:"Univers Next Pro";font-style:normal;font-weight:250;font-display:swap;src:url(assets/fonts/UniversNextPro-UltLt.woff2) format("woff2"),url(assets/fonts/UniversNextPro-UltLt.woff) format("woff")}
+@font-face{font-family:"Univers Next Pro";font-style:normal;font-weight:300;font-display:swap;src:url(assets/fonts/UniversNextPro-Light.woff2) format("woff2"),url(assets/fonts/UniversNextPro-Light.woff) format("woff")}
+@font-face{font-family:"Univers Next Pro";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/UniversNextPro-Regular.woff2) format("woff2"),url(assets/fonts/UniversNextPro-Regular.woff) format("woff")}
+@font-face{font-family:"ABC Monument Grotesk Mono";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/ABCMonumentGroteskSemi-Mono-Regular.woff2) format("woff2"),url(assets/fonts/ABCMonumentGroteskSemi-Mono-Regular.woff) format("woff")}
+
+*,:after,:before{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+:root{
+  /* 浅色翻转：028 black→paper, off-white→ink, yellow→accent(LANZ 橙) */
+  --color-paper:#ece9e2; --color-paper-2:#f4f2ec; --color-card:#fafafa;
+  --color-ink:#15171b; --color-ink-soft:rgba(21,23,27,.55); --color-ink-40:rgba(21,23,27,.4);
+  --color-accent:#f15a24; --color-accent-deep:#d4481a;
+  --color-charcoal:#33363b; --color-arsenic:#55585e; --color-mid-grey:#7c7c7c;
+  --color-silver:#9b968c; --color-light-grey:#bdb8ad; --color-off-white:#15171b;
+  --color-line:rgba(21,23,27,.14); --color-line-2:rgba(21,23,27,.26);
+  --color-dark:#1a1e24;
+  --ease-expo-in-out:cubic-bezier(.87,0,.13,1);
+  --ease-expo-out:cubic-bezier(.16,1,.3,1);
+  --font-base:"Univers Next Pro"; --font-accent:"ABC Monument Grotesk Mono";
+  --grid-column-count:2; --grid-gutter:1.6vw; --grid-outer-gutter:4.2666666667vw;
+}
+@media only screen and (min-width:834px){
+  :root{--grid-column-count:24; --grid-gutter:1.1111111111vw; --grid-outer-gutter:2.5vw}
+}
+html{font-family:var(--font-base),sans-serif;font-size:10px;font-weight:300;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+body{background-color:#eeeeee;color:var(--color-ink);overscroll-behavior:none;line-height:1.4}
+body.loading{overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+button{background:none;border:none;cursor:pointer;font-family:inherit;color:inherit;padding:0}
+ul{list-style:none}
+img,svg,canvas{display:block}
+img{width:100%;height:auto}
+h1,h2,h3,h4,p{font-size:unset;font-weight:unset;margin:0}
+
+.grid-container{display:grid;grid-template-columns:repeat(var(--grid-column-count),1fr);
+  column-gap:var(--grid-gutter);padding:0 var(--grid-outer-gutter)}
+
+/* mono 小标签 • LABEL */
+.label{display:flex;align-items:center;font-family:var(--font-accent),sans-serif;
+  font-size:1.2rem;font-weight:400;letter-spacing:-.02em;line-height:1.67;text-transform:uppercase;color:var(--color-mid-grey)}
+.label:before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:currentColor;margin-right:.7rem}
+@media only screen and (min-width:834px){.label:before{margin-right:.4166666667vw}}
+
+/* 圆形箭头按钮（028 dots-icon-button） */
+.circle-btn{width:11.7333333333vw;height:11.7333333333vw;border-radius:50%;border:1px solid var(--color-line-2);
+  display:grid;place-items:center;flex-shrink:0;transition:background-color .25s,color .25s,border-color .25s}
+.circle-btn svg{width:34%;height:34%;fill:none;stroke:currentColor;stroke-width:1.5}
+@media only screen and (min-width:834px){.circle-btn{width:3.0555555556vw;height:3.0555555556vw}}
+.circle-btn:hover{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+
+/* 胶囊 CTA */
+.pill{display:inline-flex;align-items:center;column-gap:.9rem;border:1px solid var(--color-ink);
+  border-radius:40px;padding:1.1rem 2.2rem;font-size:1.4rem;font-weight:400;letter-spacing:-.01em;
+  transition:background-color .25s,color .25s}
+.pill .dot{width:.6rem;height:.6rem;border-radius:50%;background:var(--color-accent);transition:background .25s}
+.pill:hover{background:var(--color-ink);color:var(--color-paper)}
+@media only screen and (min-width:834px){.pill{font-size:1.1111111111vw;padding:.6vw 1.3vw}}
+
+/* 文本链接 + 下划线箭头 */
+.text-link{display:inline-flex;align-items:center;column-gap:.7rem;font-size:1.4rem;border-bottom:1px solid var(--color-ink);padding-bottom:.4rem;transition:gap .25s,color .25s,border-color .25s}
+.text-link:hover{color:var(--color-accent);border-color:var(--color-accent);column-gap:1.3rem}
+@media only screen and (min-width:834px){.text-link{font-size:1.1111111111vw}}
+
+/* ===== LOADER ===== */
+#loader{position:fixed;inset:0;z-index:200;background:var(--color-paper);display:flex;flex-direction:column;justify-content:flex-end;
+  padding:5.3333333333vw var(--grid-outer-gutter);transition:transform 1s var(--ease-expo-in-out)}
+#loader.done{transform:translateY(-101%)}
+.ld-top{position:absolute;top:5.3333333333vw;left:var(--grid-outer-gutter);right:var(--grid-outer-gutter);display:flex;justify-content:space-between}
+.ld-mark,.ld-sub{font-family:var(--font-accent),sans-serif;font-size:1.2rem;letter-spacing:.02em;text-transform:uppercase}
+.ld-sub{color:var(--color-mid-grey)}
+.ld-num{font-size:clamp(8rem,28vw,28vw);font-weight:250;line-height:.8;letter-spacing:-.04em}
+.ld-num small{font-size:.18em;font-weight:300;color:var(--color-mid-grey);vertical-align:top;margin-left:.1em}
+.ld-bar{height:1px;background:var(--color-line);margin-top:2.4vw;position:relative;overflow:hidden}
+.ld-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--color-ink)}
+@media only screen and (min-width:834px){.ld-top{top:2.5vw}.ld-num{font-size:clamp(8rem,16vw,16vw)}.ld-bar{margin-top:.8vw}}
+
+/* ===== MENU / NAV ===== */
+.menu{position:fixed;top:0;left:0;width:100%;z-index:40;mix-blend-mode:difference}
+@media only screen and (min-width:834px){.menu{top:1.1111111111vw}}
+.menu.solid{mix-blend-mode:normal}
+.bar{display:flex;align-items:center;column-gap:.1rem;padding:0 var(--grid-outer-gutter);height:11.7333333333vw}
+@media only screen and (min-width:834px){.bar{height:1.9444444444vw;padding:0 var(--grid-outer-gutter)}}
+.logo{display:flex;align-items:center;column-gap:.7rem;flex-grow:1;color:#fff}
+.menu.solid .logo{color:var(--color-ink)}
+.logo .mk{font-family:var(--font-accent),sans-serif;font-weight:400;font-size:1.6rem;letter-spacing:-.02em;
+  border:1px solid currentColor;padding:.2rem .5rem;border-radius:.4rem}
+.logo .nm{font-size:1.5rem;font-weight:400;letter-spacing:-.01em}
+@media only screen and (min-width:834px){.logo .mk{font-size:1.0416666667vw;padding:.15vw .4vw}.logo .nm{font-size:1.0416666667vw}}
+.nav-links{display:none}
+@media only screen and (min-width:834px){
+  .nav-links{display:flex;align-items:center;column-gap:.2vw}
+  .nav-links a{position:relative;padding:.3vw .8vw;font-size:1.0416666667vw;color:#fff;transition:opacity .2s}
+  .menu.solid .nav-links a{color:var(--color-ink)}
+  .nav-links a:hover{opacity:.6}
+}
+.nav-right{display:flex;align-items:center;column-gap:1rem}
+.menu .pill{color:#fff;border-color:rgba(255,255,255,.5)}
+.menu.solid .pill{color:var(--color-ink);border-color:var(--color-ink)}
+.menu .pill:hover{background:#fff;color:var(--color-ink);border-color:#fff}
+.menu.solid .pill:hover{background:var(--color-ink);color:var(--color-paper)}
+.ham{display:flex;flex-direction:column;gap:.5rem;padding:.6rem;color:#fff}
+.menu.solid .ham{color:var(--color-ink)}
+.ham span{width:2.4rem;height:1.5px;background:currentColor;transition:.3s}
+@media only screen and (min-width:834px){.ham{display:none}}
+.ham.open span:nth-child(1){transform:translateY(.65rem) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-.65rem) rotate(-45deg)}
+.m-nav{position:fixed;inset:0;z-index:39;background:var(--color-paper);transform:translateY(-100%);transition:transform .6s var(--ease-expo-in-out);
+  display:flex;flex-direction:column;justify-content:center;padding:0 var(--grid-outer-gutter);row-gap:1.2rem}
+.m-nav.open{transform:none}
+.m-nav a{font-size:8vw;font-weight:300;letter-spacing:-.04em}
+@media only screen and (min-width:834px){.m-nav{display:none}}
+
+main{position:relative}
+
+/* ===== HOME-HERO ===== */
+.home-hero{position:sticky;top:0;height:100svh;min-height:560px;width:100%;z-index:1;overflow:hidden}
+.home-hero .media{position:absolute;inset:0;z-index:-1}
+.home-hero .media img{width:100%;height:100%;object-fit:cover;object-position:82% 52%}
+/* 浅色：底部渐变收到 paper（028 是收到 black）；顶部+左侧加强以洗掉素材烤字 */
+.home-hero:before{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(236,233,226,.9) 0%,rgba(236,233,226,.42) 16%,rgba(236,233,226,0) 42%,rgba(236,233,226,.5) 82%,var(--color-paper) 100%);
+  z-index:0;pointer-events:none}
+.home-hero:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(236,233,226,.97) 0%,rgba(236,233,226,.9) 30%,rgba(236,233,226,.5) 46%,rgba(236,233,226,.08) 63%,rgba(236,233,226,0) 78%)}
+.hero-title{position:absolute;left:var(--grid-outer-gutter);top:50%;transform:translateY(-50%);z-index:2;
+  font-size:clamp(2.8rem,9.6vw,9.6vw);font-weight:300;letter-spacing:-.02em;line-height:1.167}
+@media only screen and (min-width:834px){.hero-title{font-size:clamp(5rem,4.4444444444vw,4.4444444444vw);letter-spacing:-.04em;line-height:1.125}}
+.hero-title .ln{display:block;overflow:hidden}
+.hero-title .ln i{display:block;font-style:normal;transform:translateY(105%)}
+.hero-title .accent{color:var(--color-accent)}
+.hero-copy{position:absolute;left:var(--grid-outer-gutter);bottom:var(--grid-outer-gutter);z-index:2;
+  font-size:clamp(1.3rem,3.7333333333vw,1.8rem);font-weight:300;letter-spacing:-.02em;line-height:1.375;max-width:80vw;opacity:0}
+@media only screen and (min-width:834px){.hero-copy{font-size:clamp(1.4rem,1.1111111111vw,1.8rem);width:26vw;max-width:none}.hero-copy span{display:block}}
+/* 右下玻璃卡片（028 hero card） */
+.hero-card{position:absolute;z-index:2;left:var(--grid-outer-gutter);bottom:calc(var(--grid-outer-gutter) + 12vw);
+  display:flex;column-gap:1.2rem;align-items:center;padding:.6rem .6rem .6rem 1.6rem;border-radius:1.6rem;
+  background:rgba(250,248,243,.55);-webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,.6);
+  width:calc(100% - var(--grid-outer-gutter)*2);opacity:0;transition:background-color .2s}
+@media only screen and (min-width:834px){.hero-card{left:unset;right:1.0416666667vw;bottom:1.1111111111vw;border-radius:1.1111111111vw;column-gap:.8333333333vw;width:auto;max-width:32vw}}
+.hero-card:hover{background:rgba(250,248,243,.78)}
+.hero-card .hc-content{padding:.4rem 0}
+@media only screen and (min-width:834px){.hero-card .hc-content{min-width:18rem;width:14.3vw;padding:.45vw 0}}
+.hero-card .hc-label{font-family:var(--font-accent),sans-serif;font-size:1.1rem;text-transform:uppercase;color:var(--color-accent-deep);letter-spacing:-.02em}
+.hero-card .hc-copy{font-size:clamp(1.3rem,3.7vw,1.6rem);font-weight:300;letter-spacing:-.02em;line-height:1.3;margin-top:.6rem}
+@media only screen and (min-width:834px){.hero-card .hc-copy{font-size:1.0416666667vw;margin-top:.48vw}}
+.hero-card .hc-img{flex-shrink:0;aspect-ratio:1;border-radius:2.4vw;overflow:hidden;max-width:10.6rem;width:28vw}
+@media only screen and (min-width:834px){.hero-card .hc-img{border-radius:.625vw;width:clamp(10.6rem,7.36vw,12rem)}}
+.hero-card .hc-img img{width:100%;height:100%;object-fit:cover}
+
+/* ===== INTRO (028 黄底大陈述段 → 橙底) ===== */
+/* cover-hi：hero 粘住 → intro 橙屏上移覆盖 → technology 再覆盖 intro（isolation 隔离 z 层） */
+.cover-hi{position:relative;isolation:isolate}
+.intro{position:relative;z-index:2;height:200lvh}
+.intro-sticky{position:sticky;top:0;height:100lvh;min-height:560px;display:flex;align-items:center;overflow:hidden;background:var(--color-accent);color:#fff}
+@media only screen and (max-width:833px){.intro{height:auto}.intro-sticky{position:relative;height:auto;min-height:100vh;padding:32vw 0}}
+.intro .inner{width:100%}
+.intro .content{grid-column:1/-1}
+@media only screen and (min-width:834px){.intro .content{grid-column:1/-3}}
+.intro .label{color:rgba(255,255,255,.75);margin-bottom:6.4vw}
+@media only screen and (min-width:834px){.intro .label{margin-bottom:3.3333333333vw}}
+.intro .copy{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.02em;line-height:1.142;color:rgba(255,255,255,.5)}
+@media only screen and (min-width:834px){.intro .copy{font-size:clamp(3.6rem,3.8vw,3.8vw);letter-spacing:-.04em;line-height:1.18}}
+.intro .copy .w{display:inline-block;white-space:nowrap}
+.intro .copy .c{display:inline-block;opacity:0;transform:translateY(.4em);will-change:opacity,transform}
+.intro .copy .hl{color:#fff}
+
+/* ===== TECHNOLOGY (sticky image-sequence scrub) ===== */
+.technology{position:relative;z-index:3;background:var(--color-dark);height:380vh}
+@media only screen and (max-width:833px){.technology{height:auto}}
+.tech-scene{position:sticky;top:0;height:100lvh;overflow:hidden}
+@media only screen and (max-width:833px){.tech-scene{position:relative;height:auto;padding:32vw 0}}
+.tech-canvas{position:absolute;inset:0;width:100%;height:100%}
+@media only screen and (max-width:833px){.tech-canvas{position:relative;height:64vh}}
+.tech-scene:after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(26,30,36,.82) 0,rgba(26,30,36,.3) 36%,transparent 58%),linear-gradient(0deg,rgba(26,30,36,.85),transparent 42%)}
+.tech-head{position:absolute;top:var(--grid-outer-gutter);left:0;right:0;z-index:3;color:#fff}
+.tech-head .grid-container{align-items:baseline}
+.tech-head .label{grid-column:1/-1;color:rgba(255,255,255,.6)}
+@media only screen and (min-width:834px){.tech-head .label{grid-column:1/8}}
+.tech-content{position:absolute;left:var(--grid-outer-gutter);bottom:calc(var(--grid-outer-gutter) + 4vw);z-index:3;color:#fff;max-width:80vw}
+@media only screen and (min-width:834px){.tech-content{bottom:var(--grid-outer-gutter);max-width:none}}
+.tech-phase{position:absolute;bottom:0;left:0;opacity:0;transform:translateY(2vw);transition:opacity .5s var(--ease-expo-out),transform .5s var(--ease-expo-out)}
+@media only screen and (max-width:833px){.tech-phase{position:relative;opacity:1;transform:none;margin-bottom:8vw}}
+.tech-phase.on{opacity:1;transform:none}
+.tech-phase .pno{font-family:var(--font-accent),sans-serif;font-size:1.2rem;text-transform:uppercase;color:var(--color-accent);letter-spacing:-.02em}
+@media only screen and (min-width:834px){.tech-phase .pno{font-size:.97vw}}
+.tech-phase h2{font-size:clamp(3rem,8vw,8vw);font-weight:300;letter-spacing:-.04em;line-height:1.05;margin:2.4vw 0 0;white-space:nowrap}
+@media only screen and (min-width:834px){.tech-phase h2{font-size:clamp(3rem,2.8vw,2.8vw);margin:1vw 0 0}}
+.tech-phase p{display:none}
+.tech-rail{position:absolute;left:var(--grid-outer-gutter);right:var(--grid-outer-gutter);bottom:2.4vw;z-index:3;height:1px;background:rgba(255,255,255,.18)}
+.tech-rail i{position:absolute;inset:0 auto 0 0;width:0;background:var(--color-accent)}
+@media only screen and (max-width:833px){.tech-rail{display:none}}
+
+/* ===== HOME-FEATURES (右半 2x2 icon-feature) ===== */
+.home-features{padding:32vw 0 53.3333333333vw}
+@media only screen and (min-width:834px){.home-features{padding:8.3333333333vw 0 6.9444444444vw}}
+.home-features .head{grid-column:1/-1}
+@media only screen and (min-width:834px){.home-features .head{grid-column:1/7}}
+.home-features .head .title{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:3.4666666667vw}
+@media only screen and (min-width:834px){.home-features .head .title{font-size:clamp(3rem,2.5vw,2.5vw);line-height:1.167;margin-top:.9vw}}
+.feat-items{display:flex;flex-direction:column;grid-column:1/-1;row-gap:19.2vw;margin-top:16vw}
+@media only screen and (min-width:834px){.feat-items{display:grid;grid-column:13/-1;grid-template-columns:repeat(2,1fr);column-gap:var(--grid-gutter);row-gap:4.1666666667vw;margin-top:0}}
+.icon-feature .ic{width:13.6vw;max-width:13.6vw;color:var(--color-accent)}
+.icon-feature .ic svg{width:100%;height:auto;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+@media only screen and (min-width:834px){.icon-feature .ic{width:3.0555555556vw;max-width:3.0555555556vw}}
+.icon-feature h3{font-size:clamp(2rem,5.3vw,5.3vw);font-weight:300;letter-spacing:-.04em;line-height:1.167;margin-top:9.6vw}
+@media only screen and (min-width:834px){.icon-feature h3{font-size:clamp(2rem,1.6666666667vw,1.6666666667vw);margin-top:2.2222222222vw}}
+.icon-feature p{font-size:clamp(1.5rem,4.8vw,4.8vw);font-weight:300;letter-spacing:-.02em;line-height:1.22;color:var(--color-mid-grey);margin-top:6.4vw}
+@media only screen and (min-width:834px){.icon-feature p{font-size:clamp(1.6rem,1.3888888889vw,1.3888888889vw);margin-top:1.6666666667vw}}
+
+/* ===== EXPERTISES OVERVIEW (左标题 + 右半堆叠卡) ===== */
+.expertises{background:#e6e6e6;overflow:hidden;padding:32vw 0}
+@media only screen and (min-width:834px){.expertises{padding:5.5555555556vw 0 10.4166666667vw}}
+.expertises .head{grid-column:1/-1}
+@media only screen and (min-width:834px){.expertises .head{grid-column:1/7}}
+.expertises .head .title{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:3.4666666667vw}
+@media only screen and (min-width:834px){.expertises .head .title{font-size:clamp(3rem,2.5vw,2.5vw);line-height:1.167;margin-top:.9vw}}
+.expertises .ov-copy{grid-column:1/-1;margin-top:16vw;font-size:clamp(1.6rem,5.3333333333vw,5.3333333333vw);font-weight:300;letter-spacing:-.04em;line-height:1.2;color:var(--color-arsenic)}
+@media only screen and (min-width:834px){.expertises .ov-copy{grid-column:13/-1;margin-top:2.0833333333vw;font-size:clamp(2rem,1.6666666667vw,1.6666666667vw);line-height:1.167}}
+.ex-cards{display:flex;flex-direction:column;grid-column:1/-1;margin-top:16vw;row-gap:4.2666666667vw}
+@media only screen and (min-width:834px){.ex-cards{grid-column:13/-1;margin-top:4.1666666667vw;row-gap:2.5vw}}
+.ex-card{position:relative;display:flex;column-gap:3.2vw;align-items:stretch;overflow:hidden;width:100%;
+  background:var(--color-card);border:1px solid var(--color-line);border-radius:1.6rem;padding:1.6vw;transition:background-color .25s,border-color .25s}
+@media only screen and (min-width:834px){.ex-card{column-gap:2.2222222222vw;border-radius:1.1111111111vw;padding:1.1111111111vw}}
+.ex-card:hover{background:var(--color-accent);border-color:var(--color-accent)}
+.ex-card .ex-img{flex-shrink:0;aspect-ratio:1;width:29.58%;border-radius:.625vw;overflow:hidden;position:relative}
+.ex-card .ex-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ex-card .ex-c{display:flex;flex-direction:column;justify-content:flex-start;width:56%;padding:1.39vw 0 .45vw}
+.ex-card .ex-name{font-size:clamp(1.6rem,4.8vw,4.8vw);font-weight:300;letter-spacing:-.02em;line-height:1.2;color:var(--color-ink);transition:color .2s}
+@media only screen and (min-width:834px){.ex-card .ex-name{font-size:clamp(1.6rem,1.3888888889vw,1.3888888889vw)}}
+.ex-card:hover .ex-name{color:#fff}
+.ex-card .ex-copy{font-size:clamp(1.3rem,3.7vw,1.6rem);font-weight:300;letter-spacing:-.02em;line-height:1.375;color:var(--color-silver);margin-top:1.1vw}
+@media only screen and (min-width:834px){.ex-card .ex-copy{font-size:1.0416666667vw}}
+.ex-card:hover .ex-copy{color:rgba(255,255,255,.75)}
+.ex-card .ex-arrow{position:absolute;right:1.6vw;bottom:1.6vw;width:9vw;height:9vw;border-radius:50%;border:1px solid var(--color-line-2);display:grid;place-items:center;color:var(--color-ink);transition:.25s}
+@media only screen and (min-width:834px){.ex-card .ex-arrow{right:1.1111111111vw;bottom:1.1111111111vw;width:2.6vw;height:2.6vw}}
+.ex-card .ex-arrow svg{width:38%;height:38%;fill:none;stroke:currentColor;stroke-width:1.5}
+.ex-card:hover .ex-arrow{background:var(--color-ink);border-color:var(--color-ink);color:var(--color-accent)}
+
+/* ===== FULL-BLEED (流动光丝视频 + 上移覆盖 cover-stack) ===== */
+.cover-stack{position:relative;isolation:isolate}
+.fb-screen{position:relative;height:200lvh}
+@media only screen and (max-width:833px){.fb-screen{height:auto}}
+.full-bleed{position:relative;height:100lvh;min-height:560px;display:flex;align-items:center;overflow:hidden;background:#0c0e12;color:#fff}
+.full-bleed.cover-base{position:sticky;top:0}
+@media only screen and (max-width:833px){.full-bleed.cover-base{position:relative}}
+.full-bleed{background:#0a0c10}
+.full-bleed .media{position:absolute;inset:0;z-index:0}
+.full-bleed .media canvas{width:100%;height:100%;display:block}
+.full-bleed:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,transparent 28%,rgba(12,14,18,.4) 56%,rgba(12,14,18,.82) 100%),linear-gradient(180deg,rgba(12,14,18,.45),transparent 28%,transparent 70%,rgba(12,14,18,.55))}
+.full-bleed .content{position:relative;z-index:2;grid-column:1/-1;margin:32vw 0}
+.full-bleed .label{color:rgba(255,255,255,.7)}
+@media only screen and (min-width:834px){.full-bleed .content{grid-column:13/-3;margin:8.3333333333vw 0}}
+.full-bleed .fb-title{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:9.6vw}
+@media only screen and (min-width:834px){.full-bleed .fb-title{font-size:clamp(3rem,2.5vw,2.5vw);line-height:1.167;margin-top:2.5vw}}
+.full-bleed .fb-title{color:#fff}
+.full-bleed .fb-sub{color:rgba(255,255,255,.5)}
+.full-bleed .fb-link{margin-top:9.6vw}
+@media only screen and (min-width:834px){.full-bleed .fb-link{margin-top:2.5vw}}
+.fb-btn{display:inline-flex;align-items:center;padding:1.3rem 2.6rem;border-radius:40px;font-size:1.4rem;color:#fff;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background .25s,color .25s}
+.fb-btn:hover{background:#fff;color:var(--color-ink)}
+@media only screen and (min-width:834px){.fb-btn{font-size:1.0416666667vw;padding:.7vw 1.5vw}}
+
+/* ===== FEATURE CARDS (大数字卡) — cover-stack 顶层，上移覆盖光丝段 ===== */
+.feature-cards{position:relative;z-index:2;background:#eeeeee;padding:32vw 0 53.3333333333vw}
+.feature-cards.cover-top{border-radius:0;margin-top:-6vw}
+@media only screen and (min-width:834px){.feature-cards{padding:8.3333333333vw 0 7.5vw}.feature-cards.cover-top{border-radius:0;margin-top:-2.2vw}}
+/* 产品展示 head */
+.ph-head{grid-column:1/-1;margin-bottom:8vw}
+@media only screen and (min-width:834px){.ph-head{margin-bottom:2.5vw;display:flex;align-items:flex-end;justify-content:space-between}}
+.ph-title{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:3.4666666667vw}
+@media only screen and (min-width:834px){.ph-title{font-size:clamp(3rem,2.5vw,2.5vw);line-height:1.167;margin-top:.9vw}}
+.ph-sub{color:var(--color-mid-grey);font-size:clamp(1.4rem,1.1111111111vw,1.8rem);font-weight:300;white-space:nowrap;text-align:right}
+@media only screen and (max-width:833px){.ph-sub{white-space:normal;text-align:left;margin-top:4vw}}
+/* 产品网格（2 行 × 2 列） */
+.prod-grid{grid-column:1/-1;display:grid;grid-template-columns:1fr;column-gap:var(--grid-gutter);row-gap:6.4vw}
+@media only screen and (min-width:834px){.prod-grid{grid-template-columns:repeat(2,1fr);row-gap:1.6666666667vw}}
+.pcard{position:relative;display:flex;flex-direction:column;overflow:hidden;background:#e6e6e6;border:1px solid rgba(21,23,27,.06);border-radius:6.4vw;padding:4vw 4vw 0;transition:border-color .4s,box-shadow .4s,transform .5s var(--ease-expo-out)}
+@media only screen and (min-width:834px){.pcard{border-radius:1.6vw;padding:1.1vw 1.1vw 0}}
+.pcard:hover{transform:translateY(-.3vw);box-shadow:0 .45vw 1.3vw rgba(21,23,27,.08)}
+.pc-media{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:4.4vw;background:#dcdcdc}
+@media only screen and (min-width:834px){.pc-media{border-radius:1.1vw}}
+.pc-media img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-expo-out)}
+.pcard:hover .pc-media img{transform:scale(1.04)}
+.pc-body{position:relative;padding:4.5vw 2vw 5vw;display:flex;flex-direction:column}
+@media only screen and (min-width:834px){.pc-body{padding:1.3vw 1vw 1.6vw}}
+.pc-num{font-family:var(--font-base),sans-serif;font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--color-ink);font-size:clamp(3.2rem,9vw,9vw)}
+@media only screen and (min-width:834px){.pc-num{font-size:clamp(3.2rem,3vw,3vw)}}
+.pc-num .pc-x{display:inline-block;font-size:.5em;font-weight:300;letter-spacing:-.02em;vertical-align:top;margin-right:.04em;color:var(--color-ink-soft)}
+.pc-tag{font-family:var(--font-accent),sans-serif;font-size:1.2rem;letter-spacing:.04em;text-transform:uppercase;color:var(--color-accent);margin-top:2.4vw}
+@media only screen and (min-width:834px){.pc-tag{font-size:.9722222222vw;margin-top:.5vw}}
+.pc-desc{font-family:var(--font-base),sans-serif;font-size:clamp(1.4rem,3.7vw,1.8rem);font-weight:300;letter-spacing:-.02em;line-height:1.45;color:var(--color-mid-grey);margin-top:3.5vw}
+@media only screen and (min-width:834px){.pc-desc{font-size:1.0416666667vw;margin-top:.8vw;max-width:24vw}}
+
+/* ===== TIMELINE — 横向移动时间轴（sticky pin + 水平平移，无人机 playhead） ===== */
+.timeline{position:relative;background-color:#eeeeee;margin-top:-3vw}
+@media only screen and (max-width:833px){.timeline{margin-top:-9vw}}
+.tl-scroll{position:relative}
+.tl-sticky{position:sticky;top:0;height:100vh;min-height:560px;overflow:hidden;display:flex;flex-direction:column;background-color:#eeeeee;background-image:linear-gradient(rgba(86,104,134,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(86,104,134,.05) 1px,transparent 1px);background-size:2.6vw 2.6vw;border-top:1px solid rgba(21,23,27,.12)}
+.tl-head-wrap{flex:none;padding-top:4.2vw}
+.timeline .th-head{grid-column:1/-1}
+.timeline .th-title{font-size:clamp(3.2rem,9.6vw,9.6vw);font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:1vw}
+@media only screen and (min-width:834px){.timeline .th-title{font-size:clamp(3rem,3.6vw,3.6vw);line-height:1.08}}
+.timeline .th-sub{color:var(--color-mid-grey);font-size:clamp(1.6rem,1.3888888889vw,2rem);font-weight:300;margin-top:.8vw}
+.tl-zone{position:relative;flex:1;width:100%;overflow:hidden}
+.tl-track{position:absolute;top:0;left:0;height:100%;will-change:transform}
+.tl-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tl-axis-bg{stroke:rgba(86,104,134,.22);stroke-width:1}
+.tl-axis{stroke:var(--color-accent);stroke-width:1.8;stroke-dasharray:6 6;filter:drop-shadow(0 0 2px rgba(241,90,36,.3))}
+.tl-conn{stroke:rgba(21,23,27,.16);stroke-width:1}
+.tl-node{fill:#eeeeee;stroke:rgba(21,23,27,.35);stroke-width:1.2;transition:fill .3s,stroke .3s}
+.tl-node.on{fill:var(--color-accent);stroke:var(--color-accent)}
+.tl-drone{will-change:transform;transition:opacity .4s;filter:drop-shadow(0 0 3px rgba(241,90,36,.3))}
+.tl-drone .arm{stroke:var(--color-accent);stroke-width:1.6;stroke-linecap:round}
+.tl-drone .body{fill:var(--color-ink);stroke:var(--color-accent);stroke-width:1.4}
+.tl-drone .hub{fill:#fff}
+.tl-drone .rotor{fill:rgba(241,90,36,.12);stroke:rgba(21,23,27,.4);stroke-width:1}
+.tl-drone .glow{fill:var(--color-accent);opacity:.1}
+.tl-drone .blade{transform-box:fill-box;transform-origin:center;animation:rotor .32s linear infinite}
+.tl-drone .blade.b2{animation-duration:.38s}.tl-drone .blade.b3{animation-duration:.34s}.tl-drone .blade.b4{animation-duration:.42s}
+@keyframes rotor{to{transform:rotate(360deg)}}
+.tl-items{position:absolute;inset:0}
+.tl-item{position:absolute;box-sizing:border-box;opacity:0;transition:opacity .55s,transform .7s cubic-bezier(.16,1,.3,1);transform:translateY(20px)}
+.tl-item.on{opacity:1;transform:none}
+.tl-card{position:relative;overflow:hidden;display:block;text-align:left;background:#f6f7f8;border:1px solid rgba(21,23,27,.12);border-radius:.28vw;padding:1.5vw 1.7vw;transition:border-color .35s}
+.tl-card::before{content:"";position:absolute;left:0;top:0;height:2px;width:0;background:var(--color-accent);transition:width .6s var(--ease-expo-out)}
+.tl-item.on .tl-card{border-color:rgba(21,23,27,.2)}
+.tl-item.on .tl-card::before{width:100%}
+.tl-yr{display:flex;align-items:center;font-family:var(--font-accent),sans-serif;color:var(--color-accent);font-weight:400;letter-spacing:.04em;font-size:1.32vw}
+.tl-yr::before{content:"";width:.46em;height:.46em;background:var(--color-accent);margin-right:.6em;flex:none}
+.tl-card p{margin-top:.8vw;font-size:1.16vw;color:var(--color-ink);line-height:1.5}
+@media only screen and (max-width:833px){
+  .tl-scroll{height:auto!important}
+  .tl-sticky{position:static;height:auto;min-height:0;overflow:visible;display:block;padding-bottom:12vw}
+  .tl-head-wrap{padding-top:14vw}
+  .tl-zone{overflow:visible;height:auto}
+  .tl-track{position:static;width:auto!important;height:auto;transform:none!important;margin-top:8vw}
+  .tl-svg{display:none}
+  .tl-items{position:static;inset:auto}
+  .tl-item{position:static!important;width:auto!important;left:auto!important;top:auto!important;margin-bottom:5vw;opacity:1;transform:none}
+  .tl-card{border-radius:1vw;padding:5vw 5.5vw}
+  .tl-yr{font-size:3.6vw}.tl-card p{font-size:3.4vw;margin-top:2vw}
+}
+
+/* ===== HOME-NEWS (更浅反差段) ===== */
+.home-news{background:#eeeeee;color:var(--color-ink);padding:32vw 0 53.3333333333vw}
+@media only screen and (min-width:834px){.home-news{padding:8.3333333333vw 0 16.6666666667vw}}
+.home-news .nh{grid-column:1/-1}
+@media only screen and (min-width:834px){.home-news .nh{grid-column:1/12;display:flex;align-items:flex-end;justify-content:space-between}}
+.home-news .nh .title{font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1.142;margin-top:3.4vw}
+@media only screen and (min-width:834px){.home-news .nh .title{font-size:clamp(3.6rem,3.3333333333vw,3.3333333333vw);line-height:1.167;margin-top:0}}
+.news-tabs{display:flex;column-gap:.6rem;margin-top:6vw}
+@media only screen and (min-width:834px){.news-tabs{margin-top:0}}
+.news-tabs button{font-family:var(--font-accent),sans-serif;font-size:1.2rem;text-transform:uppercase;letter-spacing:-.02em;
+  border:1px solid var(--color-line-2);border-radius:30px;padding:.7rem 1.4rem;color:var(--color-mid-grey);transition:.2s}
+@media only screen and (min-width:834px){.news-tabs button{font-size:.83vw;padding:.4vw 1vw}}
+.news-tabs button.active{background:var(--color-ink);border-color:var(--color-ink);color:var(--color-paper)}
+.featured-items{display:grid;grid-column:1/-1;grid-template-columns:repeat(var(--grid-column-count),1fr);column-gap:var(--grid-gutter);row-gap:16vw;margin-top:16vw}
+@media only screen and (min-width:834px){.featured-items{row-gap:3.3333333333vw;margin-top:3.3333333333vw}}
+.fpost{grid-column:1/-1}
+@media only screen and (min-width:834px){.fpost{grid-column:span 12}}
+.fpost .fp-img{aspect-ratio:16/10;border-radius:2.4vw;overflow:hidden;position:relative}
+@media only screen and (min-width:834px){.fpost .fp-img{border-radius:.83vw}}
+.fpost .fp-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-expo-out)}
+.fpost:hover .fp-img img{transform:scale(1.05)}
+.fpost .fp-meta{display:flex;column-gap:1.2rem;align-items:center;margin-top:2.4vw;font-family:var(--font-accent),sans-serif;font-size:1.2rem;text-transform:uppercase;letter-spacing:-.02em;color:var(--color-mid-grey)}
+@media only screen and (min-width:834px){.fpost .fp-meta{margin-top:1.1vw;font-size:.83vw}}
+.fpost .fp-meta .cat{color:var(--color-charcoal)}
+.fpost .fp-title{font-size:clamp(1.8rem,5.3vw,5.3vw);font-weight:300;letter-spacing:-.02em;line-height:1.2;margin-top:3vw}
+@media only screen and (min-width:834px){.fpost .fp-title{font-size:clamp(1.8rem,1.6666666667vw,1.6666666667vw);margin-top:1vw}}
+.news-list{grid-column:1/-1;margin-top:16vw;border-top:1px solid var(--color-line)}
+@media only screen and (min-width:834px){.news-list{margin-top:5.5vw}}
+.nl-item{position:relative;display:flex;flex-direction:column;justify-content:space-evenly;column-gap:var(--grid-gutter);padding:5.3333333333vw 0;border-bottom:1px solid var(--color-line);transition:background-color .2s}
+@media(hover:hover)and (pointer:fine){.nl-item:hover{background-color:var(--color-paper);z-index:2}}
+@media only screen and (min-width:834px){.nl-item{flex-direction:row;align-items:center;padding:1.6666666667vw 0}}
+.nl-item .nl-t{font-family:var(--font-base),sans-serif;font-size:clamp(1.6rem,3.7333333333vw,1.8rem);font-weight:300;letter-spacing:-.02em;line-height:1.375;flex:1}
+@media only screen and (min-width:834px){.nl-item .nl-t{flex:.5;font-size:clamp(1.6rem,1.3888888889vw,1.8rem);line-height:1.2}}
+@media(hover:hover)and (pointer:fine){.nl-item .nl-t{transition:transform .2s var(--ease-expo-out)}.nl-item:hover .nl-t{transform:translateX(.8rem)}}
+.nl-cw{display:flex;flex-direction:column;column-gap:var(--grid-gutter);margin-top:6.4vw}
+@media only screen and (min-width:834px){.nl-cw{flex:.5;flex-direction:row;align-items:center;justify-content:space-between;margin-top:0}}
+.nl-item .nl-date{font-family:var(--font-accent),sans-serif;font-size:1.2rem;color:var(--color-arsenic)}
+@media only screen and (min-width:834px){.nl-item .nl-date{font-size:.97vw}}
+.nl-link{display:flex;align-items:center;column-gap:1.6vw;flex-shrink:0;margin-top:6.4vw;color:var(--color-ink);font-family:var(--font-base),sans-serif;font-size:clamp(1.3rem,3.7333333333vw,1.8rem);font-weight:300;letter-spacing:-.02em}
+@media only screen and (min-width:834px){.nl-link{column-gap:.4861111111vw;margin-top:0;font-size:clamp(1.4rem,1.1111111111vw,1.8rem)}}
+@media(hover:hover)and (pointer:fine){.nl-link{transition:transform .2s var(--ease-expo-out)}.nl-item:hover .nl-link{transform:translateX(-.8rem)}}
+.nl-icon{flex-shrink:0;width:3.7333333333vw;color:var(--color-ink)}
+@media only screen and (min-width:834px){.nl-icon{width:.8333333333vw}}
+.nl-icon svg{width:100%;height:auto;display:block}
+/* 028 List: hover 行右侧浮现该新闻的图片预览 */
+.nl-preview{display:none}
+@media only screen and (min-width:834px){
+  .nl-preview{display:block;position:absolute;left:62.6388888889vw;top:-4.0277777778vw;
+    width:22.8472222222vw;height:15.2083333333vw;border-radius:1.1111111111vw;overflow:hidden;
+    opacity:0;visibility:hidden;pointer-events:none;z-index:1;transform:scale(.96);
+    transition:opacity .3s var(--ease-expo-out),transform .55s var(--ease-expo-out),visibility .3s}
+  .nl-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .nl-item:hover .nl-preview{opacity:1;visibility:visible;transform:scale(1)}
+}
+
+/* ===== FOOTER (网格纹 + 橙卡) ===== */
+.footer{position:relative;z-index:12;padding:0 0 22.6666666667vw;background:var(--color-paper);
+  --pattern:6.66667vw;--oc:rgba(21,23,27,.1);
+  background-image:radial-gradient(circle at center,transparent calc(var(--pattern)/2 - 1px),var(--oc) calc(var(--pattern)/2 - 1px),var(--oc) calc(var(--pattern)/2),transparent calc(var(--pattern)/2)),linear-gradient(var(--oc) 1px,transparent 1px),linear-gradient(90deg,var(--oc) 1px,transparent 1px);
+  background-size:var(--pattern) var(--pattern),var(--pattern) var(--pattern),var(--pattern) var(--pattern)}
+@media only screen and (min-width:834px){.footer{padding:1.3888888889vw 1.1111111111vw 6vw}}
+.footer-container{position:relative;z-index:1;display:grid;grid-template-columns:repeat(var(--grid-column-count),1fr);column-gap:var(--grid-gutter);
+  background:var(--color-accent);color:#fff;border-bottom-left-radius:6.4vw;border-bottom-right-radius:6.4vw;padding:16vw var(--grid-outer-gutter)}
+@media only screen and (min-width:834px){.footer-container{border-radius:1.6666666667vw;padding:2.7777777778vw 1.3888888889vw 1.3888888889vw}}
+.ft-cta{grid-column:1/-1;display:flex;flex-direction:column;row-gap:6.4vw}
+@media only screen and (min-width:834px){.ft-cta{grid-column:span 12;row-gap:2.2222222222vw}}
+.ft-cta .ft-label{font-family:var(--font-accent),sans-serif;font-size:1.2rem;text-transform:uppercase;letter-spacing:-.02em;color:rgba(255,255,255,.7)}
+@media only screen and (min-width:834px){.ft-cta .ft-label{font-size:.97vw}}
+.ft-cta .ft-copy{font-size:clamp(1.6rem,5.3333333333vw,5.3333333333vw);font-weight:300;letter-spacing:-.04em;line-height:1.2}
+@media only screen and (min-width:834px){.ft-cta .ft-copy{font-size:clamp(2rem,1.6666666667vw,1.6666666667vw);line-height:1.167;width:30.8333333333vw}}
+.ft-cta .ft-mail{display:inline-flex;align-items:center;column-gap:.8rem;font-size:clamp(2rem,6vw,6vw);font-weight:300;letter-spacing:-.04em;line-height:1}
+@media only screen and (min-width:834px){.ft-cta .ft-mail{font-size:2.2vw}}
+.ft-list{display:flex;flex-direction:column;grid-column:1/-1;margin-top:16vw;row-gap:0}
+@media only screen and (min-width:834px){.ft-list{grid-column:13/-1;margin-top:0}}
+.ft-link{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.35);
+  padding:3.2vw 0;font-size:clamp(2rem,7.4666666667vw,7.4666666667vw);font-weight:300;letter-spacing:-.04em;line-height:1;transition:opacity .15s}
+@media only screen and (min-width:834px){.ft-link{padding:.55vw 0;font-size:clamp(3rem,2.5vw,2.5vw);line-height:1.167}}
+.ft-list:hover .ft-link{opacity:.5}.ft-list:hover .ft-link:hover{opacity:1}
+.ft-link svg{width:2.1vw;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.5}
+@media only screen and (min-width:834px){.ft-link svg{width:.56vw}}
+.ft-logo{grid-column:1/-1;margin-top:53.3333333333vw;font-size:14vw;font-weight:250;letter-spacing:-.06em;line-height:.8}
+@media only screen and (min-width:834px){.ft-logo{grid-column:1/12;margin-top:5vw;font-size:9vw}}
+.ft-foot{grid-column:1/-1;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2vw;margin-top:6.4vw;
+  font-size:clamp(1.3rem,3.7vw,1.8rem);color:rgba(255,255,255,.85)}
+@media only screen and (min-width:834px){.ft-foot{grid-column:13/-1;margin-top:0;font-size:1.1111111111vw}}
+.ft-foot .legal{display:flex;flex-wrap:wrap;gap:.6rem 1.6vw}
+.ft-foot .legal a:hover{color:#fff;text-decoration:underline}
+
+/* top progress + cursor */
+.prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--color-accent);z-index:60}
+.cur,.cur-r{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:50;transform:translate(-50%,-50%)}
+.cur{width:.7rem;height:.7rem;background:var(--color-accent)}
+.cur-r{width:3.2rem;height:3.2rem;border:1px solid var(--color-line-2);transition:width .25s,height .25s,border-color .25s,background .25s}
+.cur-r.hot{width:5.4rem;height:5.4rem;border-color:var(--color-accent);background:rgba(241,90,36,.06)}
+@media(hover:none){.cur,.cur-r{display:none}}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="loading">
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-top"><span class="ld-mark">LANZ Technology</span><span class="ld-sub">Small UAV · Big Dream</span></div>
+  <div class="ld-num"><span id="ldNum">0</span><small>%</small></div>
+  <div class="ld-bar"><i id="ldBar"></i></div>
+</div>
+
+<div class="cur" id="cur"></div><div class="cur-r" id="curR"></div>
+<div class="prog" id="prog"></div>
+
+<!-- MENU -->
+<header class="menu" id="menu">
+  <div class="bar">
+    <a href="#top" class="logo" data-hot><span class="mk">LZ</span><span class="nm">LANZ Technology</span></a>
+    <nav class="nav-links">
+      <a href="#technology">Platform</a>
+      <a href="#features">Technology</a>
+      <a href="#expertises">Applications</a>
+      <a href="#news">News</a>
+      <a href="#footer">About</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#footer" class="pill" data-hot><span class="dot"></span>Get in touch</a>
+      <button class="ham" id="ham" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="m-nav" id="mNav">
+  <a href="#technology">Platform</a><a href="#features">Technology</a><a href="#expertises">Applications</a>
+  <a href="#news">News</a><a href="#footer">About</a>
+</nav>
+
+<main>
+<div class="cover-hi">
+<!-- HOME-HERO -->
+<section class="home-hero" id="top">
+  <div class="media"><img src="assets/hero2.jpg" alt="LANZ coaxial dual-rotor UAV lineup" id="heroImg"/></div>
+  <h1 class="hero-title" id="heroTitle">
+    <span class="ln"><i>Micro Coaxial Dual-Rotor</i></span>
+    <span class="ln accent"><i>UAV Pioneers</i></span>
+  </h1>
+  <p class="hero-copy" id="heroCopy"><span>Ultra-quiet · High-performance · Intelligent · Modular.</span><span>Dedicated to building world-class aerial robotic systems.</span></p>
+  <a href="#news" class="hero-card" id="heroCard" data-hot>
+    <div class="hc-content">
+      <div class="hc-label">2025.05 · Mass Production</div>
+      <div class="hc-copy">X100 enters mass production — top 3 worldwide and China’s only volume-delivered coaxial dual-rotor.</div>
+    </div>
+    <div class="hc-img"><img src="assets/product-x300.jpg" alt=""/></div>
+  </a>
+</section>
+
+<!-- INTRO（橙屏：上移覆盖 hero + 文字逐字揭示） -->
+<section class="intro">
+  <div class="intro-sticky">
+    <div class="inner grid-container">
+      <div class="content">
+        <div class="label">Complex Missions · Elegantly Solved</div>
+        <p class="copy" id="introCopy"><b>With micro coaxial dual-rotor architecture</b>, we are redefining the compact unmanned flight platform. In airframe configuration, control method and overall performance, we have <b>achieved substantial technical breakthroughs</b> to build world-class <b>aerial robotic systems</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY — sticky scrubbed sequence（上移覆盖 intro 橙屏） -->
+<section class="technology" id="technology">
+  <div class="tech-scene">
+    <canvas class="tech-canvas" id="techCanvas"></canvas>
+    <div class="tech-head"><div class="grid-container"><div class="label">Our Technology · Coaxial Intelligent Flight Platform</div></div></div>
+    <div class="tech-content">
+      <div class="tech-phase" data-i="0"><div class="pno">01 — Platform</div><h2>Coaxial Dual-Rotor Platform</h2></div>
+      <div class="tech-phase" data-i="1"><div class="pno">02 — Payload</div><h2>Modular Mission Payloads</h2></div>
+      <div class="tech-phase" data-i="2"><div class="pno">03 — Delivery</div><h2>Mass-Production & Delivery</h2></div>
+    </div>
+    <div class="tech-rail"><i id="techRail"></i></div>
+  </div>
+</section>
+</div><!-- /cover-hi -->
+
+<!-- HOME-FEATURES (右半 2x2 icon-feature) -->
+<section class="home-features" id="features">
+  <div class="grid-container">
+    <div class="head">
+      <div class="label">Why LANZ</div>
+      <h2 class="title">Built for the ultimate experience</h2>
+    </div>
+    <div class="feat-items">
+      <div class="icon-feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 9l8-5 8 5-8 5z"/><path d="M4 9v6l8 5 8-5V9"/></svg></div>
+        <h3>Convenient</h3><p>A cylindrical body with blades that fold flush — deploys and flies in seconds. Pocket-sized portability, ready whenever you are.</p>
+      </div>
+      <div class="icon-feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 2.6v5c0 4.4-3 7.4-7 8.9-4-1.5-7-4.5-7-8.9v-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Safe</h3><p>Robust power-redundant design with strong wind resistance — stable and reliable across the most demanding missions.</p>
+      </div>
+      <div class="icon-feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></div>
+        <h3>Intelligent</h3><p>An intelligent flight-control system with autonomous routes and one-tap takeoff and landing makes every flight efficient and precise.</p>
+      </div>
+      <div class="icon-feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg></div>
+        <h3>Modular</h3><p>Rapidly adapts to multi-mode payloads — from electro-optical gimbals to mission modules. One platform, many roles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISES — 左标题 + 右半堆叠行业卡 -->
+<section class="expertises" id="expertises">
+  <div class="grid-container">
+    <div class="head">
+      <div class="label">Our Expertise</div>
+      <h2 class="title">Applications</h2>
+    </div>
+    <p class="ov-copy">Widely deployed across security, patrol, counter-terrorism, technical reconnaissance, emergency response, inspection, environmental protection, solar and oil &amp; gas.</p>
+    <div class="ex-cards" id="exCards"></div>
+  </div>
+</section>
+
+<!-- FULL-BLEED (流动光丝视频) + 大数字卡：cover-stack 上移覆盖 -->
+<div class="cover-stack">
+<div class="fb-screen">
+<section class="full-bleed cover-base">
+  <div class="media"><canvas id="fbCanvas"></canvas></div>
+  <div class="grid-container">
+    <div class="content">
+      <div class="label">Performance Proven</div>
+      <p class="fb-title">From prototype to large-scale delivery, <span class="fb-sub">proving performance in the harshest environments.</span></p>
+      <div class="fb-link"><a href="#news" class="fb-btn" data-hot>Learn more</a></div>
+    </div>
+  </div>
+</section>
+</div><!-- /fb-screen -->
+
+<!-- PRODUCTS 全系列产品展示（2 行 × 2 列，上移覆盖光丝段） -->
+<section class="feature-cards cover-top" id="products">
+  <div class="grid-container">
+    <div class="ph-head">
+      <div><div class="label">Products</div><h2 class="ph-title">The Full Lineup</h2></div>
+      <p class="ph-sub">From pocket-sized portability to heavy-lift stability, the X-series covers every mission scenario.</p>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+  </div>
+</section>
+</div><!-- /cover-stack -->
+
+<!-- TIMELINE（发展历程 · SVG 无人机轨迹，移植自 demo-1） -->
+<section class="timeline" id="timeline">
+  <div class="tl-scroll" id="tlScroll">
+    <div class="tl-sticky">
+      <div class="tl-head-wrap"><div class="grid-container">
+        <div class="th-head">
+          <div class="label">Milestones</div>
+          <h2 class="th-title">Our Journey</h2>
+          <p class="th-sub">Charting every LANZ innovation and every flight.</p>
+        </div>
+      </div></div>
+      <div class="tl-zone" id="tlZone">
+        <div class="tl-track" id="tlTrack">
+          <svg class="tl-svg" id="tlSvg">
+            <line class="tl-axis-bg" id="tlAxisBg"/>
+            <line class="tl-axis" id="tlAxis"/>
+            <g id="tlNodes"></g>
+            <g class="tl-drone" id="tlDrone" style="opacity:0">
+              <g class="drone-bob">
+                <circle class="glow" cx="0" cy="0" r="22"/>
+                <line class="arm" x1="0" y1="0" x2="-13" y2="-13"/><line class="arm" x1="0" y1="0" x2="13" y2="-13"/>
+                <line class="arm" x1="0" y1="0" x2="-13" y2="13"/><line class="arm" x1="0" y1="0" x2="13" y2="13"/>
+                <g transform="translate(-13,-13)"><circle class="rotor" r="7.5"/><g class="blade"><line x1="-6.5" y1="0" x2="6.5" y2="0" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/><line x1="0" y1="-6.5" x2="0" y2="6.5" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/></g></g>
+                <g transform="translate(13,-13)"><circle class="rotor" r="7.5"/><g class="blade b2"><line x1="-6.5" y1="0" x2="6.5" y2="0" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/><line x1="0" y1="-6.5" x2="0" y2="6.5" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/></g></g>
+                <g transform="translate(-13,13)"><circle class="rotor" r="7.5"/><g class="blade b3"><line x1="-6.5" y1="0" x2="6.5" y2="0" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/><line x1="0" y1="-6.5" x2="0" y2="6.5" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/></g></g>
+                <g transform="translate(13,13)"><circle class="rotor" r="7.5"/><g class="blade b4"><line x1="-6.5" y1="0" x2="6.5" y2="0" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/><line x1="0" y1="-6.5" x2="0" y2="6.5" stroke="rgba(21,23,27,.55)" stroke-width="1.3"/></g></g>
+                <circle class="body" cx="0" cy="0" r="6"/><circle class="hub" cx="0" cy="0" r="2.2"/>
+              </g>
+            </g>
+          </svg>
+          <div class="tl-items" id="tlItems"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME-NEWS -->
+<section class="home-news" id="news">
+  <div class="grid-container">
+    <div class="nh">
+      <div><div class="label">Newsroom</div><h2 class="title">News</h2></div>
+      <div class="news-tabs" id="newsTabs">
+        <button class="active" data-f="all">All</button>
+        <button data-f="news">News</button>
+        <button data-f="media">Press</button>
+      </div>
+    </div>
+    <div class="featured-items" id="featured"></div>
+    <div class="news-list" id="newsList"></div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer">
+  <div class="footer-container">
+    <div class="ft-cta">
+      <div class="ft-label">Get in touch</div>
+      <p class="ft-copy">Whether you’re a user, a payload provider, or like-minded talent — share your challenge and we’ll solve it together.</p>
+      <a href="mailto:info@lanzuav.com" class="ft-mail" data-hot>info@lanzuav.com <span>↗</span></a>
+    </div>
+    <div class="ft-list">
+      <a href="#technology" class="ft-link" data-hot>Platform<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a href="#expertises" class="ft-link" data-hot>Applications<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a href="#news" class="ft-link" data-hot>News<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a href="#footer" class="ft-link" data-hot>About<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="ft-logo">LANZ</div>
+    <div class="ft-foot">
+      <div class="legal">
+        <span>©2017–2024 LANZ Technology</span>
+        <a href="https://www.most.gov.cn/" target="_blank">Ministry of Science &amp; Technology</a>
+        <a href="https://www.cas.cn/" target="_blank">Chinese Academy of Sciences</a>
+        <a href="https://www.miit.gov.cn/" target="_blank">Ministry of Industry &amp; IT</a>
+        <span>Su ICP No. 2024113458</span>
+      </div>
+      <div>info@lanzuav.com · (0756) 396 6001</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/lib/gsap.min.js"></script>
+<script src="assets/lib/ScrollTrigger.min.js"></script>
+<script src="assets/lib/lenis.min.js"></script>
+<script src="assets/lib/three.min.js"></script>
+<script>
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+window.scrollTo(0,0);
+const hasGSAP=typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined';
+if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
+let bindCursor=function(){};   // hoisted: News render() 在 cursor IIFE 之前调用它
+
+/* DATA */
+const expertises=[
+  {img:'assets/feat3.jpg',name:'Security · Patrol · Counter-Terror',copy:'Aerial patrol over cities and key zones — rapid response and covert maneuvering.'},
+  {img:'assets/feat1.jpg',name:'Emergency · Recon · Rescue',copy:'Emergency reconnaissance and on-scene situational awareness in complex environments.'},
+  {img:'assets/feat2.jpg',name:'Inspection · Environment · Solar',copy:'Efficient automated inspection of power lines, solar farms and oil pipelines.'},
+];
+const news=[
+  {cat:'media',img:'assets/news1.jpg',date:'March 26, 2026',t:'BIT, Zhuhai City and CRSC forge a strategic alliance as the delegation visits LANZ'},
+  {cat:'media',img:'assets/news2.jpg',date:'December 6, 2025',t:'Inaugural AIE Expo concludes across Zhuhai and Macao with provincial leaders touring the show'},
+  {cat:'news',img:'assets/news3.jpg',date:'December 5, 2025',t:'National People’s Congress delegation tours LANZ to witness its innovation milestones'},
+  {cat:'news',img:'assets/news4.jpg',date:'November 10, 2025',t:'Gaohua Technology invests in LANZ as the Joint UAV Technology Lab is launched'},
+  {cat:'news',img:'assets/news5.jpg',date:'October 17, 2025',t:'LANZ field update: multiple programs advancing steadily'},
+  {cat:'media',img:'assets/news6.jpg',date:'October 17, 2025',t:'Fearless at the edge — a field report from LANZ’s Tibetan plateau missions'},
+];
+const catLabel={news:'News',media:'Press'};
+
+/* LOADER */
+(function(){
+  const num=document.getElementById('ldNum'),bar=document.getElementById('ldBar'),loader=document.getElementById('loader');
+  let p=0;const t=setInterval(()=>{p+=Math.random()*15+7;if(p>=100){p=100;clearInterval(t);finish();}
+    num.textContent=Math.floor(p);bar.style.width=p+'%';},120);
+  function finish(){setTimeout(()=>{loader.classList.add('done');document.body.classList.remove('loading');
+    window.scrollTo(0,0);playHero();if(hasGSAP)ScrollTrigger.refresh();},360);}
+})();
+
+/* HERO 入场（每行 mask 上移 + copy/card 淡入），028 expo 风格 */
+function playHero(){
+  const lns=[...document.querySelectorAll('#heroTitle .ln i')];
+  const copy=document.getElementById('heroCopy'),card=document.getElementById('heroCard');
+  lns.forEach((el,i)=>{el.style.transition='transform 1.1s var(--ease-expo-out) '+(0.1+i*0.12)+'s';});
+  requestAnimationFrame(()=>{
+    lns.forEach(el=>el.style.transform='translateY(0)');
+    copy.style.transition='opacity .9s ease .55s';copy.style.opacity='1';
+    card.style.transition='opacity .9s ease .75s';card.style.opacity='1';
+  });
+}
+
+/* LENIS + GSAP */
+let lenis=null;
+if(typeof Lenis!=='undefined'){
+  lenis=new Lenis({lerp:.1,smoothWheel:true});
+  if(hasGSAP){lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);}
+  else{(function raf(t){lenis.raf(t);requestAnimationFrame(raf);})(0);}
+}
+function scrollToY(t){if(lenis)lenis.scrollTo(t);else{const e=typeof t==='string'?document.querySelector(t):t;if(e&&e.scrollIntoView)e.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});}}
+
+/* NAV: solid 切换（离开 hero 后）+ progress + 锚点 */
+(function(){
+  const menu=document.getElementById('menu'),prog=document.getElementById('prog'),hero=document.getElementById('top');
+  function upd(){
+    const h=document.documentElement,sc=h.scrollTop,max=h.scrollHeight-h.clientHeight;
+    prog.style.width=(max>0?sc/max*100:0)+'%';
+    menu.classList.toggle('solid',sc>innerHeight*0.82);
+  }
+  if(lenis)lenis.on('scroll',upd);else addEventListener('scroll',upd,{passive:true});
+  addEventListener('resize',upd);upd();
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');if(id==='#')return;const el=document.querySelector(id);if(!el)return;
+    e.preventDefault();scrollToY(el);document.getElementById('mNav').classList.remove('open');document.getElementById('ham').classList.remove('open');
+  }));
+  const ham=document.getElementById('ham'),mNav=document.getElementById('mNav');
+  ham.onclick=()=>{mNav.classList.toggle('open');ham.classList.toggle('open');};
+})();
+
+/* INTRO 文字逐字揭示出现（028 copy-reveal） */
+(function(){
+  const el=document.getElementById('introCopy');if(!el)return;
+  const chars=[],nodes=[];
+  [...el.childNodes].forEach(node=>{
+    const hl=node.nodeType===1&&node.tagName==='B';
+    node.textContent.split(/(\s+)/).forEach(part=>{
+      if(!part)return;
+      if(/^\s+$/.test(part)){nodes.push(document.createTextNode(part));return;}
+      const w=document.createElement('span');w.className='w';
+      [...part].forEach(ch=>{const s=document.createElement('span');s.className='c'+(hl?' hl':'');s.textContent=ch;chars.push(s);w.appendChild(s);});
+      nodes.push(w);});
+  });
+  el.innerHTML='';nodes.forEach(n=>el.appendChild(n));
+  function show(){chars.forEach((c,i)=>{c.style.transition='opacity .6s ease '+(i*0.018)+'s,transform .7s var(--ease-expo-out) '+(i*0.018)+'s';c.style.opacity='1';c.style.transform='none';});}
+  // 等橙屏（intro-sticky）真正滑到位、几乎满屏覆盖时才逐字揭示（用 IntersectionObserver，
+  // 不依赖 ScrollTrigger 对 sticky 元素的位置计算——刷新后也稳定可靠）
+  const stick=document.querySelector('.intro-sticky')||el;
+  let shown=false;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!shown&&e.intersectionRatio>=0.82){shown=true;show();io.disconnect();}
+  }),{threshold:[0,0.4,0.6,0.82,1]});
+  io.observe(stick);
+})();
+
+/* TECHNOLOGY — Three.js 共轴无人机 3D 模型，滚动驱动多角度翻转（参考 028 的 GLTF + scrub） */
+(function(){
+  const sec=document.querySelector('.technology'),canvas=document.getElementById('techCanvas'),
+    rail=document.getElementById('techRail'),phases=[...document.querySelectorAll('.tech-phase')];
+  if(!canvas)return;
+  function phase(p){const n=phases.length,i=Math.min(n-1,Math.floor(p*n+0.0001));phases.forEach((el,k)=>el.classList.toggle('on',k===i));if(rail)rail.style.width=(p*100)+'%';}
+  let gl=null;try{gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');}catch(e){}
+  if(typeof THREE==='undefined'||!gl){canvas.style.background='#1a1e24';phases.forEach(el=>el.classList.add('on'));return;}
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.06;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(38,1,0.1,1000);
+  /* 程序化影棚环境贴图 — 让金属/玻璃材质有反射质感 */
+  (function(){
+    const c=document.createElement('canvas');c.width=512;c.height=256;const x=c.getContext('2d');
+    const g=x.createLinearGradient(0,0,0,256);
+    g.addColorStop(0,'#6b7a90');g.addColorStop(.46,'#2b333f');g.addColorStop(.5,'#3a4450');g.addColorStop(1,'#0c1014');
+    x.fillStyle=g;x.fillRect(0,0,512,256);
+    x.fillStyle='rgba(255,255,255,.85)';x.fillRect(110,24,120,48);
+    x.fillStyle='rgba(255,150,80,.55)';x.fillRect(360,36,90,30);
+    const t=new THREE.CanvasTexture(c);t.mapping=THREE.EquirectangularReflectionMapping;
+    const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromEquirectangular(t).texture;pm.dispose();t.dispose();
+  })();
+  scene.add(new THREE.HemisphereLight(0xaec2dd,0x14181e,0.7));
+  const key=new THREE.DirectionalLight(0xffffff,2.4);key.position.set(6,9,8);scene.add(key);
+  const rim=new THREE.DirectionalLight(0xff6a2a,1.7);rim.position.set(-6,3,-7);scene.add(rim);
+  const fill=new THREE.DirectionalLight(0x88a6d8,0.7);fill.position.set(-7,-2,5);scene.add(fill);
+  const pivot=new THREE.Group();scene.add(pivot);
+  let rotorTop=null,rotorBot=null,baseY=1.5;const mods=[];
+  /* 程序化构建共轴双旋翼无人机：自建模型，各部件分组 → 旋翼可独立反向转 + 机身可爆炸分解 */
+  (function buildDrone(){
+    // 程序化纹理：碳纤维编织(map+凹凸)、白色面板细节，提升产品质感
+    function tex(draw,rep){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');draw(x);const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;if(rep)t.repeat.set(rep[0],rep[1]);if(renderer.capabilities)t.anisotropy=4;return t;}
+    const carbonMap=tex(x=>{x.fillStyle='#262b33';x.fillRect(0,0,256,256);const s=14;for(let i=0;i<256;i+=s)for(let j=0;j<256;j+=s){x.fillStyle=((i/s+j/s)%2)?'#1b1f26':'#30363f';x.fillRect(i,j,s-1,s-1);x.fillStyle='rgba(255,255,255,.05)';x.fillRect(i,j,s-1,2);}},[5,3]);
+    const carbonBump=tex(x=>{const s=14;for(let i=0;i<256;i+=s)for(let j=0;j<256;j+=s){x.fillStyle=((i/s+j/s)%2)?'#555':'#aaa';x.fillRect(i,j,s-1,s-1);}},[5,3]);
+    const whiteMap=tex(x=>{x.fillStyle='#eef0f3';x.fillRect(0,0,256,256);x.strokeStyle='rgba(110,122,138,.28)';x.lineWidth=2;for(let j=46;j<256;j+=72){x.beginPath();x.moveTo(0,j);x.lineTo(256,j);x.stroke();}for(let i=0;i<256;i+=6)for(let j=0;j<256;j+=6){if(Math.random()>.7){x.fillStyle='rgba(140,150,165,.12)';x.fillRect(i,j,1,1);}}},[2,1]);
+    const Mwhite=new THREE.MeshStandardMaterial({color:0xeef0f3,metalness:.25,roughness:.5,map:whiteMap});
+    const Mcarbon=new THREE.MeshStandardMaterial({color:0x3a4150,metalness:.55,roughness:.42,map:carbonMap,bumpMap:carbonBump,bumpScale:.018});
+    const Mdark=new THREE.MeshStandardMaterial({color:0x141619,metalness:.45,roughness:.5});
+    const Mrotor=new THREE.MeshStandardMaterial({color:0x0e1013,metalness:.35,roughness:.55});
+    const Mglass=new THREE.MeshStandardMaterial({color:0x16263a,metalness:.2,roughness:.05});
+    const Macc=new THREE.MeshStandardMaterial({color:0xf15a24,metalness:.3,roughness:.4,emissive:0x471806,emissiveIntensity:.5});
+    const cyl=(a,b,h,m,s)=>new THREE.Mesh(new THREE.CylinderGeometry(a,b,h,s||40),m);
+    function mod(restY,exY){const g=new THREE.Group();g.position.y=restY;g.userData={restY,exY};pivot.add(g);mods.push(g);return g;}
+    function blades(grp,n,len){for(let i=0;i<n;i++){const bl=new THREE.Mesh(new THREE.BoxGeometry(len,.028,.13),Mrotor);bl.position.x=len/2+.07;bl.rotation.z=.12;const tip=new THREE.Mesh(new THREE.BoxGeometry(.14,.024,.09),Mrotor);tip.position.set(len+.05,0,0);const arm=new THREE.Group();arm.add(bl);arm.add(tip);arm.rotation.y=i*Math.PI*2/n;grp.add(arm);}grp.add(cyl(.1,.13,.12,Mcarbon,24));}
+    // 上旋翼组（共轴上，在顶）
+    const topM=mod(.92,1.36);topM.add(cyl(.2,.23,.2,Mdark));rotorTop=new THREE.Group();rotorTop.position.y=-.06;topM.add(rotorTop);blades(rotorTop,2,1.0);
+    // 下旋翼组（共轴下，与上旋翼靠近）
+    const botM=mod(.66,1.02);botM.add(cyl(.23,.2,.2,Mdark));rotorBot=new THREE.Group();rotorBot.position.y=.05;botM.add(rotorBot);blades(rotorBot,2,1.0);
+    // 主机身（八角碳纤维大柱 + 橙环 + 前置云台相机）
+    const body=mod(-.12,-.12);body.add(cyl(.37,.43,1.15,Mcarbon,8));
+    const r1=cyl(.44,.44,.08,Macc,8);r1.position.y=.3;body.add(r1);
+    const r2=cyl(.435,.435,.05,Mdark,8);r2.position.y=-.36;body.add(r2);
+    const gim=cyl(.15,.15,.13,Mdark,26);gim.rotation.x=Math.PI/2;gim.position.set(0,.12,.42);body.add(gim);
+    const lens=new THREE.Mesh(new THREE.SphereGeometry(.11,24,18),Mglass);lens.position.set(0,.12,.48);lens.scale.z=.55;body.add(lens);
+    // 机身 LANZ 品牌标识
+    const brandTex=(function(){const c=document.createElement('canvas');c.width=256;c.height=110;const x=c.getContext('2d');x.clearRect(0,0,256,110);x.fillStyle='#e4e8ed';x.font='700 58px Arial';x.textAlign='center';x.textBaseline='middle';x.fillText('LANZ',128,42);x.fillStyle='#f15a24';x.fillRect(76,80,104,7);return new THREE.CanvasTexture(c);})();
+    const brand=new THREE.Mesh(new THREE.PlaneGeometry(.4,.172),new THREE.MeshBasicMaterial({map:brandTex,transparent:true}));brand.position.set(0,-.12,.405);body.add(brand);
+    const brandB=brand.clone();brandB.position.set(0,-.12,-.405);brandB.rotation.y=Math.PI;body.add(brandB);
+    // 底舱（电池）
+    const base=mod(-1.0,-1.48);base.add(cyl(.4,.32,.46,Mwhite));const br=cyl(.412,.412,.05,Macc,40);br.position.y=.16;base.add(br);
+    // 起落架
+    const gear=mod(-1.26,-1.8);for(let i=0;i<4;i++){const a=i*Math.PI/2+Math.PI/4;const leg=cyl(.022,.032,.52,Mdark,10);leg.position.set(Math.sin(a)*.22,-.18,Math.cos(a)*.22);leg.rotation.set(Math.cos(a)*.44,0,-Math.sin(a)*.44);gear.add(leg);const ft=new THREE.Mesh(new THREE.SphereGeometry(.045,12,10),Mdark);ft.position.set(Math.sin(a)*.4,-.43,Math.cos(a)*.4);gear.add(ft);}
+  })();
+  {const bb=new THREE.Box3().setFromObject(pivot);const cy=(bb.min.y+bb.max.y)/2;for(const g of mods){g.position.y-=cy;g.userData.restY-=cy;g.userData.exY-=cy;}baseY=Math.abs(bb.min.y-cy);}
+  /* 科技感背景：径向渐变天幕 + 科技网格纹 + 网格地面 + 漂浮粒子 + 背景光束 + 橙光晕（参考 028 氛围） */
+  (function(){
+    const c=document.createElement('canvas');c.width=c.height=1024;const x=c.getContext('2d');
+    let g=x.createRadialGradient(512,430,40,512,600,760);g.addColorStop(0,'#2c3644');g.addColorStop(.5,'#161c24');g.addColorStop(1,'#070a0e');
+    x.fillStyle=g;x.fillRect(0,0,1024,1024);
+    g=x.createRadialGradient(512,860,16,512,860,420);g.addColorStop(0,'rgba(241,90,36,.22)');g.addColorStop(1,'rgba(241,90,36,0)');
+    x.fillStyle=g;x.fillRect(0,0,1024,1024);
+    // 科技网格纹（透视收束的细线）
+    x.strokeStyle='rgba(135,170,210,.09)';x.lineWidth=1.3;
+    for(let i=0;i<=1024;i+=44){x.beginPath();x.moveTo(i,0);x.lineTo(i,1024);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(1024,i);x.stroke();}
+    // 几条更亮的高光网格线
+    x.strokeStyle='rgba(165,200,240,.2)';x.lineWidth=1.5;for(let i=0;i<=1024;i+=176){x.beginPath();x.moveTo(i,0);x.lineTo(i,1024);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(1024,i);x.stroke();}
+    scene.background=new THREE.CanvasTexture(c);
+  })();
+  const grid=new THREE.GridHelper(30,60,0x5a6e88,0x2a3543);grid.material.transparent=true;grid.material.opacity=.55;grid.position.y=-baseY-0.18;scene.add(grid);
+  // 漂浮粒子（蓝 + 少量橙，更亮）
+  function makePts(n,box,col,sz,op){const a=new Float32Array(n*3);for(let i=0;i<n;i++){a[i*3]=(Math.random()-.5)*box[0];a[i*3+1]=(Math.random()-.5)*box[1];a[i*3+2]=(Math.random()-.5)*box[2];}
+    const gg=new THREE.BufferGeometry();gg.setAttribute('position',new THREE.BufferAttribute(a,3));
+    return new THREE.Points(gg,new THREE.PointsMaterial({color:col,size:sz,sizeAttenuation:true,transparent:true,opacity:op,depthWrite:false,blending:THREE.AdditiveBlending}));}
+  const particles=makePts(480,[18,10,15],0xc4d6f2,.055,.8);scene.add(particles);
+  const particles2=makePts(80,[16,9,13],0xff8a4a,.07,.7);scene.add(particles2);
+  // 背景体积光束（无人机后方径向光，始终朝相机）
+  const glowMat=(function(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');
+    const g=x.createRadialGradient(128,128,4,128,128,128);g.addColorStop(0,'rgba(120,160,210,.55)');g.addColorStop(.4,'rgba(80,110,160,.18)');g.addColorStop(1,'rgba(80,110,160,0)');
+    x.fillStyle=g;x.fillRect(0,0,256,256);return new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,opacity:.8,blending:THREE.AdditiveBlending,depthWrite:false});})();
+  const glow=new THREE.Mesh(new THREE.PlaneGeometry(11,11),glowMat);scene.add(glow);
+  // 起飞幕的地面光环
+  const ring=new THREE.Mesh(new THREE.RingGeometry(1.0,1.16,72),new THREE.MeshBasicMaterial({color:0xff6a2a,transparent:true,opacity:0,side:THREE.DoubleSide}));
+  ring.rotation.x=-Math.PI/2;scene.add(ring);
+  /* 三幕关键帧：az/el 相机方位·仰角(度), r 距离, ty 注视高, spinR 旋翼转速, ex 爆炸度, py 起飞高, tilt 前倾, ring 光环 */
+  const KF=[
+    {p:0,    az:5,   el:70, r:4.7, ty:0,    spinR:8,  ex:0,    py:0,    tilt:0,    ring:0},  // 01 顶视揭幕·旋翼怠速
+    {p:0.3,  az:24,  el:9,  r:4.0, ty:0,    spinR:6,  ex:0,    py:0,    tilt:0,    ring:0},  // 01→ 平视
+    {p:0.52, az:-42, el:15, r:3.7, ty:0.05, spinR:2,  ex:1,    py:0,    tilt:0,    ring:0},  // 02 爆炸分解展开
+    {p:0.74, az:-64, el:24, r:3.4, ty:0,    spinR:2,  ex:0.25, py:0,    tilt:0,    ring:0},  // 02→ 合拢
+    {p:1,    az:-22, el:6,  r:5.6, ty:0.5,  spinR:40, ex:0,    py:0.55, tilt:0.12, ring:1},  // 03 高速旋翼·起飞
+  ];
+  function kf(p){let a=KF[0],b=KF[KF.length-1];for(let i=0;i<KF.length-1;i++){if(p>=KF[i].p&&p<=KF[i+1].p){a=KF[i];b=KF[i+1];break;}}
+    let t=(p-a.p)/((b.p-a.p)||1);t=t*t*(3-2*t);const L=k=>a[k]+(b[k]-a[k])*t;
+    return {az:L('az'),el:L('el'),r:L('r'),ty:L('ty'),spinR:L('spinR'),ex:L('ex'),py:L('py'),tilt:L('tilt'),ring:L('ring')};}
+  function resize(){const r=canvas.getBoundingClientRect();if(!r.width)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();}
+  resize();addEventListener('resize',resize);
+  let prog=0,last=0,rotT=0,rotB=0;const mobile=innerWidth<=833;
+  (function tick(t){
+    const dt=Math.min(0.05,(t-last)/1000||0.016);last=t;
+    const k=kf(mobile?0.32:prog);
+    const rr=k.r*(camera.aspect<1?1.5:camera.aspect<1.4?1.14:1); // 窄屏拉远防裁切
+    const az=k.az*Math.PI/180,el=k.el*Math.PI/180;
+    camera.position.set(rr*Math.cos(el)*Math.sin(az),k.ty+rr*Math.sin(el),rr*Math.cos(el)*Math.cos(az));
+    camera.lookAt(0,k.ty,0);
+    rotT+=k.spinR*dt;rotB-=k.spinR*dt;                          // 共轴双旋翼：上下反向旋转
+    if(rotorTop)rotorTop.rotation.y=rotT;if(rotorBot)rotorBot.rotation.y=rotB;
+    particles.rotation.y+=dt*0.025;particles.rotation.x=Math.sin(t*0.0002)*0.05; // 粒子缓慢飘
+    particles2.rotation.y-=dt*0.018;
+    grid.position.y=-baseY-0.18+k.py;                                            // 起飞时网格跟随下沉感
+    {const cd=camera.position.clone().normalize();glow.position.copy(cd.multiplyScalar(-3.2));glow.position.y+=k.ty*0.3;glow.lookAt(camera.position);} // 背景光束(始终在机后朝相机)
+    pivot.rotation.x=k.tilt;pivot.position.y=k.py;
+    for(const g of mods){const u=g.userData;g.position.y=u.restY+(u.exY-u.restY)*k.ex;} // 爆炸分解
+    ring.position.y=-baseY+k.py;ring.material.opacity=k.ring*0.5;ring.scale.setScalar(1+k.ring*0.12*(0.5+0.5*Math.sin(t*0.004)));
+    renderer.render(scene,camera);
+    requestAnimationFrame(tick);
+  })(0);
+  phase(0);
+  if(hasGSAP&&!mobile){ScrollTrigger.create({trigger:sec,start:'top top',end:'bottom bottom',scrub:1,
+    onUpdate:s=>{prog=s.progress;phase(s.progress);}});}
+  else{phases.forEach(el=>el.classList.add('on'));}
+})();
+
+/* 滚动揭示（icon-feature / ex-card / fpost / fcard），028 expo 上移 */
+function reveal(sel,opt){opt=opt||{};const els=[...document.querySelectorAll(sel)];if(!els.length)return;
+  if(hasGSAP){els.forEach((el,i)=>{gsap.from(el,{y:opt.y||40,opacity:0,duration:1,ease:'power3.out',delay:(i%(opt.col||1))*0.08,
+    scrollTrigger:{trigger:el,start:'top 88%',once:true}});});}
+}
+/* 028 风格通用揭示：容器内子元素初次进入视口 slide-up + fade 逐个揭示
+   用 IntersectionObserver 驱动（cover/sticky/页脚等底部元素也可靠，不会卡隐藏）；揭示后清 inline 让 CSS hover 复原 */
+function revealUp(sel,opt){opt=opt||{};
+  const st=opt.stagger!=null?opt.stagger:0.08, y=opt.y||48;
+  document.querySelectorAll(sel).forEach(box=>{
+    const targets=opt.self?[box]:[...box.children];if(!targets.length)return;
+    targets.forEach((t,i)=>{t.style.opacity='0';t.style.transform='translateY('+y+'px)';
+      t.style.transition='opacity 1s cubic-bezier(.165,.84,.44,1) '+(i*st)+'s, transform 1s cubic-bezier(.165,.84,.44,1) '+(i*st)+'s';});
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+      targets.forEach(t=>{t.style.opacity='1';t.style.transform='none';});
+      setTimeout(()=>targets.forEach(t=>{t.style.opacity='';t.style.transform='';t.style.transition='';}),1200+targets.length*st*1000);
+      io.disconnect();
+    }),{threshold:0.1,rootMargin:'0px 0px -6% 0px'});
+    io.observe(box);
+  });
+}
+
+/* EXPERTISES 卡片 */
+(function(){
+  const wrap=document.getElementById('exCards');
+  wrap.innerHTML=expertises.map(e=>`<a class="ex-card" href="#expertises" data-hot>
+    <div class="ex-img"><img src="${e.img}" alt=""/></div>
+    <div class="ex-c"><div class="ex-name">${e.name}</div><div class="ex-copy">${e.copy}</div></div>
+    <div class="ex-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></div></a>`).join('');
+})();
+
+/* NEWS render */
+(function(){
+  const feat=document.getElementById('featured'),list=document.getElementById('newsList');
+  // 028 原版 "arrow-top-right" 点阵箭头图标
+  const dots='<svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9.89859" cy="1.41437" r="1" transform="rotate(135 9.89859 1.41437)" fill="currentColor"/><circle cx="5.6564" cy="1.41437" r="1" transform="rotate(135 5.6564 1.41437)" fill="currentColor"/><circle cx="1.41422" cy="1.41437" r="1" transform="rotate(135 1.41422 1.41437)" fill="currentColor"/><circle cx="7.7775" cy="3.53546" r="1" transform="rotate(135 7.7775 3.53546)" fill="currentColor"/><circle cx="5.6564" cy="5.65655" r="1" transform="rotate(135 5.6564 5.65655)" fill="currentColor"/><circle cx="9.89859" cy="5.65655" r="1" transform="rotate(135 9.89859 5.65655)" fill="currentColor"/><circle cx="9.89859" cy="9.89874" r="1" transform="rotate(135 9.89859 9.89874)" fill="currentColor"/><circle cx="3.53531" cy="7.77765" r="1" transform="rotate(135 3.53531 7.77765)" fill="currentColor"/><circle cx="1.41422" cy="9.89874" r="1" transform="rotate(135 1.41422 9.89874)" fill="currentColor"/></svg>';
+  function render(f){
+    const arr=news.filter(n=>f==='all'||n.cat===f);
+    feat.innerHTML=arr.slice(0,2).map(n=>`<a class="fpost" href="#news" data-hot>
+      <div class="fp-img"><img src="${n.img}" alt=""/></div>
+      <div class="fp-meta"><span class="cat">${catLabel[n.cat]}</span><span>${n.date}</span></div>
+      <div class="fp-title">${n.t}</div></a>`).join('');
+    list.innerHTML=arr.slice(2).map(n=>`<a class="nl-item" href="#news" data-hot>
+      <div class="nl-t">${n.t}</div>
+      <div class="nl-cw"><span class="nl-date">${n.date}</span><span class="nl-link">Read more <span class="nl-icon">${dots}</span></span></div>
+      <div class="nl-preview"><img src="${n.img}" alt=""/></div></a>`).join('');
+    bindCursor();if(hasGSAP)ScrollTrigger.refresh();
+  }
+  document.querySelectorAll('#newsTabs button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#newsTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.f);});
+  render('all');
+})();
+
+/* PRODUCTS 全系列产品展示（客户原站产品，2 行 × 2 列） */
+const products=[
+  {m:'X050',tag:'Pocket · Instant',img:'assets/product-x050.jpg',pos:'center',d:'A nimble handheld micro-pioneer — pocket-sized and airborne in an instant.'},
+  {m:'X100',tag:'Agile · Robust',img:'assets/product-x100.jpg',pos:'center',d:'A modular all-rounder — China’s only volume-delivered coaxial dual-rotor.'},
+  {m:'X300',tag:'Shoulder · Heavy-Lift',img:'assets/product-x300.jpg',pos:'center',d:'A new benchmark for dual-side payloads — stronger lift with balanced endurance.'},
+  {m:'X750',tag:'Composed · Precise',img:'assets/product-x750.jpg',pos:'center',d:'The steady, precise heavy-lifter — stable under load with pinpoint hover.'},
+];
+(function(){
+  const g=document.getElementById('prodGrid');if(!g)return;
+  g.innerHTML=products.map(p=>`<a class="pcard" href="#footer" data-hot>
+    <div class="pc-media"><img src="${p.img}" alt="${p.m}" style="object-position:${p.pos}"/></div>
+    <div class="pc-body"><div class="pc-num"><span class="pc-x">${p.m.charAt(0)}</span>${p.m.slice(1)}</div><div class="pc-tag">${p.tag}</div><div class="pc-desc">${p.d}</div></div>
+  </a>`).join('');
+  if(typeof bindCursor==='function')bindCursor();
+})();
+
+/* 揭示绑定 */
+reveal('.icon-feature',{col:2});reveal('.ex-card');reveal('.fpost',{col:2});reveal('.pcard',{col:2});
+/* 补齐各屏标题/正文/页脚的初次进入文字动效（028 slide-up） */
+revealUp('.home-features .head');
+revealUp('.feature-cards .ph-head');
+revealUp('.expertises .head');
+revealUp('.expertises .ov-copy',{self:true});
+/* FULL-BLEED：复刻原版出现动效（label 逐字 + 标题 blur-reveal + 按钮 fade-reveal，纯模糊/淡入，无平移） */
+(function(){
+  const c=document.querySelector('.full-bleed .content');if(!c)return;
+  const label=c.querySelector('.label'),title=c.querySelector('.fb-title'),link=c.querySelector('.fb-link');
+  const E='cubic-bezier(.165,.84,.44,1)';const chars=[];
+  if(label){const txt=label.textContent;label.textContent='';const inner=document.createElement('span');inner.style.display='inline-block';
+    [...txt].forEach(ch=>{const s=document.createElement('span');s.textContent=ch;s.style.cssText='display:inline-block;white-space:pre;opacity:0;transform:translateY(.6em);transition:opacity .5s ease, transform .55s '+E;inner.appendChild(s);chars.push(s);});
+    label.appendChild(inner);}
+  if(title){title.style.opacity='0';title.style.filter='blur(10px)';title.style.willChange='filter,opacity';title.style.transition='opacity 1.1s '+E+', filter 1.1s '+E;}
+  if(link){link.style.opacity='0';link.style.transition='opacity 1s ease';}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.disconnect();
+    chars.forEach((s,i)=>{s.style.transitionDelay=(i*0.022)+'s';s.style.opacity='1';s.style.transform='none';});
+    if(title){title.style.transitionDelay='.2s';title.style.opacity='1';title.style.filter='blur(0px)';}
+    if(link){link.style.transitionDelay='.5s';link.style.opacity='1';}
+    setTimeout(()=>{[...chars,title,link].forEach(el=>{if(el){el.style.opacity='';el.style.transform='';el.style.filter='';el.style.transition='';el.style.transitionDelay='';el.style.willChange='';}});},2400);
+  }),{threshold:0.18,rootMargin:'0px 0px -8% 0px'});
+  io.observe(c);
+})();
+revealUp('.home-news .nh');
+revealUp('.news-list',{stagger:0.08});
+revealUp('.footer .ft-cta');
+revealUp('.footer .ft-list',{stagger:0.08});
+revealUp('.footer .ft-logo',{self:true,y:56});
+revealUp('.footer .ft-foot',{self:true});
+revealUp('.tech-head .label',{self:true,start:'top 92%'});
+revealUp('.timeline .th-head');
+
+/* TIMELINE 发展历程 · SVG 无人机沿轨迹飞行（移植自 demo-1，Lenis 驱动） */
+const milestones=[
+  {y:'2025.05',d:'X100 enters mass production and delivery — top 3 worldwide and China’s only volume manufacturer of coaxial dual-rotor UAVs.'},
+  {y:'2024.11',d:'Debuts at the 15th Zhuhai Airshow, winning the International Unmanned-Systems Design Award and the Gold Innovation Award.'},
+  {y:'2023.12',d:'First prize, startup track, at the national finals of the China Aviation Innovation & Entrepreneurship Competition.'},
+  {y:'2022.09',d:'Suzhou LANZ Technology Co., Ltd. is founded and certified as a Guangdong Province High-Tech Enterprise.'},
+  {y:'2021.09',d:'First appearance at the Zhuhai Airshow, winning the Innovative Product Award at the World UAV Congress.'},
+  {y:'2020.11',d:'The Heng-029 v3.0 prototype completes a successful test flight, breaking 58 minutes of endurance.'},
+  {y:'2019.06',d:'The Heng-series prototypes are born; the Heng-300 and Heng-029 complete their maiden flights.'},
+  {y:'2018.06',d:'The project lands in Zhuhai — the LANZ UAV journey begins.'},
+];
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const scrollEl=document.getElementById('tlScroll'),track=document.getElementById('tlTrack'),
+    zone=document.getElementById('tlZone'),items=document.getElementById('tlItems'),
+    axisBg=document.getElementById('tlAxisBg'),axis=document.getElementById('tlAxis'),
+    nodesG=document.getElementById('tlNodes'),drone=document.getElementById('tlDrone');
+  if(!scrollEl||!track||!zone||!items)return;
+  milestones.forEach(m=>{const it=document.createElement('div');it.className='tl-item';
+    it.innerHTML=`<div class="tl-card"><div class="tl-yr">${m.y}</div><p>${m.d}</p></div>`;items.appendChild(it);});
+  const tlItems=[...items.querySelectorAll('.tl-item')];
+  let pan=0,zw=0,axisY=0,droneX=0,nodeXs=[];
+  const SCROLL=0.8;
+  function isMobile(){return zone.clientWidth<=833||window.innerWidth<=833;}
+  function layout(){
+    if(isMobile()){track.style.width='';track.style.transform='';scrollEl.style.height='';
+      tlItems.forEach(it=>{it.style.left='';it.style.top='';it.style.width='';it.classList.add('on');});pan=0;return;}
+    zw=zone.clientWidth;const zh=zone.clientHeight;
+    axisY=Math.round(zh*0.5);
+    const cardW=Math.min(420,Math.max(300,Math.round(zw*0.28)));
+    droneX=Math.round(zw*0.4);
+    const stepX=Math.max(cardW+40,Math.round(zw*0.26)),x0=droneX,gap=Math.max(40,Math.round(zh*0.1));
+    nodeXs=tlItems.map((it,k)=>x0+k*stepX);
+    tlItems.forEach((it,k)=>{it.style.width=cardW+'px';it.style.left=(nodeXs[k]-cardW/2)+'px';
+      if(k%2===1)it.style.top=(axisY+gap)+'px';});
+    tlItems.forEach((it,k)=>{if(k%2===0){const h=it.querySelector('.tl-card').getBoundingClientRect().height;it.style.top=(axisY-gap-h)+'px';}});
+    const lastX=nodeXs[nodeXs.length-1];
+    track.style.width=(lastX+(zw-droneX))+'px';
+    pan=Math.max(1,lastX-x0);
+    axisBg.setAttribute('x1',x0);axisBg.setAttribute('y1',axisY);axisBg.setAttribute('x2',lastX);axisBg.setAttribute('y2',axisY);
+    axis.setAttribute('x1',x0);axis.setAttribute('y1',axisY);axis.setAttribute('x2',x0);axis.setAttribute('y2',axisY);
+    nodesG.textContent='';
+    tlItems.forEach((it,k)=>{const nx=nodeXs[k],top=parseFloat(it.style.top),h=it.querySelector('.tl-card').getBoundingClientRect().height;
+      const edgeY=(k%2===1)?top:(top+h);
+      const ln=document.createElementNS(NS,'line');ln.setAttribute('class','tl-conn');ln.setAttribute('x1',nx);ln.setAttribute('y1',axisY);ln.setAttribute('x2',nx);ln.setAttribute('y2',edgeY);nodesG.appendChild(ln);
+      const c=document.createElementNS(NS,'circle');c.setAttribute('class','tl-node');c.setAttribute('cx',nx);c.setAttribute('cy',axisY);c.setAttribute('r',4);c.setAttribute('data-k',k);nodesG.appendChild(c);});
+    scrollEl.style.height=Math.round(window.innerHeight+pan*SCROLL)+'px';
+  }
+  function update(){
+    if(pan<=1){drone.style.opacity=0;return;}
+    const total=Math.max(1,scrollEl.offsetHeight-window.innerHeight);
+    let p=(-scrollEl.getBoundingClientRect().top)/total;p=Math.min(1,Math.max(0,p));
+    const tx=-pan*p;
+    track.style.transform=`translate3d(${tx}px,0,0)`;
+    const head=droneX+pan*p;
+    axis.setAttribute('x2',head);
+    drone.setAttribute('transform',`translate(${head},${axisY}) scale(1.3)`);
+    drone.style.opacity=1;
+    tlItems.forEach((it,k)=>{const nx=nodeXs[k];if(nx+tx<=zw*0.99)it.classList.add('on');
+      const nd=nodesG.querySelector('.tl-node[data-k="'+k+'"]');if(nd)nd.classList.toggle('on',nx<=head+0.5);});
+  }
+  function build(){layout();update();}
+  setTimeout(build,360);addEventListener('resize',build);
+  if(typeof lenis!=='undefined'&&lenis)lenis.on('scroll',update);else addEventListener('scroll',update,{passive:true});
+})();
+
+/* FULL-BLEED 程序化流光 WebGL + 鼠标交互（纯 shader，无 video，file:// 也完全可用，不降级） */
+(function(){
+  const sec=document.querySelector('.full-bleed'),canvas=document.getElementById('fbCanvas');
+  if(!sec||!canvas)return;
+  let gl=null;try{gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');}catch(e){}
+  if(!gl){sec.style.background='radial-gradient(120% 90% at 18% 22%,rgba(241,90,36,.55),transparent 60%),#0a0c10';return;}
+  const VS='attribute vec2 p;varying vec2 vUv;void main(){vUv=p*.5+.5;gl_Position=vec4(p,0.,1.);}';
+  const FS=[
+   'precision highp float;uniform vec2 uRes;uniform vec2 uMouse;uniform float uTime;uniform float uAmt;varying vec2 vUv;',
+   'void main(){',
+   ' float a=uRes.x/uRes.y;',
+   ' vec2 p=vec2(vUv.x*a,vUv.y);',
+   ' vec2 m=vec2(uMouse.x*a,uMouse.y);',
+   ' float md=distance(p,m);',
+   ' float infl=smoothstep(.46,0.,md)*uAmt;',
+   ' vec2 dir=normalize(p-m+1e-4);',
+   ' p-=dir*infl*0.14*(0.5+0.5*sin(md*16.-uTime*4.0));',  // 鼠标处推开光丝（波纹）
+   ' vec3 acc=vec3(0.0);',
+   ' for(int i=0;i<6;i++){',
+   '  float fi=float(i);',
+   '  float yc=0.82 - p.x*0.60 + 0.11*sin(p.x*1.05+0.4+fi*0.16) + (fi-2.5)*0.020;',  // 对角弧中心线
+   '  float w=0.0085+0.0045*sin(uTime*0.7+fi*1.3);',
+   '  float d=abs(p.y-yc);',
+   '  float core=smoothstep(w,0.,d);',
+   '  float glow=smoothstep(w*8.,0.,d)*0.28;',
+   '  float flow=0.5+0.5*sin(p.x*5.5-uTime*1.7+fi*0.8);',  // 沿带流动的高光
+   '  vec3 c=mix(vec3(1.0,0.42,0.07),vec3(1.0,0.93,0.66),flow);',  // 橙→暖白
+   '  acc+=(core+glow)*c*(0.42+0.72*flow);',
+   ' }',
+   ' acc+=infl*0.5*vec3(1.0,0.6,0.22);',  // 鼠标处点亮
+   ' vec3 bg=vec3(0.043,0.05,0.062);',
+   ' gl_FragColor=vec4(bg+acc,1.0);',
+   '}'].join('\n');
+  function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);return o;}
+  const prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const pl=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(pl);gl.vertexAttribPointer(pl,2,gl.FLOAT,false,0,0);
+  const U=n=>gl.getUniformLocation(prog,n);
+  const uRes=U('uRes'),uMouse=U('uMouse'),uTime=U('uTime'),uAmt=U('uAmt');
+  let mx=.5,my=.55,tx=.5,ty=.55,amt=0,tamt=0;
+  sec.addEventListener('pointermove',e=>{const r=sec.getBoundingClientRect();tx=(e.clientX-r.left)/r.width;ty=1-(e.clientY-r.top)/r.height;tamt=1;});
+  sec.addEventListener('pointerleave',()=>{tamt=0;});
+  function size(){const r=canvas.getBoundingClientRect();const dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.max(2,r.width*dpr|0);canvas.height=Math.max(2,r.height*dpr|0);gl.viewport(0,0,canvas.width,canvas.height);}
+  size();addEventListener('resize',size);
+  function frame(t){
+    mx+=(tx-mx)*.08;my+=(ty-my)*.08;amt+=(tamt-amt)*.05;
+    gl.uniform2f(uRes,canvas.width,canvas.height);gl.uniform2f(uMouse,mx,my);gl.uniform1f(uTime,t*0.001);gl.uniform1f(uAmt,amt);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* CURSOR */
+(function(){
+  const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+  if(matchMedia('(hover:none)').matches){cur.style.display=curR.style.display='none';return;}
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;});
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;curR.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
+  bindCursor=function(){document.querySelectorAll('a,button,[data-hot]').forEach(el=>{if(el._cb)return;el._cb=1;
+    el.addEventListener('mouseenter',()=>curR.classList.add('hot'));el.addEventListener('mouseleave',()=>curR.classList.remove('hot'));});};
+  bindCursor();
+})();
+
+addEventListener('load',()=>{if(hasGSAP)ScrollTrigger.refresh();});
+</script>
+</body>
+</html>
