@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>X 系列 · 3D 产品展示｜览众科技 LANZ</title>
+<meta name="description" content="览众 X 系列微型共轴双旋翼无人机 3D 产品展示:滚动拆解、热点标注、自由查看、功能巡览,多种 3D 交互方式介绍产品。" />
+<style>
+:root{
+  --orange:#f15a24; --orange-2:#ff7a45; --orange-soft:#fff1ec; --blue:#0f3d63; --blue-2:#1769aa;
+  --ink:#16212e; --muted:#5d6b7d; --bg:#ffffff; --bg-2:#f5f8fb; --line:#e6ecf2; --maxw:1180px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--orange);font-weight:800;letter-spacing:.25em;font-size:12px;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--orange),transparent);border-radius:2px}
+
+/* nav + 50% drawer */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:.4s var(--ease)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:54px;position:relative}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;position:relative;z-index:97}
+.brand img{height:28px}
+.brand .lname{font-size:19px;letter-spacing:1.2px}
+.menu{position:fixed;top:0;right:0;bottom:0;width:50%;list-style:none;z-index:95;background:rgba(255,255,255,.99);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:-30px 0 80px -20px rgba(15,33,49,.28);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:90px 6vw;transform:translateX(100%);transition:transform .55s var(--ease)}
+.menu.open{transform:none}
+.menu-scrim{position:fixed;inset:0;z-index:94;background:rgba(13,21,31,.4);opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+.menu-scrim.open{opacity:1;pointer-events:auto}
+.menu li{width:100%;max-width:360px}
+.menu a{display:flex;align-items:center;justify-content:center;width:100%;padding:18px;font-size:clamp(20px,2.2vw,28px);font-weight:700;border-bottom:1px solid var(--line);transition:color .25s}
+.menu a:hover,.menu a.active{color:var(--orange)}
+.nav-cta{display:flex;align-items:center}
+.menu-btn{position:relative;z-index:97;display:inline-flex;align-items:center;gap:11px;background:transparent;border:1px solid rgba(22,33,46,.2);border-radius:9px;padding:7px 15px;cursor:pointer;color:var(--ink);font-weight:600;font-size:14px;font-family:inherit;transition:.25s}
+.menu-btn:hover{border-color:var(--ink);background:rgba(22,33,46,.04)}
+.menu-btn .bars{display:flex;flex-direction:column;gap:4px}
+.menu-btn .bars span{display:block;width:18px;height:2px;background:var(--ink);transition:.3s}
+.menu-btn.open .bars span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-btn.open .bars span:nth-child(2){opacity:0}
+.menu-btn.open .bars span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+#loader{position:fixed;inset:0;z-index:200;background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Consolas,monospace;color:var(--blue);letter-spacing:.3em;font-size:12px;transition:opacity .6s}
+#loader.gone{opacity:0;pointer-events:none}
+
+/* intro */
+.intro{padding:120px 0 24px;text-align:center}
+.intro h1{font-size:clamp(30px,5.4vw,60px);font-weight:800;letter-spacing:-1px;margin:10px 0}
+.intro p{color:var(--muted);max-width:600px;margin:0 auto;font-size:16px}
+
+/* effect section shell */
+.fx{padding:34px 0 76px;border-top:1px solid var(--line)}
+.fx-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+.fx-head h2{font-size:clamp(22px,3vw,36px);font-weight:800;letter-spacing:-.4px}
+.fx-head h2 .idx{font-family:ui-monospace,Consolas,monospace;color:var(--orange);margin-right:12px}
+.fx-head p{color:var(--muted);font-size:14.5px;max-width:460px}
+.fx-tag{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.14em;color:var(--blue);background:#eaf1f8;border:1px solid #d6e4f0;border-radius:30px;padding:5px 12px;white-space:nowrap}
+.stage{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.stage canvas{display:block;width:100%;height:100%}
+.stage.light{background:radial-gradient(120% 100% at 50% 26%,#fff,#eef3f8 55%,#e3ebf3)}
+.stage.blue{background:linear-gradient(180deg,#eef3f8,#e6eef6)}
+.stage.dark{background:radial-gradient(125% 100% at 50% 30%,#243349,#16212e 46%,#0c131c)}
+/* color swatches */
+.sw-btns{position:absolute;left:24px;top:24px;z-index:3;display:flex;gap:10px}
+.sw-btns button{width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.25);cursor:pointer;outline:2px solid transparent;outline-offset:2px;transition:.2s}
+.sw-btns button.on{outline-color:var(--ink);transform:scale(1.12)}
+/* spec counters */
+.count-row{display:flex;gap:clamp(28px,5vw,56px);flex-wrap:wrap;margin-top:24px}
+.count-row .c b{font:800 clamp(34px,5vw,54px)/1 ui-monospace,Consolas,monospace;display:inline-flex;align-items:baseline}
+.count-row .c b i{font-style:normal;font-size:.4em;color:var(--orange);margin-left:4px}
+.count-row .c>span{display:block;color:var(--muted);font-size:13px;margin-top:6px}
+.cnt-stage{height:min(58vh,440px)}
+/* 09 night HUD */
+.night-stage{height:min(80vh,640px);background:#070a12}
+.hud{position:absolute;inset:0;pointer-events:none;font-family:ui-monospace,Consolas,monospace;color:#9be8ff;z-index:3}
+.hud .l{position:absolute;font-size:12px;letter-spacing:.12em;opacity:.92}
+.hud .l b{font-size:22px;color:#fff;font-weight:700;margin:0 5px}
+.hud .tl{left:24px;top:22px}.hud .tr{right:24px;top:22px;text-align:right}
+.hud .bl{left:24px;bottom:22px;font-size:11px;letter-spacing:.3em;color:#ff7a45}
+.hud .radar{position:absolute;right:24px;bottom:22px;width:62px;height:62px;border-radius:50%;border:1px solid rgba(155,232,255,.35);overflow:hidden}
+.hud .radar::before{content:"";position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg,rgba(54,224,138,.55),transparent 55%);animation:sweep 2.6s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+/* 10 cross-section label */
+.clip-label{position:absolute;left:24px;bottom:24px;font:600 14px/1 inherit;color:var(--ink);background:#fff;border:1px solid var(--orange);border-radius:10px;padding:11px 15px;z-index:3}
+.clip-label b{color:var(--orange)}
+/* 11 click-to-inspect */
+.pick-panel{position:absolute;right:24px;top:24px;width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 16px 40px -20px rgba(15,61,99,.4);z-index:3;opacity:0;transform:translateX(10px);transition:.3s var(--ease);pointer-events:none}
+.pick-panel.on{opacity:1;transform:none}
+.pick-panel .n{font-family:ui-monospace,Consolas,monospace;color:var(--orange);font-size:11px;letter-spacing:.2em;margin-bottom:6px}
+.pick-panel b{font-size:18px;display:block;margin-bottom:6px}
+.pick-panel span{color:var(--muted);font-size:13px;line-height:1.6}
+.pick-hint{position:absolute;left:24px;bottom:22px;font:12px ui-monospace,Consolas,monospace;color:var(--muted);z-index:3}
+
+/* 1 · exploded (scroll) */
+#s1run{position:relative;height:300vh}
+#s1stick{position:sticky;top:54px;height:calc(100vh - 54px)}
+#s1cap{position:absolute;left:30px;bottom:26px;font:12px ui-monospace,Consolas,monospace;color:var(--orange);background:#fff;border:1px solid var(--orange);border-radius:10px;padding:10px 14px;opacity:0;transition:.4s}
+#s1cap.show{opacity:1}
+.s1hint{position:absolute;right:24px;bottom:24px;font:12px ui-monospace,Consolas,monospace;color:var(--blue);opacity:.6}
+
+/* 2 · hotspots */
+.hs-stage{height:min(74vh,580px)}
+.hot{position:absolute;transform:translate(-50%,-50%);z-index:3}
+.hot .pin{display:block;width:18px;height:18px;border-radius:50%;background:var(--orange);border:3px solid #fff;cursor:pointer;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(241,90,36,.5)}70%{box-shadow:0 0 0 12px rgba(241,90,36,0)}100%{box-shadow:0 0 0 0 rgba(241,90,36,0)}}
+.hot .card{position:absolute;left:26px;top:-10px;width:220px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 16px 40px -20px rgba(15,61,99,.4);opacity:0;transform:translateX(-8px);pointer-events:none;transition:.3s var(--ease)}
+.hot:hover .card{opacity:1;transform:none}
+.hot .card b{display:block;font-size:15px;margin-bottom:4px}
+.hot .card span{color:var(--muted);font-size:13px;line-height:1.6}
+
+/* 3 · drag orbit + material */
+.dr-stage{height:min(74vh,580px);cursor:grab}.dr-stage:active{cursor:grabbing}
+.mat-btns{position:absolute;left:24px;top:24px;z-index:3;display:flex;gap:8px}
+.mat-btns button{font:600 13px/1 inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.9);color:var(--ink);cursor:pointer;transition:.2s}
+.mat-btns button.on{background:var(--orange);color:#fff;border-color:transparent}
+.dr-hint{position:absolute;right:24px;bottom:20px;font:12px ui-monospace,Consolas,monospace;color:var(--muted);z-index:3}
+
+/* 4 · gsap walkthrough */
+#s4{position:relative}
+#s4pin{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;height:calc(100vh - 54px)}
+#s4canvasWrap{height:min(74vh,580px);border-radius:22px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(120% 100% at 50% 26%,#fff,#eef3f8 55%,#e3ebf3)}
+#s4canvasWrap canvas{display:block;width:100%;height:100%}
+.s4steps{position:relative;min-height:200px}
+.s4step{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(20px);transition:.5s var(--ease);pointer-events:none}
+.s4step.on{opacity:1;transform:none}
+.s4step .n{font-family:ui-monospace,Consolas,monospace;color:var(--orange);font-weight:800;letter-spacing:.2em;margin-bottom:10px}
+.s4step h3{font-size:clamp(24px,3vw,38px);font-weight:800;margin-bottom:12px}
+.s4step p{color:var(--muted);font-size:16px;max-width:420px}
+.s4dots{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
+.s4dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:.3s}
+.s4dots i.on{background:var(--orange);transform:scale(1.4)}
+
+footer{background:var(--ink);color:#8ea0b3;padding:44px 0;text-align:center;font-size:13px;margin-top:40px}
+footer a{color:#cfe0f0}
+
+@media(max-width:860px){
+  .menu{width:80%}
+  #s4pin{grid-template-columns:1fr;gap:14px;height:auto;padding:20px 0}
+  #s4canvasWrap{order:-1}
+  .hot .card{left:auto;right:26px}
+}
+</style>
+</head>
+<body>
+<div id="loader">LOADING · X SERIES 3D</div>
+
+<nav class="nav" id="nav"><div class="wrap">
+  <a href="index.html" class="brand"><img class="lmark" src="assets/logo-mark.png" alt=""/><span class="lname">览众科技</span></a>
+  <ul class="menu" id="menu">
+    <li><a href="index.html#top">首页</a></li>
+    <li><a href="product.html" class="active">产品展示</a></li>
+    <li><a href="index.html#features">行业应用</a></li>
+    <li><a href="index.html#timeline">发展历程</a></li>
+    <li><a href="index.html#news">新闻资讯</a></li>
+    <li><a href="index.html#footer">关于览众</a></li>
+  </ul>
+  <div class="nav-cta"><button class="menu-btn" id="ham" type="button" aria-label="菜单"><span>菜单</span><span class="bars"><span></span><span></span><span></span></span></button></div>
+</div><div class="menu-scrim" id="menuScrim"></div></nav>
+
+<header class="intro"><div class="wrap">
+  <span class="eyebrow">X SERIES · 3D SHOWCASE</span>
+  <h1>共轴智能飞行器 · 360° 全解</h1>
+  <p>四种不同的 3D 交互方式,逐屏认识 X 系列无人机 —— 拆开看结构、点标注看功能、自由旋转把玩、跟随滚动巡览。</p>
+</div></header>
+
+<!-- 1 · EXPLODED (scroll) -->
+<section class="fx" style="border-top:none;padding-bottom:0"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">01</span>滚动拆解</h2><p>随滚轮把整机炸开成爆炸视图,看清内部结构与装配关系,再合回。</p></div><span class="fx-tag">SCROLL-SCRUBBED</span></div>
+</div>
+<div id="s1run"><div id="s1stick"><div class="stage blue" style="height:100%;border-radius:0;border:none"><canvas id="s1c"></canvas><div id="s1cap"></div><div class="s1hint">SCROLL ↓</div></div></div></div>
+</section>
+
+<!-- 2 · HOTSPOTS -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">02</span>热点标注</h2><p>模型缓慢自转,关键部位浮出标注点,悬停弹出功能说明卡。</p></div><span class="fx-tag">AUTO-ROTATE + HOVER</span></div>
+  <div class="stage light hs-stage" id="s2stage"><canvas id="s2c"></canvas>
+    <div class="hot" data-i="0"><span class="pin"></span><div class="card"><b>共轴双旋翼</b><span>上下反转主桨,自抵消扭矩、高效悬停。</span></div></div>
+    <div class="hot" data-i="1"><span class="pin"></span><div class="card"><b>光电吊舱</b><span>可换载荷接口,红外 / 变焦按任务切换。</span></div></div>
+    <div class="hot" data-i="2"><span class="pin"></span><div class="card"><b>折叠机臂</b><span>桨臂贴身折叠,口袋级便携、秒级展开。</span></div></div>
+  </div>
+</div></section>
+
+<!-- 3 · DRAG + MATERIAL -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">03</span>自由查看</h2><p>按住拖拽 360° 任意角度查看;切换实体 / 线框 / 描边材质。</p></div><span class="fx-tag">DRAG TO ORBIT</span></div>
+  <div class="stage light dr-stage" id="s3stage"><canvas id="s3c"></canvas>
+    <div class="mat-btns" id="s3btns"><button data-m="solid" class="on">实体</button><button data-m="wire">线框</button><button data-m="edge">描边</button></div>
+    <div class="dr-hint">按住拖拽旋转</div>
+  </div>
+</div></section>
+
+<!-- 4 · GSAP WALKTHROUGH -->
+<section class="fx" id="s4"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">04</span>功能巡览</h2><p>用 GSAP ScrollTrigger 钉住画面,滚动时模型转到对应部位,右侧文案同步切换。</p></div><span class="fx-tag">GSAP SCROLLTRIGGER</span></div>
+  <div id="s4pin">
+    <div class="s4steps">
+      <div class="s4step on"><div class="n">STEP 01</div><h3>顶部共轴桨</h3><p>同轴双旋翼是动力核心,转到顶视角看清上下两副反转主桨的布局。</p></div>
+      <div class="s4step"><div class="n">STEP 02</div><h3>侧身机体</h3><p>柱状机体集成电池与飞控,侧面展示折叠机臂与紧凑结构。</p></div>
+      <div class="s4step"><div class="n">STEP 03</div><h3>底部载荷</h3><p>底部光电吊舱与挂载接口,转到底视角看任务载荷的安装位置。</p></div>
+    </div>
+    <div id="s4canvasWrap"><canvas id="s4c"></canvas></div>
+    <div class="s4dots"><i class="on"></i><i></i><i></i></div>
+  </div>
+</div></section>
+
+<!-- 5 · SPOTLIGHT -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">05</span>聚光舞台</h2><p>暗色影棚 + 橙色环绕光,模型缓慢自转,像发布会主视觉。</p></div><span class="fx-tag">CINEMATIC</span></div>
+  <div class="stage dark hs-stage"><canvas id="s5c"></canvas></div>
+</div></section>
+
+<!-- 6 · COLOR CONFIG -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">06</span>配色选择</h2><p>点击色板实时更换机身配色,像产品选购页的配置器。</p></div><span class="fx-tag">CONFIGURATOR</span></div>
+  <div class="stage light hs-stage" id="s6stage"><canvas id="s6c"></canvas><div class="sw-btns" id="s6sw"></div></div>
+</div></section>
+
+<!-- 7 · SWARM -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">07</span>多机编队</h2><p>多架协同编队缓慢盘旋,演示集群作业与多机协同。</p></div><span class="fx-tag">SWARM</span></div>
+  <div class="stage light hs-stage"><canvas id="s7c"></canvas></div>
+</div></section>
+
+<!-- 8 · SPEC COUNTERS -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">08</span>数据展示</h2><p>模型旋转,关键参数滚动进场时数字递增。</p></div><span class="fx-tag">SCROLL COUNTERS</span></div>
+  <div class="stage light cnt-stage"><canvas id="s8c"></canvas></div>
+  <div class="count-row" id="s8nums">
+    <div class="c"><b><span class="num" data-to="58">0</span><i>min</i></b><span>最长续航纪录</span></div>
+    <div class="c"><b><span class="num" data-to="3">0</span><i>kg</i></b><span>最大任务载荷</span></div>
+    <div class="c"><b><span class="num" data-to="4">0</span></b><span>X 系列机型</span></div>
+    <div class="c"><b><span class="num" data-to="360">0</span><i>°</i></b><span>全向感知</span></div>
+  </div>
+</div></section>
+
+<!-- 9 · NIGHT FLIGHT -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">09</span>夜航氛围</h2><p>暗夜星空 + 体积雾,机身红/绿航行灯与尾灯频闪,鼠标视差,叠加飞行 HUD 与雷达扫描。</p></div><span class="fx-tag">CINEMATIC NIGHT</span></div>
+  <div class="stage night-stage"><canvas id="s9c"></canvas>
+    <div class="hud">
+      <div class="l tl"><span>ALT</span><b id="nAlt">1240</b><span>m</span></div>
+      <div class="l tr"><span>SPD</span><b id="nSpd">12.4</b><span>m/s</span></div>
+      <div class="l bl">NIGHT FLIGHT · LIVE</div>
+      <div class="radar"></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 10 · CROSS-SECTION -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">10</span>剖切检视</h2><p>剖切面来回扫过机身,逐层露出内部部件布局,橙色扫描片随切面移动。</p></div><span class="fx-tag">CROSS-SECTION</span></div>
+  <div class="stage blue hs-stage"><canvas id="s10c"></canvas><div class="clip-label" id="clipLabel"><b>外壳</b></div></div>
+</div></section>
+
+<!-- 11 · CLICK TO INSPECT -->
+<section class="fx"><div class="wrap">
+  <div class="fx-head"><div><h2><span class="idx">11</span>点选拆件</h2><p>点击模型上任意部件:该件高亮浮起并显示名称参数,其余压暗。Raycaster 拾取。</p></div><span class="fx-tag">CLICK TO INSPECT</span></div>
+  <div class="stage light hs-stage" id="s11stage"><canvas id="s11c"></canvas>
+    <div class="pick-hint">点击模型上的部件 →</div>
+    <div class="pick-panel" id="pickPanel"><div class="n">COMPONENT</div><b id="pickName">—</b><span id="pickDesc"></span></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">览众科技 LANZ · X 系列 3D 产品展示 ｜ <a href="index.html">回首页</a> · <a href="index.html#products">全系列产品</a></div></footer>
+
+<script src="assets/lib/three.min.js"></script>
+<script src="assets/lib/GLTFLoader.js"></script>
+<script src="assets/lib/RoomEnvironment.js"></script>
+<script src="assets/lib/drone-gltf.js"></script>
+<script src="assets/lib/gsap.min.js"></script>
+<script src="assets/lib/ScrollTrigger.min.js"></script>
+<script>
+/* nav drawer */
+(function(){
+  const nav=document.getElementById('nav'),menu=document.getElementById('menu'),ham=document.getElementById('ham'),scrim=document.getElementById('menuScrim');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30),{passive:true});
+  function setMenu(o){menu.classList.toggle('open',o);ham.classList.toggle('open',o);if(scrim)scrim.classList.toggle('open',o);document.documentElement.style.overflow=o?'hidden':'';}
+  ham.onclick=()=>setMenu(!menu.classList.contains('open'));
+  menu.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
+  if(scrim)scrim.onclick=()=>setMenu(false);
+  addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+})();
+
+/* 3D effects */
+(function(){
+"use strict";
+const loaderEl=document.getElementById('loader');
+if(typeof THREE==='undefined'||!window.__DRONE_GLTF__){loaderEl.classList.add('gone');return;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let SRC=null;
+const ready=new Promise((res,rej)=>{ new THREE.GLTFLoader().parse(window.__DRONE_GLTF__,'',g=>{SRC=g.scene;res();},rej); });
+
+function makeModel(target){
+  const m=SRC.clone(true);
+  const bb=new THREE.Box3().setFromObject(m),c=bb.getCenter(new THREE.Vector3()),s=bb.getSize(new THREE.Vector3());
+  m.position.sub(c);
+  const md=Math.max(s.x,s.y,s.z)||1;
+  const wrap=new THREE.Group(); wrap.add(m); wrap.scale.setScalar(target/md);
+  const meshes=[]; m.traverse(o=>{if(o.isMesh)meshes.push(o);});
+  return {wrap,meshes};
+}
+function envFor(r){const p=new THREE.PMREMGenerator(r);const t=p.fromScene(new THREE.RoomEnvironment(),0.04).texture;p.dispose();return t;}
+function dotTex(){const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d');const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'#fff');g.addColorStop(.3,'rgba(255,255,255,.85)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(c);}
+function glowTex(hex){const col=new THREE.Color(hex),rgb=((col.r*255)|0)+','+((col.g*255)|0)+','+((col.b*255)|0);const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'rgba('+rgb+',1)');g.addColorStop(.4,'rgba('+rgb+',.4)');g.addColorStop(1,'rgba('+rgb+',0)');x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
+function litify(meshes){meshes.forEach(o=>{if(o.material&&o.material.metalness!==undefined){o.material=o.material.clone();o.material.envMapIntensity=1.15;}});}
+function blueprintify(meshes){const wm=new THREE.MeshBasicMaterial({color:0xffffff,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});const em=new THREE.LineBasicMaterial({color:0xf15a24});meshes.forEach(o=>{o.material=wm;o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry,14),em));});}
+function rendererFor(canvas){const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});r.setPixelRatio(Math.min(2,devicePixelRatio||1));r.setClearColor(0,0);if(THREE.sRGBEncoding)r.outputEncoding=THREE.sRGBEncoding;r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.05;return r;}
+function sizer(renderer,camera,canvas){const f=function(){const w=canvas.clientWidth||1,h=canvas.clientHeight||1;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};f();addEventListener('resize',f);if(window.ResizeObserver)new ResizeObserver(f).observe(canvas);return f;}
+const ss=(a,b,x)=>{x=(x-a)/(b-a);return x<0?0:x>1?1:x*x*(3-2*x);};
+const off=c=>{const r=c.getBoundingClientRect();return r.bottom<-80||r.top>innerHeight+80;};   // skip render when off-screen (8 scenes)
+
+function initExplode(){
+  const canvas=document.getElementById('s1c'),run=document.getElementById('s1run'),cap=document.getElementById('s1cap');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(32,1,.1,100);camera.position.set(0,.2,7);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(3.0);pivot.add(wrap);blueprintify(meshes);
+  scene.updateMatrixWorld(true);
+  const ctr=new THREE.Vector3();wrap.getWorldPosition(ctr);
+  meshes.forEach((o,i)=>{const wc=new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3());const dW=wc.sub(ctr);const pq=new THREE.Quaternion();o.parent.getWorldQuaternion(pq);const psc=new THREE.Vector3();o.parent.getWorldScale(psc);const dL=dW.applyQuaternion(pq.invert()).divide(psc);dL.y*=1.7;o.userData.rest=o.position.clone();o.userData.exp=dL;o.userData.delay=(i/meshes.length)*0.08;});
+  sizer(renderer,camera,canvas);
+  const TWO=Math.PI*2;
+  function prog(){const r=run.getBoundingClientRect();const d=run.offsetHeight-innerHeight;return d>0?Math.min(1,Math.max(0,-r.top/d)):0;}
+  const labels=[[0.04,0.2,'01 · 完整机体'],[0.26,0.5,'02 · 炸开 — 模块拆解'],[0.55,0.74,'03 · 内部结构检视'],[0.84,0.98,'04 · 合体复原']];
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;const p=reduce?0.5:prog();
+    for(let i=0;i<meshes.length;i++){const o=meshes[i],d=o.userData.delay;const amt=(ss(0.16+d,0.40+d,p)-ss(0.60+d,0.82+d,p))*1.2;o.position.copy(o.userData.rest).addScaledVector(o.userData.exp,amt);}
+    pivot.rotation.y=-0.5+p*TWO*1.0+ss(0.82,1,p)*Math.PI*0.5;
+    pivot.rotation.x=-0.12-ss(0.16,0.42,p)*0.16+ss(0.6,0.82,p)*0.16;
+    camera.position.z=7.0+ss(0.16,0.46,p)*1.4-ss(0.7,0.96,p)*0.7;camera.lookAt(0,0,0);
+    let txt='';labels.forEach(l=>{if(p>=l[0]&&p<=l[1])txt=l[2];});cap.textContent=txt;cap.classList.toggle('show',!!txt);
+    renderer.render(scene,camera);
+  })();
+}
+function initHotspots(){
+  const canvas=document.getElementById('s2c'),stage=document.getElementById('s2stage');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.4,5.4);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.9));const k=new THREE.DirectionalLight(0xffffff,1.9);k.position.set(3,5,4);scene.add(k);const o2=new THREE.PointLight(0xff6a26,1.4,0,2);o2.position.set(-3,1,3);scene.add(o2);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(2.7);pivot.add(wrap);litify(meshes);
+  const anchorsPos=[new THREE.Vector3(0,1.0,0),new THREE.Vector3(0,-1.0,0.2),new THREE.Vector3(1.1,0.1,.4)];
+  const anchors=anchorsPos.map(p=>{const a=new THREE.Object3D();a.position.copy(p);wrap.add(a);return a;});
+  const hots=[...stage.querySelectorAll('.hot')];
+  sizer(renderer,camera,canvas);
+  const v=new THREE.Vector3();
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;if(!reduce)pivot.rotation.y+=0.005;renderer.render(scene,camera);
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    anchors.forEach((a,i)=>{a.getWorldPosition(v);v.project(camera);const x=(v.x*.5+.5)*w,y=(-v.y*.5+.5)*h,front=v.z<1;hots[i].style.left=x+'px';hots[i].style.top=y+'px';hots[i].style.opacity=front?1:.12;hots[i].style.pointerEvents=front?'auto':'none';});
+  })();
+}
+function initDrag(){
+  const canvas=document.getElementById('s3c'),stage=document.getElementById('s3stage');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,5.4);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.9));const k=new THREE.DirectionalLight(0xffffff,1.9);k.position.set(3,5,4);scene.add(k);
+  const pivot=new THREE.Group();scene.add(pivot);
+  const {wrap,meshes}=makeModel(2.7);pivot.add(wrap);
+  const litMats=meshes.map(o=>{const m=o.material.metalness!==undefined?o.material.clone():o.material;if(m.envMapIntensity!==undefined)m.envMapIntensity=1.15;return m;});
+  const wireMat=new THREE.MeshBasicMaterial({color:0x1769aa,wireframe:true});
+  const edgeFill=new THREE.MeshBasicMaterial({color:0xffffff,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+  const edges=meshes.map(o=>{const e=new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry,14),new THREE.LineBasicMaterial({color:0xf15a24}));e.visible=false;o.add(e);return e;});
+  function setMat(mode){meshes.forEach((o,i)=>{edges[i].visible=(mode==='edge');o.material=(mode==='wire')?wireMat:(mode==='edge')?edgeFill:litMats[i];});}
+  document.querySelectorAll('#s3btns button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#s3btns button').forEach(x=>x.classList.remove('on'));b.classList.add('on');setMat(b.dataset.m);});
+  let rx=-0.15,ry=-0.5,tgx=rx,tgy=ry,vx=0,vy=0,drag=false,px=0,py=0;
+  stage.addEventListener('pointerdown',e=>{drag=true;px=e.clientX;py=e.clientY;stage.setPointerCapture(e.pointerId);});
+  stage.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;tgy+=dx*0.01;tgx+=dy*0.01;tgx=Math.max(-1.2,Math.min(1.2,tgx));vx=dx*0.01;vy=dy*0.01;});
+  stage.addEventListener('pointerup',()=>drag=false);stage.addEventListener('pointercancel',()=>drag=false);
+  sizer(renderer,camera,canvas);
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;
+    if(!drag){if(!reduce)tgy+=0.0015;tgy+=vx;tgx+=vy;vx*=0.92;vy*=0.92;}
+    rx+=(tgx-rx)*0.12;ry+=(tgy-ry)*0.12;pivot.rotation.x=rx;pivot.rotation.y=ry;
+    camera.lookAt(0,0,0);renderer.render(scene,camera);
+  })();
+}
+function initWalk(){
+  const canvas=document.getElementById('s4c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.2,4.8);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.9));const k=new THREE.DirectionalLight(0xffffff,1.9);k.position.set(3,5,4);scene.add(k);const o2=new THREE.PointLight(0xff6a26,1.3,0,2);o2.position.set(-3,1,3);scene.add(o2);
+  const pivot=new THREE.Group();scene.add(pivot);
+  const {wrap,meshes}=makeModel(2.9);pivot.add(wrap);litify(meshes);
+  sizer(renderer,camera,canvas);
+  const poses=[[-1.15,-0.4],[-0.08,-1.7],[1.0,-3.0]];
+  pivot.rotation.set(poses[0][0],poses[0][1],0);
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;camera.lookAt(0,0,0);renderer.render(scene,camera);})();
+  const steps=[...document.querySelectorAll('.s4step')],dots=[...document.querySelectorAll('.s4dots i')];
+  function setStep(i){steps.forEach((s,j)=>s.classList.toggle('on',j===i));dots.forEach((d,j)=>d.classList.toggle('on',j===i));}
+  if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined'&&!reduce&&innerWidth>860){
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({trigger:'#s4',start:'top top',end:'+=260%',pin:'#s4pin',scrub:0.6,onUpdate:self=>{
+      const p=self.progress,seg=Math.min(2,Math.floor(p*3)),f=(p*3)-seg,a=poses[seg],b=poses[Math.min(2,seg+1)];
+      pivot.rotation.set(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,0);setStep(Math.round(p*2.999));
+    }});
+  }else{setStep(0);pivot.rotation.set(poses[1][0],poses[1][1],0);}
+}
+
+function initSpotlight(){
+  const canvas=document.getElementById('s5c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,5.6);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x10161e,.35));
+  const key=new THREE.DirectionalLight(0xffffff,1.3);key.position.set(2,5,4);scene.add(key);
+  const oRim=new THREE.PointLight(0xff5a1e,3.4,0,2);scene.add(oRim);
+  const cRim=new THREE.PointLight(0x3a86d6,1.6,0,2);cRim.position.set(3,2,-3);scene.add(cRim);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(2.7);pivot.add(wrap);litify(meshes);meshes.forEach(o=>{if(o.material&&o.material.envMapIntensity!==undefined)o.material.envMapIntensity=0.6;});
+  sizer(renderer,camera,canvas);let t=0;
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;t+=0.016;if(!reduce)pivot.rotation.y+=0.006;oRim.position.set(Math.cos(t*0.8)*3.4,1.1,Math.sin(t*0.8)*3.4);camera.lookAt(0,0,0);renderer.render(scene,camera);})();
+}
+function initColor(){
+  const canvas=document.getElementById('s6c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,5.4);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.9));const k=new THREE.DirectionalLight(0xffffff,1.9);k.position.set(3,5,4);scene.add(k);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(2.7);pivot.add(wrap);litify(meshes);
+  const body=[];meshes.forEach(o=>{const m=o.material;if(m&&m.color&&(m.name||'').indexOf('silver')>=0&&body.indexOf(m)<0)body.push(m);});
+  if(!body.length)meshes.forEach(o=>{const m=o.material;if(m&&m.color&&body.indexOf(m)<0)body.push(m);}); // fallback
+  const base=body.map(m=>m.color.clone());
+  const variants=[['#aab2bc','原银',null],['#f15a24','钛橙','#f15a24'],['#1769aa','深空蓝','#1769aa'],['#222b34','碳黑','#222b34']];
+  const sw=document.getElementById('s6sw');
+  variants.forEach((vr,i)=>{const b=document.createElement('button');b.style.background=vr[0];b.title=vr[1];if(i===0)b.classList.add('on');
+    b.onclick=()=>{[...sw.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');
+      if(vr[2]===null){body.forEach((m,j)=>m.color.copy(base[j]));}else{const col=new THREE.Color(vr[2]);body.forEach(m=>m.color.copy(col));}};
+    sw.appendChild(b);});
+  sizer(renderer,camera,canvas);
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;if(!reduce)pivot.rotation.y+=0.005;camera.lookAt(0,0,0);renderer.render(scene,camera);})();
+}
+function initSwarm(){
+  const canvas=document.getElementById('s7c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(0,1.7,6.6);camera.lookAt(0,0,0);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.95));const k=new THREE.DirectionalLight(0xffffff,1.8);k.position.set(3,5,4);scene.add(k);
+  const grp=new THREE.Group();scene.add(grp);
+  const offs=[[0,0,0],[1.8,.35,-.6],[-1.8,.35,-.6],[1.05,-.2,1.5],[-1.05,-.2,1.5]];
+  const units=offs.map((o,i)=>{const r=makeModel(1.05);litify(r.meshes);r.wrap.position.set(o[0],o[1],o[2]);r.wrap.rotation.x=-0.1;grp.add(r.wrap);return {w:r.wrap,by:o[1],ph:i*1.25};});
+  sizer(renderer,camera,canvas);let t=0;
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;t+=0.016;if(!reduce)grp.rotation.y+=0.004;units.forEach(u=>{u.w.position.y=u.by+(reduce?0:Math.sin(t+u.ph)*0.08);if(!reduce)u.w.rotation.y+=0.02;});renderer.render(scene,camera);})();
+}
+function initCount(){
+  const canvas=document.getElementById('s8c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,5.2);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.95));const k=new THREE.DirectionalLight(0xffffff,1.8);k.position.set(3,5,4);scene.add(k);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(2.4);pivot.add(wrap);litify(meshes);
+  sizer(renderer,camera,canvas);
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;if(!reduce)pivot.rotation.y+=0.006;camera.lookAt(0,0,0);renderer.render(scene,camera);})();
+  const nums=[...document.querySelectorAll('#s8nums .num')];let done=false;
+  function run(){if(done)return;done=true;nums.forEach(n=>{const to=+n.dataset.to,t0=Date.now(),dur=1400;(function tick(){const k=Math.min(1,(Date.now()-t0)/dur),e=1-Math.pow(1-k,3);n.textContent=Math.round(to*e);if(k<1)requestAnimationFrame(tick);})();});}
+  if(window.IntersectionObserver){new IntersectionObserver((es,ob)=>{if(es[0].isIntersecting){run();ob.disconnect();}},{threshold:0.4}).observe(document.getElementById('s8nums'));}else run();
+}
+
+function initNight(){
+  const canvas=document.getElementById('s9c');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x070a12);scene.fog=new THREE.FogExp2(0x070a12,0.05);
+  const camera=new THREE.PerspectiveCamera(50,1,.1,200);camera.position.set(0,.5,7);
+  scene.add(new THREE.AmbientLight(0x4a5680,1.2));const moon=new THREE.DirectionalLight(0x9bb8ff,2.2);moon.position.set(5,8,3);scene.add(moon);scene.add(new THREE.PointLight(0xffae34,1.6,9));
+  const N=1700,pos=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*120;pos[i*3+1]=(Math.random()-.5)*80;pos[i*3+2]=-Math.random()*90-5;}
+  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  scene.add(new THREE.Points(sg,new THREE.PointsMaterial({size:.55,sizeAttenuation:true,map:dotTex(),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,color:0xcfd8ff})));
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.1;
+  const {wrap,meshes}=makeModel(2.6);pivot.add(wrap);litify(meshes);meshes.forEach(o=>{if(o.material&&o.material.envMapIntensity!==undefined)o.material.envMapIntensity=0.4;});
+  function nav(color,x,z){const d=new THREE.Mesh(new THREE.SphereGeometry(.05,10,8),new THREE.MeshBasicMaterial({color}));d.position.set(x,.05,z);const g=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(color),transparent:true,opacity:.85,depthWrite:false,blending:THREE.AdditiveBlending}));g.scale.setScalar(.55);g.position.copy(d.position);wrap.add(d,g);return {d,g};}
+  nav(0xff3d5a,-1.1,.9);nav(0x36e08a,1.1,.9);const strobe=nav(0xffffff,0,-1.0);strobe.g.material.opacity=0;
+  const fleet=[];for(let i=0;i<5;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(0xffae34),transparent:true,opacity:.5,depthWrite:false,blending:THREE.AdditiveBlending}));s.scale.setScalar(.5+Math.random()*.5);s.position.set((Math.random()-.5)*40,2+Math.random()*6,-15-Math.random()*20);s.userData.sp=.3+Math.random()*.5;fleet.push(s);scene.add(s);}
+  sizer(renderer,camera,canvas);
+  let mx=0,my=0,tx=0,ty=0;canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();tx=((e.clientX-r.left)/r.width)*2-1;ty=((e.clientY-r.top)/r.height)*2-1;});
+  const altEl=document.getElementById('nAlt'),spdEl=document.getElementById('nSpd');let t=0,acc=0;
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;t+=0.016;
+    if(!reduce){wrap.position.y=Math.sin(t*1.4)*.12;wrap.rotation.z=Math.sin(t*.9)*.04;}
+    const ph=t%1.6,on=ph<.07||(ph>.18&&ph<.25);strobe.g.material.opacity=on?.9:0;strobe.d.material.color.setHex(on?0xffffff:0x445566);
+    fleet.forEach(s=>{s.position.x+=s.userData.sp*0.016;if(s.position.x>22)s.position.x=-22;});
+    if(!reduce){mx+=(tx-mx)*.05;my+=(ty-my)*.05;camera.position.x+=(mx*.9-camera.position.x)*.05;camera.position.y+=((.5-my*.5)-camera.position.y)*.05;pivot.rotation.y+=((mx*.3)-pivot.rotation.y)*.05;}
+    camera.lookAt(0,.3,0);
+    acc+=0.016;if(acc>.2){acc=0;if(altEl)altEl.textContent=String(1200+Math.round(Math.sin(t*.3)*60)+Math.floor(Math.random()*8));if(spdEl)spdEl.textContent=(11+Math.sin(t*.5)*2+Math.random()*.4).toFixed(1);}
+    renderer.render(scene,camera);
+  })();
+}
+function initSection(){
+  const canvas=document.getElementById('s10c'),label=document.getElementById('clipLabel');
+  const renderer=rendererFor(canvas);renderer.localClippingEnabled=true;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,6.4);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;pivot.rotation.y=-0.5;
+  const {wrap,meshes}=makeModel(3.0);pivot.add(wrap);
+  const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),0);
+  const wm=new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,clippingPlanes:[plane],polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+  const em=new THREE.LineBasicMaterial({color:0xf15a24,clippingPlanes:[plane]});
+  meshes.forEach(o=>{o.material=wm;o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry,16),em));});
+  const scan=new THREE.Mesh(new THREE.PlaneGeometry(4.2,3.2),new THREE.MeshBasicMaterial({color:0xff5a1e,transparent:true,opacity:.10,side:THREE.DoubleSide,depthWrite:false}));scene.add(scan);
+  sizer(renderer,camera,canvas);let t=0;
+  const labs=[[-2,'尾段 · 动力臂'],[-0.6,'机体 · 飞控舱'],[0.5,'核心 · 电池组'],[2,'前段 · 光电载荷']];
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;t+=0.016;
+    const z=Math.sin(t*0.35)*1.25;plane.constant=z;scan.position.z=z+0.02;
+    let txt='外壳';for(let i=0;i<labs.length;i++){if(z>=labs[i][0])txt=labs[i][1];}if(label)label.innerHTML='<b>'+txt.split(' · ')[0]+'</b> · '+(txt.split(' · ')[1]||'');
+    renderer.render(scene,camera);
+  })();
+}
+function initPick(){
+  const canvas=document.getElementById('s11c'),panel=document.getElementById('pickPanel'),pName=document.getElementById('pickName'),pDesc=document.getElementById('pickDesc');
+  const renderer=rendererFor(canvas),scene=new THREE.Scene();scene.environment=envFor(renderer);
+  const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,.3,5.2);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,.9));const k=new THREE.DirectionalLight(0xffffff,1.9);k.position.set(3,5,4);scene.add(k);
+  const pivot=new THREE.Group();scene.add(pivot);pivot.rotation.x=-0.12;
+  const {wrap,meshes}=makeModel(2.7);pivot.add(wrap);litify(meshes);
+  scene.updateMatrixWorld(true);const ctr=new THREE.Vector3();wrap.getWorldPosition(ctr);
+  const PROPS={Plane041:1,Plane042:1,Plane043:1,Plane045:1};
+  let low=null,big=null,bigV=-1;
+  meshes.forEach(o=>{o.material=o.material.clone();o.material.transparent=true;o.userData.baseColor=o.material.color?o.material.color.clone():null;
+    const bb=new THREE.Box3().setFromObject(o),wc=bb.getCenter(new THREE.Vector3()),sz=bb.getSize(new THREE.Vector3());
+    o.userData.rest=o.position.clone();const dW=wc.clone().sub(ctr);const pq=new THREE.Quaternion();o.parent.getWorldQuaternion(pq);const psc=new THREE.Vector3();o.parent.getWorldScale(psc);
+    o.userData.lift=dW.applyQuaternion(pq.invert()).divide(psc).normalize().multiplyScalar(0.2);o.userData.wy=wc.y;
+    if(!low||wc.y<low.userData.wy)low=o;const v=sz.x*sz.y*sz.z;if(v>bigV){bigV=v;big=o;}});
+  if(low)low.userData.role=['光电吊舱','底部三轴云台,可挂红外/变焦镜头。'];
+  if(big)big.userData.role=['机身 · 飞控舱','集成飞控、电池与图传等核心模块。'];
+  function info(o){if(PROPS[o.name])return['共轴桨叶','上下反转主桨,自抵消扭矩、高效悬停。'];return o.userData.role||['结构组件','机身结构 / 连接与紧固件。'];}
+  let picked=null;
+  function pick(o){picked=o;meshes.forEach(m=>{const sel=m===o;m.position.copy(m.userData.rest);if(sel)m.position.add(m.userData.lift);if(m.material.color){if(sel)m.material.color.setHex(0xf15a24);else if(m.userData.baseColor)m.material.color.copy(m.userData.baseColor);}m.material.opacity=sel?1:.16;});const nm=info(o);panel.classList.add('on');pName.textContent=nm[0];pDesc.textContent=nm[1];}
+  function clr(){picked=null;meshes.forEach(m=>{m.position.copy(m.userData.rest);if(m.material.color&&m.userData.baseColor)m.material.color.copy(m.userData.baseColor);m.material.opacity=1;});panel.classList.remove('on');}
+  const ray=new THREE.Raycaster(),v2=new THREE.Vector2();
+  canvas.addEventListener('pointerdown',e=>{const r=canvas.getBoundingClientRect();v2.x=((e.clientX-r.left)/r.width)*2-1;v2.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(v2,camera);const hit=ray.intersectObjects(meshes,false);if(hit.length)pick(hit[0].object);else clr();});
+  sizer(renderer,camera,canvas);
+  (function loop(){requestAnimationFrame(loop);if(off(canvas))return;if(!reduce&&!picked)pivot.rotation.y+=0.004;camera.lookAt(0,0,0);renderer.render(scene,camera);})();
+}
+
+ready.then(()=>{ loaderEl.classList.add('gone'); initExplode(); initHotspots(); initDrag(); initWalk(); initSpotlight(); initColor(); initSwarm(); initCount(); initNight(); initSection(); initPick(); })
+     .catch(e=>{ loaderEl.classList.add('gone'); if(window.console)console.warn('[product3d] load failed',e); });
+})();
+</script>
+</body>
+</html>

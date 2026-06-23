@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>览众科技 LANZ｜微型共轴双旋翼无人机 · 世界一流空中机器人系统</title>
+<meta name="description" content="览众科技：超静音、高性能、智能化、模块化的微型共轴双旋翼无人机，广泛应用于安保、巡检、应急、环保等行业。" />
+<style>
+:root{
+  --orange:#f15a24; --orange-2:#ff7a45; --orange-soft:#fff1ec; --blue:#0f3d63; --blue-2:#1769aa;
+  --ink:#16212e; --muted:#5d6b7d; --bg:#ffffff; --bg-2:#f5f8fb; --line:#e6ecf2; --maxw:1180px;
+  --r-sm:8px; --r-md:14px; --r-lg:20px;
+  --sh-sm:0 4px 14px rgba(15,61,99,.06); --sh-md:0 14px 36px rgba(15,61,99,.10);
+  --sh-lg:0 30px 70px rgba(15,61,99,.16); --sh-orange:0 14px 34px rgba(241,90,36,.30);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);
+  background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  font-feature-settings:"kern" 1,"liga" 1;text-rendering:optimizeLegibility}
+::selection{background:var(--orange);color:#fff}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--orange);font-weight:800;letter-spacing:.25em;font-size:12px;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--orange),transparent);border-radius:2px}
+.sec-head.center .eyebrow{justify-content:center}
+.btn{position:relative;display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:var(--r-sm);font-weight:600;font-size:15px;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s,border-color .3s,color .3s;cursor:pointer;border:1.5px solid transparent;overflow:hidden;will-change:transform}
+.btn-primary{background:linear-gradient(135deg,var(--orange-2),var(--orange));color:#fff;box-shadow:0 6px 18px rgba(241,90,36,.22)}
+.btn-primary::after{content:"";position:absolute;top:0;left:-130%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);transition:left .6s var(--ease)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--sh-orange)}
+.btn-primary:hover::after{left:130%}
+.btn-line{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-line:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px);box-shadow:var(--sh-sm)}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;border-bottom:1px solid transparent;transition:.4s var(--ease)}
+.nav.scrolled{background:rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-color:var(--line);box-shadow:0 6px 24px rgba(15,61,99,.06)}
+.nav-prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--orange),var(--orange-2));transition:width .1s linear}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.5px;color:var(--ink)}
+.brand .lmark{height:30px;width:auto;display:block;transition:transform .4s var(--ease)}
+.brand:hover .lmark{transform:rotate(-6deg) scale(1.06)}
+.brand .lname{font-size:20px;font-weight:800;letter-spacing:1.5px}
+.brand .mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--orange-2),var(--orange));color:#fff;display:grid;place-items:center;
+  font-family:"Segoe UI";font-weight:800;font-size:18px;font-style:italic;box-shadow:0 6px 16px rgba(241,90,36,.35);transition:transform .4s var(--ease)}
+.brand:hover .mark{transform:rotate(-8deg) scale(1.06)}
+.brand small{display:block;font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.3em;font-weight:600}
+/* nav = logo (left) + menu button (right); links live in a full-screen drawer at all widths */
+.nav .wrap{position:relative}
+.brand{position:relative;z-index:97}
+.menu{position:fixed;top:0;right:0;bottom:0;width:50%;list-style:none;z-index:95;background:rgba(255,255,255,.99);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:-30px 0 80px -20px rgba(15,33,49,.28);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:90px 7%;transform:translateX(100%);transition:transform .55s var(--ease)}
+.menu.open{transform:none}
+.menu-scrim{position:fixed;inset:0;z-index:94;background:rgba(13,21,31,.4);opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+.menu-scrim.open{opacity:1;pointer-events:auto}
+.menu li{width:100%;max-width:380px}
+.menu a{display:flex;align-items:center;justify-content:center;width:100%;padding:18px;font-size:clamp(22px,2.6vw,30px);font-weight:700;color:var(--ink);border-bottom:1px solid var(--line);transition:color .25s var(--ease)}
+.menu a:hover,.menu a.active{color:var(--orange)}
+.nav-cta{display:flex;align-items:center}
+.menu-btn{position:relative;z-index:97;display:inline-flex;align-items:center;gap:11px;background:transparent;border:1px solid rgba(22,33,46,.2);border-radius:9px;padding:7px 15px;cursor:pointer;color:var(--ink);font-weight:600;font-size:14px;font-family:inherit;letter-spacing:.04em;transition:.25s var(--ease)}
+.menu-btn:hover{border-color:var(--ink);background:rgba(22,33,46,.04)}
+.menu-btn .bars{display:flex;flex-direction:column;gap:4px}
+.menu-btn .bars span{display:block;width:18px;height:2px;background:var(--ink);transition:.3s var(--ease)}
+.menu-btn.open .bars span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-btn.open .bars span:nth-child(2){opacity:0}
+.menu-btn.open .bars span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ===== LOADER ===== */
+#loader{position:fixed;inset:0;z-index:3000;background:#f4eee0;display:grid;place-items:center;overflow:hidden;
+  transition:opacity .6s ease,transform .8s cubic-bezier(.76,0,.24,1)}
+#loader.done{opacity:0;pointer-events:none}
+#loader .lgrid{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(22,33,46,.05) 1px,transparent 1px);background-size:20% 100%}
+#loader .lnum{position:relative;font-weight:800;letter-spacing:-4px;color:var(--ink);line-height:1;
+  font-size:clamp(96px,19vw,260px);font-variant-numeric:tabular-nums}
+#loader .lnum i{font-style:normal;font-size:.26em;font-weight:700;vertical-align:super;margin-left:8px;color:var(--orange)}
+#loader .lbrand{position:absolute;left:0;right:0;bottom:46px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.45em;font-weight:700}
+#loader .lbar{position:absolute;left:0;bottom:0;height:3px;width:var(--lp,0%);background:var(--orange);transition:width .15s linear}
+#loader .ldrone{position:absolute;right:8%;bottom:-7%;width:clamp(180px,22vw,330px);
+  filter:drop-shadow(0 22px 32px rgba(0,0,0,.2));animation:ldroneHover 4s ease-in-out infinite;
+  transition:transform 1s cubic-bezier(.2,1,.28,1)}
+#loader.done .ldrone{animation:none}
+@keyframes ldroneHover{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ===== HERO (cream top / brand-orange bottom — editorial) ===== */
+.hero{position:relative;min-height:100vh;overflow:hidden;color:var(--ink);
+  background:linear-gradient(180deg,#f4eee0 0%,#f4eee0 55%,var(--orange) 55%,#d8481a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(90deg,rgba(22,33,46,.045) 1px,transparent 1px);background-size:20% 100%}
+.hero-grid{position:relative;z-index:2;max-width:1320px;margin:0 auto;height:100vh;padding:0 clamp(24px,4vw,56px)}
+/* huge headline, top-left */
+.hero-headline{position:absolute;top:19vh;left:clamp(24px,4vw,56px);max-width:60vw;
+  font-weight:800;letter-spacing:-3px;line-height:.96;font-size:clamp(44px,8.4vw,118px);color:var(--ink)}
+.hero-headline .w{display:block;overflow:hidden;padding-bottom:.04em}
+.hero-headline .w b{display:inline-block;font-weight:800;transform:translateY(112%);transition:transform 1s var(--ease)}
+.hero-headline .w:nth-of-type(2) b{transition-delay:.12s}
+.loaded .hero-headline .w b{transform:none}
+/* bottom-left copy + CTA (on the orange) */
+.hero-foot{position:absolute;left:clamp(24px,4vw,56px);bottom:9vh;max-width:430px;color:#fff;
+  opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease) .35s,transform .9s var(--ease) .35s}
+.loaded .hero-foot{opacity:1;transform:none}
+.hero-foot p{font-size:16.5px;line-height:1.65;margin-bottom:24px}
+.hero-foot .cta{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--ink);
+  padding:14px 26px;border-radius:8px;font-weight:700;font-size:15px;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.hero-foot .cta .sq{width:11px;height:11px;background:var(--orange);border-radius:2px;flex:none}
+.hero-foot .cta:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(0,0,0,.2)}
+/* small coordinate detail, right */
+.hero-coord{position:absolute;right:clamp(24px,4vw,56px);top:48%;text-align:right;color:rgba(255,255,255,.85);
+  font-family:"Segoe UI";font-size:12px;line-height:1.8;letter-spacing:.06em;opacity:0;transition:opacity 1s ease 1.1s}
+.loaded .hero-coord{opacity:1}
+/* floating drones (rise from bottom on load) */
+.hero-drones{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-drones .dr{position:absolute;filter:drop-shadow(0 26px 34px rgba(0,0,0,.3));
+  transform:translateY(66vh);opacity:0;transition:transform 1.4s cubic-bezier(.2,1,.28,1),opacity .9s ease}
+.loaded .hero-drones .dr{transform:translateY(0);opacity:1}
+.hero-drones .d1{right:9%;top:33%;width:clamp(180px,21vw,330px);transition-delay:.12s}
+.hero-drones .d2{right:31%;top:17%;width:clamp(104px,12vw,176px);transition-delay:.3s}
+.hero-drones .d3{right:3%;top:74%;width:clamp(86px,10vw,148px);transition-delay:.46s}
+.loaded .hero-drones .d1{animation:bob 6s ease-in-out 1.7s infinite}
+.loaded .hero-drones .d2{animation:bob 7.2s ease-in-out 1.9s infinite reverse}
+.loaded .hero-drones .d3{animation:bob 5.4s ease-in-out 2.1s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@media(max-width:860px){
+  .hero-headline{max-width:90vw;font-size:clamp(40px,12vw,72px);top:15vh}
+  .hero-drones .d1{right:2%;top:40%;width:46vw}.hero-drones .d2{right:40%;top:24%;width:26vw}.hero-drones .d3{right:0;top:64%;width:22vw}
+  .hero-coord{display:none}
+  .hero-foot{max-width:80vw}
+}
+
+
+/* ===== sections ===== */
+section{padding:110px 0}
+.sec-head{max-width:680px;margin-bottom:56px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(30px,4vw,44px);font-weight:800;margin:5px 0;letter-spacing:-.5px;overflow:hidden;padding-bottom:.08em}
+.sec-head h2 .ln{display:inline-block;transform:translateY(115%);transition:transform .9s var(--ease) .12s}
+.sec-head h2.in .ln{transform:none}
+.sec-head p{color:var(--muted);font-size:17px}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal-l{transform:translateX(-40px)}.reveal-r{transform:translateX(40px)}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-l,.reveal-r,.sec-head h2 .ln{opacity:1!important;transform:none!important;transition:none}
+  .hero-headline .w b,.hero-foot,.hero-coord,.hero-drones .dr{opacity:1!important;transform:none!important;transition:none;animation:none!important}
+  .cursor-fly{display:none!important}
+}
+
+/* ===== PLATFORM ===== */
+.platform{background:var(--bg-2)}
+.platform .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
+.platform-img{border-radius:var(--r-lg);overflow:hidden;position:relative;
+  background:radial-gradient(125% 100% at 50% 28%,#ffffff 0%,#eef3f8 52%,#e2eaf2 100%);border:1px solid var(--line);box-shadow:inset 0 0 70px rgba(15,33,49,.05)}
+.platform-img::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(55% 40% at 50% 76%,rgba(241,90,36,.15),transparent 72%)}
+.platform-img .drone-canvas{display:block;width:100%;height:100%;position:relative;z-index:1}
+.platform-img::after{content:"";position:absolute;left:18px;top:18px;width:54px;height:54px;border-top:3px solid var(--orange);border-left:3px solid var(--orange);border-radius:6px 0 0 0;opacity:.85;z-index:2;pointer-events:none}
+.plist li{transition:background .4s var(--ease),color .3s,padding .4s var(--ease),border-color .3s,box-shadow .4s}
+.plist li .ic{transition:.3s}
+/* scroll-driven highlight (no hover) */
+.plist li.on{background:var(--orange);color:#fff;border-radius:14px;padding-left:18px;padding-right:18px;border-bottom-color:transparent;box-shadow:0 14px 30px rgba(241,90,36,.3)}
+.plist li.on .ic{background:#fff;color:var(--orange)}
+.plist li.on div,.plist li.on b{color:#fff}
+.platform h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin:14px 0 8px}
+.platform .sub{color:var(--blue-2);font-size:18px;font-weight:600;margin-bottom:26px}
+.plist{list-style:none;display:flex;flex-direction:column;gap:14px}
+.plist li{display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.plist li .ic{flex:0 0 40px;height:40px;border-radius:10px;background:var(--orange-soft);color:var(--orange);
+  display:grid;place-items:center;font-weight:800;font-family:"Segoe UI"}
+.plist li b{color:var(--ink)}
+
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1}}
+
+/* ===== FEATURES ===== */
+/* fused layout: sticky title left + card list right */
+.feat-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(40px,6vw,90px);align-items:start}
+.feat-head{position:sticky;top:108px}
+.feat-head h2{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin:12px 0 18px}
+.feat-lead{color:var(--muted);font-size:17px;line-height:1.75;max-width:380px;margin-bottom:30px}
+.feat-stats{display:flex;gap:30px;flex-wrap:wrap;margin-bottom:32px}
+.feat-stats div b{display:flex;align-items:baseline;font-size:34px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1}
+.feat-stats div b i{font-style:normal;font-size:15px;font-weight:700;color:var(--muted);margin-left:3px}
+.feat-stats div span{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.feat-cta{display:inline-flex;align-items:center;gap:11px;background:var(--ink);color:#fff;padding:14px 26px;border-radius:8px;font-weight:700;font-size:15px;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s}
+.feat-cta .sq{width:10px;height:10px;background:var(--orange);border-radius:2px}
+.feat-cta:hover{background:var(--orange);transform:translateY(-2px);box-shadow:var(--sh-orange)}
+.feat-cards{display:flex;flex-direction:column;gap:18px}
+.fcard{position:relative;display:flex;gap:24px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;overflow:hidden;
+  transition:background .35s var(--ease),border-color .35s,transform .35s var(--ease),box-shadow .35s}
+.fcard:hover{background:var(--orange);border-color:var(--orange);box-shadow:0 22px 44px rgba(241,90,36,.24)}
+.fc-img{flex:0 0 34%;max-width:230px;aspect-ratio:1.2;border-radius:12px;overflow:hidden}
+.fc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.fcard:hover .fc-img img{transform:scale(1.07)}
+.fc-c{flex:1;padding-right:52px}
+.fc-no{font-family:"Segoe UI";font-weight:800;color:var(--orange-soft);font-size:30px;line-height:1;transition:color .3s}
+.fcard:hover .fc-no{color:rgba(255,255,255,.55)}
+.fc-name{font-size:24px;font-weight:800;margin:2px 0 8px;transition:color .3s}
+.fcard:hover .fc-name{color:#fff}
+.fc-copy{color:var(--muted);font-size:15px;line-height:1.6;transition:color .3s}
+.fcard:hover .fc-copy{color:rgba(255,255,255,.92)}
+.fc-arrow{position:absolute;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink);transition:.3s var(--ease)}
+.fcard:hover .fc-arrow{background:var(--ink);color:#fff;border-color:transparent}
+
+/* ===== TIMELINE (hover-preview list) ===== */
+.timeline{background:var(--bg-2)}
+.tl-wrap{position:relative;max-width:1000px;margin:0 auto}
+.tl-list{list-style:none}
+.tl-row{position:relative;display:grid;grid-template-columns:1fr 132px 30px;gap:20px;align-items:center;
+  padding:22px 8px 22px 14px;border-bottom:1px solid var(--line);cursor:pointer;
+  transition:padding .35s var(--ease)}
+.tl-row:first-child{border-top:1px solid var(--line)}
+.tl-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--orange-2),var(--orange));
+  transform:scaleY(0);transition:transform .35s var(--ease)}
+.tl-row .ev{font-size:17px;font-weight:600;color:var(--ink);line-height:1.5;transition:color .3s;max-width:62ch}
+.tl-row .yr{font-family:"Segoe UI";font-weight:800;font-size:15px;letter-spacing:.04em;color:var(--muted);text-align:right;
+  font-variant-numeric:tabular-nums;transition:color .3s}
+.tl-row .go{justify-self:end;color:var(--muted);opacity:.45;display:inline-flex;
+  transition:transform .35s var(--ease),opacity .3s,color .3s}
+.tl-row.active{padding-left:26px}
+.tl-row.active::before{transform:scaleY(1)}
+.tl-row.active .ev{color:var(--orange)}
+.tl-row.active .yr{color:var(--ink)}
+.tl-row.active .go{opacity:1;color:var(--orange);transform:translateX(4px)}
+/* reserve right space so the floating preview never covers text */
+@media(min-width:981px){.tl-row{padding-right:340px}}
+.tl-preview{position:absolute;right:0;top:120px;width:320px;height:212px;border-radius:16px;overflow:hidden;
+  border:4px solid #fff;box-shadow:var(--sh-lg);pointer-events:none;opacity:0;
+  transform:translateY(-50%) scale(.94);transition:opacity .35s var(--ease),transform .35s var(--ease),top .3s var(--ease);z-index:6}
+.tl-preview.show{opacity:1;transform:translateY(-50%) scale(1)}
+.tl-preview img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+.tl-preview .cap{position:absolute;left:0;right:0;bottom:0;padding:16px;color:#fff;font-weight:800;font-size:16px;
+  font-family:"Segoe UI";letter-spacing:.04em;background:linear-gradient(0deg,rgba(13,30,46,.92),transparent)}
+
+/* ===== NEWS magazine ===== */
+.news-tabs{display:flex;gap:10px;margin-bottom:40px}
+.news-tabs button{padding:10px 22px;border-radius:30px;border:1.5px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font-weight:600;font-size:14px;transition:.3s}
+.news-tabs button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.news-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;align-items:stretch}
+.news-tabs button{transition:.3s var(--ease)}
+.news-tabs button:hover{border-color:var(--ink);color:var(--ink)}
+.feature-news{border-radius:var(--r-lg);overflow:hidden;position:relative;cursor:pointer;min-height:460px;display:flex;align-items:flex-end;
+  opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.feature-news.show{opacity:1;transform:none}
+.feature-news img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.6s}
+.feature-news:hover img{transform:scale(1.05)}
+.feature-news::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,30,46,.92),transparent 55%)}
+.feature-news .ov{position:relative;z-index:2;padding:36px;color:#fff}
+.feature-news .tagcat{display:inline-block;background:var(--orange);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:30px;margin-bottom:12px;letter-spacing:.05em}
+.feature-news .date{color:#ffd0bf;font-weight:700;font-size:13px}
+.feature-news h3{font-size:25px;font-weight:800;margin:10px 0;line-height:1.4}
+.feature-news p{color:#d6e0ea;font-size:15px}
+.news-list{display:flex;flex-direction:column;gap:16px;max-height:460px;overflow-y:auto;padding-right:8px}
+.news-list::-webkit-scrollbar{width:6px}
+.news-list::-webkit-scrollbar-track{background:transparent}
+.news-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.news-list::-webkit-scrollbar-thumb:hover{background:var(--orange)}
+.nl-item{display:grid;grid-template-columns:118px 1fr;gap:16px;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:border-color .3s,transform .3s var(--ease),box-shadow .3s;background:#fff;flex:0 0 auto}
+.nl-item:hover{border-color:var(--orange);transform:translateX(5px)}
+.nl-item.active{border-color:var(--orange);background:var(--orange-soft);box-shadow:0 8px 22px rgba(241,90,36,.14)}
+.nl-item.active h4{color:var(--orange)}
+.nl-item img{width:118px;height:100%;min-height:96px;object-fit:cover}
+.nl-item .c{padding:12px 14px 12px 0}
+.nl-item .date{color:var(--orange);font-size:12px;font-weight:700}
+.nl-item h4{font-size:14.5px;margin-top:5px;line-height:1.5;transition:color .3s;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ===== SUPPORT ===== */
+/* pinned scrub: page stays put while 01/02/03 highlight in sequence (footer stays hidden until after) */
+.sup-pin{position:relative;height:230vh}
+.sup-stage{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.sup-stage>.wrap{width:100%}
+/* editorial connected-index (top rule + node dots + big numerals) — not generic icon cards */
+.svc-row{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--line)}
+.svc{position:relative;display:block;padding:38px 34px 32px;border-left:1px solid var(--line);transition:background .4s var(--ease)}
+.svc:first-child{border-left:0}
+.svc::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange-2));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.svc::after{content:"";position:absolute;top:-6px;left:34px;width:10px;height:10px;border-radius:50%;background:var(--line);transition:.4s var(--ease)}
+.svc:hover{background:linear-gradient(180deg,var(--orange-soft),transparent 72%)}
+.svc:hover::before{transform:scaleX(1)}
+.svc:hover::after{background:var(--orange);box-shadow:0 0 0 5px rgba(241,90,36,.14)}
+.svc-no{display:block;font-family:"Segoe UI";font-weight:800;font-size:58px;line-height:1;letter-spacing:-1px;color:var(--line);transition:color .4s var(--ease);margin-bottom:20px}
+.svc:hover .svc-no{color:var(--orange)}
+.svc h3{font-size:22px;font-weight:800;margin-bottom:13px;display:flex;align-items:baseline;gap:11px}
+.svc h3 .en{font-size:11px;letter-spacing:.22em;font-weight:700;color:var(--muted)}
+.svc p{color:var(--muted);font-size:14.5px;line-height:1.75;margin-bottom:22px;max-width:300px}
+.svc-go{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:700;font-size:14px;transition:color .35s}
+.svc:hover .svc-go{color:var(--orange)}
+.svc-go i{font-style:normal;transition:transform .35s var(--ease)}
+.svc:hover .svc-go i{transform:translateX(6px)}
+/* scroll-driven sequential highlight (same look as hover) */
+.svc.on{background:linear-gradient(180deg,var(--orange-soft),transparent 72%)}
+.svc.on::before{transform:scaleX(1)}
+.svc.on::after{background:var(--orange);box-shadow:0 0 0 5px rgba(241,90,36,.14)}
+.svc.on .svc-no{color:var(--orange)}
+.svc.on .svc-go{color:var(--orange)}
+.svc.on .svc-go i{transform:translateX(6px)}
+
+/* ===== FOOTER ===== */
+/* page slides up to reveal the footer fixed beneath */
+.page-wrap{position:relative;z-index:2;background:var(--bg)}
+.foot-spacer{height:440px}
+footer{position:fixed;left:0;right:0;bottom:0;z-index:1;background:var(--ink);color:#aebccb;padding:72px 0 28px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:40px}
+.foot-brand .brand{color:#fff;margin-bottom:18px}
+.foot-brand .brand small{color:#8294a6}
+.foot-brand p{font-size:14px;max-width:280px}
+footer h5{color:#fff;font-size:15px;margin-bottom:16px}
+footer ul{list-style:none}footer ul li{margin-bottom:11px}
+footer a:hover{color:var(--orange)}
+.foot-contact div{margin-bottom:9px;font-size:14px}.foot-contact b{color:#fff}
+.foot-bottom{margin-top:46px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px}
+.friend{display:flex;gap:16px;flex-wrap:wrap}
+
+.totop{position:fixed;right:26px;bottom:26px;width:48px;height:48px;border-radius:12px;background:var(--orange);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:90;font-size:20px;box-shadow:0 12px 30px rgba(241,90,36,.4)}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* ============================================================
+   SCROLL-LINKED ENGINE — parallax, pinned scrub, flight-rail
+   ============================================================ */
+
+/* dragonfly cursor follower */
+.cursor-fly{position:fixed;top:0;left:0;width:48px;height:auto;z-index:200;pointer-events:none;opacity:0;
+  transition:opacity .45s ease;will-change:transform;filter:drop-shadow(0 5px 12px rgba(241,90,36,.22))}
+.cursor-fly.show{opacity:.68}
+@media(hover:none),(max-width:980px){.cursor-fly{display:none}}
+
+/* flight-rail: a drone descends the right gutter, tying sections together */
+.rail{position:fixed;top:96px;bottom:96px;right:24px;width:2px;z-index:86;pointer-events:none;display:none}
+.rail .track{position:absolute;inset:0;background:var(--line)}
+.rail .fill{position:absolute;top:0;left:0;width:100%;height:var(--sp,0%);background:linear-gradient(var(--orange-2),var(--orange));box-shadow:0 0 10px rgba(241,90,36,.5)}
+.rail .pod{position:absolute;left:50%;top:var(--sp,0%);width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  background:#fff;border:1.5px solid var(--orange);display:grid;place-items:center;font-size:16px;
+  box-shadow:0 6px 18px rgba(241,90,36,.35);transition:top .12s linear,transform .25s var(--ease)}
+.rail .pod b{display:grid;place-items:center;transform:rotate(var(--tilt,0deg));transition:transform .2s}
+.rail .pod .drone{width:18px;height:18px;color:var(--orange);display:block}
+.rail .lbl{position:absolute;right:24px;top:var(--sp,0%);transform:translateY(-50%);white-space:nowrap;
+  font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--orange);background:rgba(255,255,255,.85);
+  padding:3px 9px;border-radius:20px;box-shadow:var(--sh-sm);opacity:0;transition:opacity .3s,top .12s linear}
+.rail.show-lbl .lbl{opacity:1}
+@media(min-width:1180px){.rail{display:block}}
+
+/* giant section watermark that parallax-drifts across boundaries */
+.wm{position:absolute;z-index:0;pointer-events:none;user-select:none;font-family:"Segoe UI",sans-serif;
+  font-weight:800;line-height:.8;letter-spacing:0;font-size:clamp(54px,8.5vw,126px);
+  color:transparent;-webkit-text-stroke:1.4px rgba(15,61,99,.08);white-space:nowrap;will-change:transform;max-width:96vw}
+section,.platform-pin,.prod-pin{position:relative}
+section>.wrap,.platform-stage>.wrap,.prod-sticky{position:relative;z-index:1}
+.platform-stage .wm{transform:translateX(calc(-38px + 76px*var(--p,0)))}
+.prod-sticky .wm{z-index:0;transform:translateX(calc(38px - 76px*var(--p,0)))}
+.prod-sticky .wrap{position:relative;z-index:1}
+
+/* parallax media — translated by JS via --py */
+[data-par]{will-change:transform}
+.par-img{transform:translate3d(0,var(--py,0px),0)}
+
+/* ---- PLATFORM (compact two-column) ---- */
+.platform-pin{background:var(--bg-2)}
+.platform-stage{position:relative}
+.platform-stage .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;width:100%}
+.platform-stage .platform-img{height:min(72vh,620px)}
+.pf-copy h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;margin:12px 0 8px}
+.pf-copy .sub{color:var(--blue-2);font-size:18px;font-weight:600;margin-bottom:24px}
+
+/* ---- PRODUCTS: pinned horizontal reel ---- */
+.prod-pin{height:420vh;padding:0}
+/* stacking cover: hero ← platform ← products (each slides up over the previous) */
+.cover-group{position:relative}
+.cover-group .hero{position:sticky;top:0;z-index:1}
+/* platform pins full-screen (fills viewport — no hero orange leaks), then products covers it while pinned */
+.cover-group .platform-pin{position:sticky;top:0;min-height:100vh;z-index:2;display:flex;align-items:center;overflow:hidden;
+  border-radius:36px 36px 0 0;box-shadow:0 -30px 70px -26px rgba(15,61,99,.3)}
+.cover-group .platform-pin>.platform-stage{width:100%}
+.cover-spacer{position:relative;z-index:0;height:300vh}     /* 3-screen dwell: drone fly-in / rotate / fly-out synced to 01/02/03 */
+.cover-group .prod-pin{position:relative;z-index:3;background:var(--bg);border-radius:36px 36px 0 0;box-shadow:0 -30px 70px -26px rgba(15,61,99,.3)}
+.prod-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;padding:78px 0 28px}
+.prod-sticky .sec-head{margin-bottom:4px}
+.prod-sticky .sec-head .eyebrow{margin-bottom:0}
+.prod-sticky .sec-head h2{font-size:clamp(26px,3vw,38px);margin:3px 0}
+.prod-sticky>.wrap{width:100%}/* flex-column children would otherwise shrink to content via margin:auto */
+/* scroll-driven switcher: image(left) · copy(right) · vertical-line thumbnail rail(far right) */
+.prod-stage{flex:1;min-height:0;display:grid;grid-template-columns:1fr 104px;gap:clamp(26px,3.4vw,56px);align-items:center;margin-top:8px}
+.ps-main{position:relative;width:100%;height:min(62vh,520px)}
+.ps-item{position:absolute;inset:0;display:grid;grid-template-columns:1.06fr 1fr;gap:clamp(26px,3vw,50px);align-items:center;
+  opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .6s var(--ease),transform .7s var(--ease)}
+.ps-item.on{opacity:1;visibility:visible;transform:none}
+.ps-pic{position:relative;height:100%;border-radius:20px;overflow:hidden;box-shadow:var(--sh-md);background:var(--bg-2)}
+.ps-pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease);transform:scale(1.05)}
+.ps-item.on .ps-pic img{transform:scale(1)}
+.ps-name{position:absolute;left:26px;top:22px;z-index:2;color:#fff;font-weight:800;letter-spacing:1px;line-height:1;font-size:clamp(30px,3.6vw,50px);text-shadow:0 2px 22px rgba(0,0,0,.42)}
+.ps-name small{display:block;font-size:14px;font-weight:600;letter-spacing:.14em;margin-top:11px;opacity:.92}
+.ps-info{display:flex;flex-direction:column;justify-content:center}
+.ps-info h3{font-size:clamp(22px,2.25vw,33px);font-weight:700;line-height:1.42;letter-spacing:-.3px}
+.ps-info h3 .hl{color:var(--orange)}
+.ps-more{display:inline-flex;align-items:center;gap:11px;margin-top:28px;font-weight:700;font-size:15px;color:var(--ink);transition:.3s var(--ease)}
+.ps-more .sq{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.3s var(--ease)}
+.ps-more:hover{color:var(--orange)}
+.ps-more:hover .sq{background:var(--orange);color:#fff;border-color:transparent;transform:translateX(3px)}
+.ps-rail{height:min(62vh,520px);display:flex;align-items:stretch;gap:18px}
+.ps-track{position:relative;width:2px;background:rgba(22,33,46,.14);border-radius:2px;flex:none}
+.ps-dot{position:absolute;left:50%;margin-left:-3px;top:0;width:6px;height:46px;border-radius:6px;background:linear-gradient(180deg,var(--orange-2),var(--orange));box-shadow:0 0 0 5px rgba(241,90,36,.12);transition:top .12s linear}
+.ps-thumbs{display:flex;flex-direction:column;justify-content:space-between;flex:1}
+.ps-thumb{position:relative;width:72px;height:72px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;padding:0;cursor:pointer;opacity:.5;filter:grayscale(.35);transition:.4s var(--ease)}
+.ps-thumb img{width:100%;height:100%;object-fit:cover}
+.ps-thumb.on{opacity:1;filter:none;border-color:var(--orange);box-shadow:0 10px 24px rgba(241,90,36,.26);transform:scale(1.07)}
+
+/* scroll-velocity skew for liveliness */
+.skew{transition:transform .12s var(--ease)}
+
+@media(max-width:980px){
+  .hero .wrap,.platform .wrap,.prod-stage,.news-layout{grid-template-columns:1fr}
+  .hero-visual>img{height:360px}
+  /* features fused layout → stack on mobile */
+  .feat-layout{grid-template-columns:1fr;gap:30px}
+  .feat-head{position:static}
+  .fc-img{flex:0 0 30%}
+  /* support → static, horizontal swipe cards (no pin on mobile) */
+  .sup-pin{height:auto}
+  .sup-stage{position:static;min-height:0;display:block;overflow:visible}
+  .svc-row{display:flex;border-top:0;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin:24px -30px 0;padding:6px 30px 18px;scrollbar-width:none}
+  .svc-row::-webkit-scrollbar{display:none}
+  .svc{flex:0 0 80%;scroll-snap-align:center;border:1px solid var(--line);border-radius:16px}
+  .svc::after,.svc::before{display:none}
+  .prod-info{padding:0 24px 24px}
+  .tl-row{grid-template-columns:76px 1fr;gap:14px;padding:18px 6px}
+  .tl-row .yr{order:-1;text-align:left}
+  .tl-row .ev{font-size:15px;max-width:none}
+  .tl-row .go{display:none}
+  .tl-preview{display:none}
+  /* footer reveal off on small screens */
+  .page-wrap{z-index:auto}
+  footer{position:static}
+  .foot-spacer{display:none}
+  .foot-grid{grid-template-columns:repeat(2,1fr)}
+  /* nav drawer: wider panel on phones (50% would be too cramped) */
+  .menu{width:82%}
+  section{padding:74px 0}
+  /* neutralize pinned scrubs on small screens */
+  .cover-group .hero{position:static}
+  .cover-group .platform-pin{position:static;border-radius:0;box-shadow:none}
+  .cover-group .prod-pin{border-radius:0;box-shadow:none}
+  .cover-group .platform-pin,.platform-pin{height:auto;min-height:0;display:block}
+  .cover-group .platform-stage,.platform-stage{position:static;min-height:0;height:auto;padding:74px 0}
+  .cover-spacer{display:none}
+  .platform-stage .pf-copy h2{transform:none!important}
+  .platform-stage .wrap{grid-template-columns:1fr}
+  .platform-stage .platform-img,.pf-copy>*,.platform-stage .plist li{transform:none!important;opacity:1!important}
+  .platform-stage .platform-img{height:300px}
+  .prod-pin{height:auto}
+  .prod-sticky{position:static;height:auto;padding:74px 0;overflow:visible}
+  /* products → stacked cards (vertical-line rail hidden) */
+  .prod-stage{display:block;grid-template-columns:1fr;gap:0;margin-top:18px}
+  .ps-rail{display:none}
+  .ps-main{height:auto;display:flex;flex-direction:column;gap:30px}
+  .ps-item{position:static;display:grid;grid-template-columns:1fr;gap:16px;opacity:1;visibility:visible;transform:none}
+  .ps-pic{height:240px}
+  .ps-info h3{font-size:20px;line-height:1.5}
+  .ps-more{margin-top:18px}
+  .wm{font-size:clamp(40px,13vw,84px)}
+}
+@media(max-width:600px){
+  .foot-grid{grid-template-columns:1fr}
+  .svc{flex:0 0 86%}
+  .fcard{gap:16px;padding:14px}.fc-img{flex:0 0 34%}.fc-name{font-size:20px}.fc-c{padding-right:0}.fc-arrow{display:none}
+  .ps-pic{height:200px}
+}
+</style>
+</head>
+<body>
+
+<!-- loader -->
+<div id="loader">
+  <div class="lgrid"></div>
+  <div class="lnum"><span id="loadNum">0</span><i>%</i></div>
+  <img class="ldrone" src="assets/drone-b.png" alt="" aria-hidden="true"/>
+  <div class="lbrand">览众科技 · LANZ</div>
+  <div class="lbar"></div>
+</div>
+
+<!-- dragonfly cursor follower -->
+<img id="dragonfly" class="cursor-fly" src="assets/dragonfly.png" alt="" aria-hidden="true"/>
+
+<!-- flight-rail (drone rides down the page, links sections) -->
+<div class="rail" id="rail" aria-hidden="true">
+  <div class="track"></div>
+  <div class="fill"></div>
+  <div class="pod"><b><svg class="drone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line x1="7" y1="7" x2="17" y2="17"/><line x1="17" y1="7" x2="7" y2="17"/><circle cx="6" cy="6" r="2.6"/><circle cx="18" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><circle cx="18" cy="18" r="2.6"/><rect x="9.4" y="9.4" width="5.2" height="5.2" rx="1.4"/></svg></b></div>
+  <div class="lbl" id="railLbl">首页</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><img class="lmark" src="assets/logo-mark.png" alt=""/><span class="lname">览众科技</span></a>
+    <ul class="menu" id="menu">
+      <li><a href="#top" class="active">首页</a></li>
+      <li><a href="#products">产品介绍</a></li>
+      <li><a href="#features">行业应用</a></li>
+      <li><a href="#timeline">发展历程</a></li>
+      <li><a href="#news">新闻资讯</a></li>
+      <li><a href="#footer">关于览众</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="menu-btn" id="ham" type="button" aria-label="菜单" aria-expanded="false"><span class="mlbl">菜单</span><span class="bars"><span></span><span></span><span></span></span></button>
+    </div>
+  </div>
+  <div class="nav-prog" id="navProg"></div>
+  <div class="menu-scrim" id="menuScrim" aria-hidden="true"></div>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+<!-- stacking cover sequence: hero ← platform ← products -->
+<div class="cover-group">
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <h1 class="hero-headline">
+      <span class="w"><b>让小无人机，</b></span>
+      <span class="w"><b>承载大梦想。</b></span>
+    </h1>
+    <div class="hero-drones" aria-hidden="true">
+      <img class="dr d1" src="assets/drone-b.png" alt=""/>
+      <img class="dr d2" src="assets/drone-b.png" alt=""/>
+      <img class="dr d3" src="assets/drone-b.png" alt=""/>
+    </div>
+    <div class="hero-coord">珠海 · 览众创新<br>22°16′N&nbsp;&nbsp;113°34′E</div>
+    <div class="hero-foot">
+      <p>基于微型共轴双旋翼构型技术 — 超静音、高性能、智能化、模块化，打造世界一流的空中机器人系统。</p>
+      <a class="cta" href="#products"><span class="sq"></span>浏览全系列产品</a>
+    </div>
+  </div>
+</header>
+
+<!-- PLATFORM (pinned scale-reveal) -->
+<section class="platform-pin" id="platform">
+  <div class="platform-stage">
+    <span class="wm" style="left:4vw;top:50%;margin-top:-0.45em">PLATFORM</span>
+    <div class="wrap">
+      <div class="platform-img" id="droneBox"><canvas class="drone-canvas" id="droneCanvas" aria-label="无人机光影"></canvas></div>
+      <div class="pf-copy reveal reveal-r">
+        <span class="eyebrow">FLIGHT PLATFORM</span>
+        <h2>共轴智能飞行器平台</h2>
+        <div class="sub">灵活适配各类任务载荷，满足个性需求</div>
+        <ul class="plist">
+          <li><span class="ic">01</span><div>如您是<b>用户</b>，请分享您的痛点，我们携手解决</div></li>
+          <li><span class="ic">02</span><div>如您是<b>荷载提供商</b>，我们联手成就一方市场</div></li>
+          <li><span class="ic">03</span><div>如您是<b>人才</b>，让我们共筑一个飞行的梦想</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="cover-spacer" aria-hidden="true"></div>
+
+<!-- PRODUCTS (pinned horizontal reel) -->
+<section class="prod-pin" id="products">
+  <div class="prod-sticky">
+    <span class="wm" style="right:4vw;top:46%;margin-top:-0.45em">X SERIES</span>
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">FULL PRODUCT LINE</span><h2>全系列产品</h2></div>
+    </div>
+    <div class="wrap prod-stage">
+      <div class="ps-main" id="psMain"></div>
+      <div class="ps-rail">
+        <div class="ps-track"><span class="ps-dot" id="psDot"></span></div>
+        <div class="ps-thumbs" id="psThumbs"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /cover-group -->
+
+<!-- FEATURES -->
+<section id="features">
+  <span class="wm" data-wm style="left:5vw;top:32px">WHY LANZ</span>
+  <div class="wrap feat-layout">
+    <div class="feat-head reveal reveal-l">
+      <span class="eyebrow">WHY LANZ</span>
+      <h2>为极致体验而生</h2>
+      <p class="feat-lead">便捷、安全、美好 — 以微型共轴双旋翼构型，重新定义微型无人飞行平台的体验边界。</p>
+      <div class="feat-stats">
+        <div><b>58<i>min</i></b><span>最长续航纪录</span></div>
+        <div><b>4</b><span>X 系列机型</span></div>
+        <div><b>3</b><span>核心体验</span></div>
+      </div>
+      <a class="feat-cta" href="#products"><span class="sq"></span>浏览全系列产品</a>
+    </div>
+    <div class="feat-cards">
+      <a class="fcard reveal" href="#products">
+        <div class="fc-img"><img src="assets/feat1.jpg" alt="便捷"/></div>
+        <div class="fc-c"><div class="fc-no">01</div><div class="fc-name">便捷</div><div class="fc-copy">柱状机体桨叶贴身折叠，秒级展开即飞，随取随用。</div></div>
+        <span class="fc-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="fcard reveal" href="#products">
+        <div class="fc-img"><img src="assets/feat2.jpg" alt="安全"/></div>
+        <div class="fc-c"><div class="fc-no">02</div><div class="fc-name">安全</div><div class="fc-copy">超强动力冗余设计，从容应对复杂环境与极端任务。</div></div>
+        <span class="fc-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="fcard reveal" href="#products">
+        <div class="fc-img"><img src="assets/feat3.jpg" alt="美好"/></div>
+        <div class="fc-c"><div class="fc-no">03</div><div class="fc-name">美好</div><div class="fc-copy">全新多模式载荷适配，带来非一般的品质与操控体验。</div></div>
+        <span class="fc-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE (hover-preview list) -->
+<section class="timeline" id="timeline">
+  <span class="wm" data-wm style="right:4vw;top:32px">SINCE 2018</span>
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">MILESTONES</span>
+      <h2>发展历程</h2>
+      <p>记录着我们的创新与飞翔</p>
+    </div>
+    <div class="tl-wrap reveal" id="tlWrap">
+      <ul class="tl-list" id="tlList"></ul>
+      <div class="tl-preview" id="tlPreview"><img id="tlImg" alt=""/><div class="cap" id="tlCap"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <span class="wm" data-wm style="left:6vw;top:32px">NEWS</span>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">NEWSROOM</span>
+      <h2>新闻资讯</h2>
+      <p>汇聚览众最新动态与权威媒体报道</p>
+    </div>
+    <div class="news-tabs reveal">
+      <button class="active" data-f="all">全部</button>
+      <button data-f="news">新闻资讯</button>
+      <button data-f="media">媒体报道</button>
+    </div>
+    <div class="news-layout" id="newsLayout"></div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section id="support" class="sup-pin">
+  <div class="sup-stage">
+  <span class="wm" data-wm style="right:5vw;top:32px">SERVICE</span>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">SERVICE &amp; SUPPORT</span>
+      <h2>服务与支持</h2>
+      <p>从合作洽谈到售后保障，全流程陪伴你的每一次飞行任务</p>
+    </div>
+    <div class="svc-row">
+      <a class="svc reveal" href="#footer">
+        <span class="svc-no">01</span>
+        <h3>合作交流<span class="en">COOPERATION</span></h3>
+        <p>开放共建生态，携手用户、载荷提供商与人才，共创低空应用新场景。</p>
+        <span class="svc-go">洽谈合作<i>→</i></span>
+      </a>
+      <a class="svc reveal" href="#footer">
+        <span class="svc-no">02</span>
+        <h3>服务与支持<span class="en">SUPPORT</span></h3>
+        <p>覆盖售后政策、设备保养与技术响应，让每台设备都长期稳定可靠。</p>
+        <span class="svc-go">获取支持<i>→</i></span>
+      </a>
+      <a class="svc reveal" href="#products">
+        <span class="svc-no">03</span>
+        <h3>技术参数<span class="en">PARAMETER</span></h3>
+        <p>X 系列完整规格、续航与载荷数据，助你按任务精准选型。</p>
+        <span class="svc-go">查看参数<i>→</i></span>
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
+</div><!-- /page-wrap -->
+
+<div class="foot-spacer" id="footSpacer"></div>
+
+<!-- FOOTER (revealed beneath as page slides up) -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="mark">LZ</span><span>览众科技<small>SMALL UAV BIG DREAM</small></span></div>
+        <p>苏州览众科技有限公司 · 珠海览众创新科技有限公司。基于微型共轴双旋翼构型技术，打造世界一流空中机器人系统。</p>
+      </div>
+      <div><h5>服务与支持</h5><ul><li><a href="#support">售后政策</a></li><li><a href="#support">服务支持</a></li><li><a href="#support">设备保养</a></li></ul></div>
+      <div><h5>关于览众</h5><ul><li><a href="#platform">企业介绍</a></li><li><a href="#timeline">成长历程</a></li><li><a href="#footer">渠道合作</a></li></ul></div>
+      <div class="foot-contact"><h5>联系我们</h5>
+        <div><b>info@lanzuav.com</b></div>
+        <div>电话：(0756) 396 6001</div>
+        <div>苏州览众科技有限公司</div>
+        <div>珠海览众创新科技有限公司</div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="friend"><span>友情链接：</span>
+        <a href="https://www.most.gov.cn/" target="_blank">科技部</a>
+        <a href="https://www.cas.cn/" target="_blank">中科院</a>
+        <a href="https://www.miit.gov.cn/" target="_blank">工信部</a>
+      </div>
+      <div>©2017-2024 览众科技 All Rights Reserved · 苏ICP备2024113458号</div>
+    </div>
+  </div>
+</footer>
+
+<div class="totop" id="totop">↑</div>
+
+<!-- 3D drone: vendored three.js r128 + GLTFLoader + RoomEnvironment + embedded model (classic scripts load on file://) -->
+<script src="assets/lib/three.min.js"></script>
+<script src="assets/lib/GLTFLoader.js"></script>
+<script src="assets/lib/RoomEnvironment.js"></script>
+<script src="assets/lib/drone-gltf.js"></script>
+<script>
+/* ===== refs & helpers ===== */
+const nav=document.getElementById('nav'),menu=document.getElementById('menu'),
+  navProg=document.getElementById('navProg'),totop=document.getElementById('totop'),vtEl=document.getElementById('vt'),
+  rail=document.getElementById('rail'),railLbl=document.getElementById('railLbl'),railPod=rail.querySelector('.pod'),
+  railDrone=rail.querySelector('.drone'),heroDrones=document.querySelector('.hero-drones');
+const ids=['top','products','features','timeline','news','footer'];
+const idLabel={top:'首页',products:'产品',features:'应用',timeline:'历程',news:'资讯',footer:'关于'};
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ===== always start at the top (home) on every load / refresh ===== */
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+const toHome=()=>scrollTo({top:0,left:0,behavior:'auto'});
+toHome();
+addEventListener('load',toHome);
+
+/* ===== loader → reveal hero (count to 100, then drones rise) ===== */
+(function(){
+  const loader=document.getElementById('loader'),num=document.getElementById('loadNum');
+  const reveal=()=>{document.body.classList.add('loaded');loader.classList.add('done');document.documentElement.style.overflow='';toHome();};
+  if(reduce){if(num)num.textContent='100';if(loader)loader.style.setProperty('--lp','100%');reveal();return;}
+  document.documentElement.style.overflow='hidden';
+  let n=0;
+  (function tick(){
+    n+=Math.max(1,Math.round((100-n)/7));if(n>99)n=100;
+    num.textContent=n;loader.style.setProperty('--lp',n+'%');
+    if(n<100)setTimeout(tick,35+Math.random()*70);
+    else setTimeout(reveal,420);
+  })();
+})();
+
+/* ===== footer reveal: spacer = footer height (so page can slide up over it) ===== */
+const footEl=document.getElementById('footer'),footSpacer=document.getElementById('footSpacer');
+function sizeFoot(){if(matchMedia('(max-width:980px)').matches){footSpacer.style.height='';return;}footSpacer.style.height=footEl.offsetHeight+'px';}
+addEventListener('load',sizeFoot);addEventListener('resize',sizeFoot);sizeFoot();
+
+/* ===== menu / totop ===== */
+const ham=document.getElementById('ham'),menuScrim=document.getElementById('menuScrim');
+function setMenu(open){menu.classList.toggle('open',open);ham.classList.toggle('open',open);if(menuScrim)menuScrim.classList.toggle('open',open);ham.setAttribute('aria-expanded',open);document.documentElement.style.overflow=open?'hidden':'';}
+ham.onclick=()=>setMenu(!menu.classList.contains('open'));
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
+if(menuScrim)menuScrim.onclick=()=>setMenu(false);
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+totop.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* ===== reveal (stagger among siblings) ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+  const sibs=[...e.target.parentElement.children].filter(c=>c.classList.contains('reveal'));
+  e.target.style.transitionDelay=(Math.max(0,sibs.indexOf(e.target))*90)+'ms';
+  e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+/* mask slide-up for section headings */
+document.querySelectorAll('.sec-head h2').forEach(h=>{h.innerHTML='<span class="ln">'+h.innerHTML+'</span>';io.observe(h);});
+
+/* ===== count-up ===== */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+  const el=e.target,to=+el.dataset.to;let cur=0;const step=Math.max(1,Math.round(to/28));
+  const t=setInterval(()=>{cur+=step;if(cur>=to){cur=to;clearInterval(t);}el.textContent=cur;},28);
+  cio.unobserve(el);}}),{threshold:.6});
+document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+
+/* ===== product reel (built once, scrubbed by scroll) ===== */
+const products=[
+  {m:'X050',img:'assets/product-x050.jpg',tag:'握放 · 一念',desc:'手持灵巧型微先锋',feat:['口袋级便携，单手握放','一念即飞的极简交互','贴身侦察与快速响应']},
+  {m:'X100',img:'assets/product-x100.jpg',tag:'起落 · 矫健',desc:'组合模块化多面手',feat:['全球前三 · 全国唯一批量交付共轴双旋翼','模块化任务载荷快速切换','已正式量产交付']},
+  {m:'X300',img:'assets/product-x300.jpg',tag:'肩挑 · 重任',desc:'拓展双侧挂新标杆',feat:['双侧挂载，拓展任务边界','更强载荷与续航平衡','复杂环境稳定作业']},
+  {m:'X750',img:'assets/product-x750.jpg',tag:'泰然 · 利落',desc:'稳重精准型砥流柱',feat:['重载稳定，精准悬停','抗风能力强，泰然应对','大范围巡检与运输']},
+];
+const prodPin=document.getElementById('products'),psMain=document.getElementById('psMain'),psThumbs=document.getElementById('psThumbs'),psDot=document.getElementById('psDot');
+const psArrow='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+products.forEach((p,k)=>{
+  const item=document.createElement('div');item.className='ps-item'+(k===0?' on':'');
+  item.innerHTML=`<div class="ps-pic"><span class="ps-name">${p.m}<small>${p.tag}</small></span><img src="${p.img}" alt="${p.m}"/></div>
+    <div class="ps-info"><h3><span class="hl">${p.desc}。</span>${p.feat.join('，')}。</h3>
+      <a class="ps-more" href="product.html">了解更多<span class="sq">${psArrow}</span></a></div>`;
+  psMain.appendChild(item);
+  const tb=document.createElement('button');tb.className='ps-thumb'+(k===0?' on':'');tb.setAttribute('aria-label',p.m);
+  tb.innerHTML=`<img src="${p.img}" alt="${p.m}"/>`;
+  tb.onclick=()=>{const denom=prodPin.offsetHeight-innerHeight;scrollTo({top:prodPin.offsetTop+(k/(products.length-1))*denom*0.998+1,behavior:'smooth'});};
+  psThumbs.appendChild(tb);
+});
+const psItems=[...psMain.children],psThumbBtns=[...psThumbs.children];
+
+/* ===== unified scroll engine (rAF, one read/write pass) ===== */
+const platPin=document.getElementById('platform'),platStage=platPin&&platPin.querySelector('.platform-stage'),droneBox=document.getElementById('droneBox');
+const absTop=el=>{let t=0;while(el){t+=el.offsetTop;el=el.offsetParent;}return t;};
+const coverSpacer=document.querySelector('.cover-spacer');
+let platTop=0,coverSpacerPx=0,dronePP=0;function measurePlat(){if(platPin)platTop=absTop(platPin);coverSpacerPx=coverSpacer?coverSpacer.offsetHeight:0;}
+addEventListener('load',measurePlat);addEventListener('resize',measurePlat);measurePlat();
+const plistItems=platStage?[...platStage.querySelectorAll('.plist li')]:[];
+const sideWms=[...document.querySelectorAll('section > .wm')];
+const supPin=document.getElementById('support'),svcRow=document.querySelector('.svc-row'),svcItems=svcRow?[...svcRow.children]:[];
+let lastY=scrollY,vel=0,raf=0;
+function frame(){
+  raf=0;
+  const y=scrollY,vh=innerHeight,docEl=document.documentElement,max=docEl.scrollHeight-vh;
+  vel+=((y-lastY)-vel)*0.25;lastY=y;
+  const sp=max>0?y/max:0;
+  navProg.style.width=(sp*100)+'%';
+  nav.classList.toggle('scrolled',y>30);
+  totop.classList.toggle('show',y>600);
+  /* active link */
+  let cur='top';ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<160)cur=id;});
+  menu.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+  /* flight-rail drone */
+  rail.style.setProperty('--sp',(sp*100)+'%');
+  railLbl.textContent=idLabel[cur]||'';
+  rail.classList.toggle('show-lbl',y>240);
+  railPod.style.transform='scale('+(1+Math.min(.22,Math.abs(vel)*0.012))+')';
+  if(!reduce)railDrone.style.transform='rotate('+(y*0.45)+'deg)'; /* uniform spin with scroll */
+  /* timeline draw */
+  if(vtEl){const r=vtEl.getBoundingClientRect();vtEl.style.setProperty('--vt-prog',(clamp((vh*0.5-r.top)/r.height,0,1)*100)+'%');}
+  /* watermark parallax (plain sections) */
+  if(!reduce)sideWms.forEach(el=>{const r=el.parentElement.getBoundingClientRect();const c=(r.top+r.height/2)-vh/2;el.style.transform='translate3d(0,'+(-c*0.12)+'px,0)';});
+  /* hero drones — parallax: rise faster than the page as the hero scrolls up */
+  if(heroDrones&&!reduce)heroDrones.style.transform='translateY('+(-Math.min(y,vh)*0.32)+'px)';
+  /* platform = 3-screen scrubbed sequence; dronePP (0..1) drives the 3D drone fly-in / rotate / fly-out */
+  {
+    const dwell=coverSpacerPx||vh*3;
+    dronePP=clamp((y-platTop)/dwell,0,1);
+    if(plistItems.length){
+      const inReg=y>=platTop-vh*0.15 && y<platTop+dwell;
+      const idx=inReg?Math.min(2,Math.floor(dronePP*3)):-1;
+      plistItems.forEach((li,i)=>li.classList.toggle('on',i===idx));
+    }
+  }
+  /* support pinned: page stays put while 01/02/03 highlight in sequence (desktop) */
+  if(svcItems.length){
+    let sidx=-1;
+    if(supPin&&matchMedia('(min-width:981px)').matches){
+      const r=supPin.getBoundingClientRect(),d=supPin.offsetHeight-vh;
+      const p=clamp(d>0?(-r.top)/d:0,0,1);
+      if(r.top<=0&&p<1)sidx=Math.min(2,Math.floor(p*3));   // only while pinned
+    }
+    svcItems.forEach((el,i)=>el.classList.toggle('on',i===sidx));
+  }
+  /* products pin — scroll-driven switcher: vertical line slides down, product crossfades (desktop) */
+  if(prodPin&&psMain&&matchMedia('(min-width:981px)').matches){
+    const r=prodPin.getBoundingClientRect(),d=prodPin.offsetHeight-vh;
+    const p=clamp(d>0?(-r.top)/d:0,0,1);
+    const idx=clamp(Math.round(p*(products.length-1)),0,products.length-1);
+    psItems.forEach((el,i)=>el.classList.toggle('on',i===idx));
+    psThumbBtns.forEach((b,i)=>b.classList.toggle('on',i===idx));
+    if(psDot){psDot.style.top=(p*100)+'%';psDot.style.transform='translateY('+(-p*100)+'%)';}
+  }
+}
+function onScroll(){if(!raf)raf=requestAnimationFrame(frame);}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll);
+frame();
+
+/* timeline — hover-preview list */
+const ms=[
+  {y:'2025.11',d:'南京高华科技联合成立"无人机技术联合实验室"',img:'assets/news4.jpg'},
+  {y:'2025.05',d:'X100正式量产交付，成为全球前三、全国唯一批量交付共轴双旋翼无人机的厂家',img:'assets/product-x100.jpg'},
+  {y:'2024.11',d:'第15届珠海航展 · 中国航展首届低空经济创新大赛金创奖',img:'assets/news1.jpg'},
+  {y:'2024.05',d:'荣获国际无人系统设计奖，亮相深圳国际无人机展览会',img:'assets/news6.jpg'},
+  {y:'2023.12',d:'中国航空创新创业大赛全国总决赛 — 创业组一等奖',img:'assets/news3.jpg'},
+  {y:'2022.09',d:'苏州览众科技有限公司成立，获广东省高新技术企业认证',img:'assets/company.jpg'},
+  {y:'2021.09',d:'首次参加珠海航展，获第五届世界无人机大会创新产品奖',img:'assets/banner1.jpg'},
+  {y:'2020.11',d:'衡029 v3.0样机试飞成功，续航时间达58分钟',img:'assets/hero1.jpg'},
+  {y:'2019.06',d:'衡系列原型机诞生，衡300、衡029相继完成首飞',img:'assets/feat2.jpg'},
+  {y:'2018.06',d:'项目落地珠海，览众无人机征程由此启航',img:'assets/banner2.jpg'},
+];
+const tlList=document.getElementById('tlList'),tlWrap=document.getElementById('tlWrap'),
+  tlPreview=document.getElementById('tlPreview'),tlImg=document.getElementById('tlImg'),tlCap=document.getElementById('tlCap');
+const arrow='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>';
+ms.forEach((m,i)=>{
+  new Image().src=m.img; // preload
+  const li=document.createElement('li');li.className='tl-row';
+  li.innerHTML=`<div class="ev">${m.d}</div><div class="yr">${m.y}</div><div class="go">${arrow}</div>`;
+  li.addEventListener('mouseenter',()=>setMs(i));
+  tlList.appendChild(li);
+});
+const tlRows=[...tlList.children];
+function setMs(i){
+  tlRows.forEach((r,j)=>r.classList.toggle('active',j===i));
+  const m=ms[i];tlImg.src=m.img;tlCap.textContent=m.y;
+  const r=tlRows[i],ph=tlPreview.offsetHeight||212,wh=tlWrap.offsetHeight;
+  let top=r.offsetTop+r.offsetHeight/2;
+  top=Math.max(ph/2,Math.min(wh-ph/2,top));
+  tlPreview.style.top=top+'px';tlPreview.classList.add('show');
+}
+tlList.addEventListener('mouseleave',()=>setMs(0));
+setMs(0);
+
+/* news */
+const news=[
+  {cat:'media',img:'assets/news1.jpg',date:'2026-03-26',t:'北理工、珠海市、中国通号强强联合在珠揭牌！考察团一行到访览众科技',d:'湾区低空研究院在珠海揭牌，多方政企高校领导考察览众科技，共探无人机产业化发展。'},
+  {cat:'media',img:'assets/news2.jpg',date:'2025-12-06',t:'首届AIE展会在珠澳两地圆满落幕，省委领导现场巡展',d:'首届AIE展会圆满落幕。'},
+  {cat:'news',img:'assets/news3.jpg',date:'2025-12-05',t:'全国人大代表视察组莅临览众科技指导调研，见证创新成果！',d:'全国人大代表视察组莅临调研。'},
+  {cat:'news',img:'assets/news4.jpg',date:'2025-11-10',t:'高华科技投资览众科技暨"无人机技术联合实验室"共建启动仪式成功举办',d:'共建无人机技术联合实验室启动。'},
+  {cat:'news',img:'assets/news5.jpg',date:'2025-10-17',t:'览众近况速报！',d:'览众团队近期动态速报。'},
+  {cat:'media',img:'assets/news6.jpg',date:'2025-10-17',t:'览众精神，无畏极境！览众团队前往西藏高原',d:'面对多变气候与高原反应，团队始终坚守岗位。'},
+];
+const layout=document.getElementById('newsLayout');
+const catLabel={media:'媒体报道',news:'新闻资讯'};
+function renderNews(f){
+  const list=news.filter(n=>f==='all'||n.cat===f);
+  if(!list.length){layout.innerHTML='<p style="color:var(--muted)">暂无相关资讯</p>';return;}
+  layout.innerHTML=`
+    <div class="feature-news" id="newsFeature"></div>
+    <div class="news-list" id="newsList">${list.map((n,i)=>`
+      <div class="nl-item" data-i="${i}"><img src="${n.img}" alt=""/><div class="c"><div class="date">${n.date} · ${catLabel[n.cat]}</div><h4>${n.t}</h4></div></div>`).join('')}</div>`;
+  const feature=document.getElementById('newsFeature'),items=[...document.getElementById('newsList').children];
+  function setFeature(i){
+    items.forEach((it,j)=>it.classList.toggle('active',j===i));
+    const n=list[i];
+    feature.classList.remove('show');void feature.offsetWidth;
+    feature.innerHTML=`<img src="${n.img}" alt=""/><div class="ov"><span class="tagcat">${catLabel[n.cat]}</span>
+      <div class="date">${n.date}</div><h3>${n.t}</h3><p>${n.d}</p></div>`;
+    feature.classList.add('show');
+  }
+  items.forEach((it,i)=>it.addEventListener('click',()=>setFeature(i)));
+  setFeature(0);
+}
+document.querySelectorAll('.news-tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.news-tabs button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');renderNews(b.dataset.f);
+});
+renderNews('all');
+
+/* ===== platform: real 3D drone model (three.js r128 — env-lit, orange/cool rim, auto-rotate + mouse parallax) ===== */
+(function(){
+  const box=document.getElementById('droneBox'),canvas=document.getElementById('droneCanvas');
+  if(!box||!canvas)return;
+  const fallback=()=>{box.style.background='radial-gradient(120% 90% at 50% 45%,rgba(241,90,36,.32),transparent 62%)';};
+  if(typeof THREE==='undefined'||!window.__DRONE_GLTF__){fallback();return;}
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true,powerPreference:'high-performance'});}
+  catch(e){fallback();return;}
+  renderer.setClearColor(0x000000,0);
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.05;
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(33,1,0.1,100);
+  camera.position.set(0,0.4,5.4); camera.lookAt(0,0,0);
+
+  /* studio reflections so the metal / glass parts read crisply */
+  const pmrem=new THREE.PMREMGenerator(renderer);
+  scene.environment=pmrem.fromScene(new THREE.RoomEnvironment(),0.04).texture;
+  pmrem.dispose();
+
+  /* clean studio lighting for a light stage: bright neutral key/fill + subtle brand accent */
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6deea,0.95));
+  const key=new THREE.DirectionalLight(0xffffff,2.0); key.position.set(3,5,4); scene.add(key);
+  const fill=new THREE.DirectionalLight(0xeaf0f8,0.7); fill.position.set(-4,2,3); scene.add(fill);
+  const oRim=new THREE.PointLight(0xff6a26,1.7,0,2); oRim.position.set(-3.2,1.0,2.4); scene.add(oRim);
+  const oRim2=new THREE.PointLight(0xff7a30,0.9,0,2); oRim2.position.set(2.6,-1.4,-2.0); scene.add(oRim2);
+  const oBack=new THREE.PointLight(0xff7a30,1.5,0,2); oBack.position.set(0,1.6,-3.6); scene.add(oBack);
+  const cRim=new THREE.PointLight(0x6aa8e0,0.8,0,2); cRim.position.set(3.0,2.0,-2.6); scene.add(cRim);
+
+  const pivot=new THREE.Group(); scene.add(pivot);    // turntable spin
+  const tilt=new THREE.Group(); pivot.add(tilt);      // mouse parallax + hover float
+  pivot.rotation.x=-0.16;
+  /* holographic sonar pads pulsing beneath the drone */
+  const rings=[];
+  for(let i=0;i<2;i++){const rg=new THREE.Mesh(new THREE.TorusGeometry(1.3,0.014,8,90),new THREE.MeshBasicMaterial({color:0xf15a24,transparent:true,opacity:0.35,depthWrite:false}));rg.rotation.x=Math.PI/2;rg.position.y=-1.15;scene.add(rg);rings.push(rg);}
+
+  let model=null,props=[];
+  new THREE.GLTFLoader().parse(window.__DRONE_GLTF__,'',function(gltf){
+    model=gltf.scene;
+    const bb=new THREE.Box3().setFromObject(model);
+    const size=bb.getSize(new THREE.Vector3()),center=bb.getCenter(new THREE.Vector3());
+    model.position.sub(center);                        // center geometry at wrap origin
+    const maxDim=Math.max(size.x,size.y,size.z)||1;
+    const wrap=new THREE.Group(); wrap.add(model); wrap.scale.setScalar(2.7/maxDim);
+    const PROPS={Plane041:1,Plane042:1,Plane043:1,Plane045:1};   // the 4 rotor blades
+    model.traverse(o=>{
+      if(o.isMesh&&o.material&&o.material.metalness!==undefined)o.material.envMapIntensity=1.3;
+      if(o.isMesh&&PROPS[o.name]){
+        const geo=o.geometry; geo.computeBoundingBox();
+        const c=geo.boundingBox.getCenter(new THREE.Vector3()),s=geo.boundingBox.getSize(new THREE.Vector3());
+        geo.translate(-c.x,-c.y,-c.z);                                              // move pivot to the blade centre
+        o.position.add(c.clone().multiply(o.scale).applyQuaternion(o.quaternion));  // ...and shift the mesh back so it doesn't move
+        o.userData.ax = (s.x<=s.y&&s.x<=s.z)?new THREE.Vector3(1,0,0):(s.y<=s.x&&s.y<=s.z)?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1); // disc-normal = thinnest axis
+        props.push(o);
+      }
+    });
+    tilt.add(wrap);
+    draw();
+  },function(err){ fallback(); if(window.console)console.warn('[drone] parse failed',err); });
+
+  /* motion is scroll-driven (see dronePP) — no autonomous turntable / mouse spin */
+
+  function size(){const w=canvas.clientWidth||box.offsetWidth||1,h=canvas.clientHeight||box.offsetHeight||1;renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  function draw(){renderer.render(scene,camera);}
+  size();
+  if(window.ResizeObserver){new ResizeObserver(()=>{size();if(reduce)draw();}).observe(box);}else addEventListener('resize',size);
+
+  let inView=true;
+  if(window.IntersectionObserver){new IntersectionObserver(es=>{inView=es[0].isIntersecting;},{threshold:0}).observe(box);}
+
+  /* scroll-driven choreography across 3 screens: 1) fly in top-down  2) rotate to reveal  3) fly out */
+  const TWO=Math.PI*2;
+  const ss=(a,b,x)=>{x=(x-a)/(b-a);x=x<0?0:x>1?1:x;return x*x*(3-2*x);};
+  function pose(pp,ts){
+    const inT=ss(0,0.30,pp), outT=ss(0.70,1.0,pp);
+    pivot.position.y = 3.4*(1-inT) - 3.8*outT;          // descend in from top, then drop out the bottom
+    pivot.rotation.x = -0.46 + 0.34*ss(0,0.34,pp);      // top-down view eases to a 3/4 reveal
+    pivot.rotation.y = -0.55 + ss(0.27,0.73,pp)*TWO;    // full turntable reveal in the middle screen
+    tilt.rotation.x = Math.sin(ts*0.9)*0.03;            // subtle hover sway
+    tilt.rotation.z = Math.sin(ts*0.7)*0.04;
+    tilt.position.y = Math.sin(ts*1.2)*0.04;
+    const ringAmt = ss(0.16,0.32,pp)*(1-ss(0.68,0.84,pp));   // pads only while it hovers mid-screen
+    for(let i=0;i<rings.length;i++){const ph=((ts*0.5)+i*0.5)%1; rings[i].scale.setScalar(1+ph*0.6); rings[i].material.opacity=(1-ph)*0.5*ringAmt;}
+    oRim.intensity = 1.7 + Math.sin(ts*2.0)*0.4;        // breathing glow
+  }
+  if(reduce){ pose(0.45,0); draw(); return; }            // reduced-motion: settled centred pose
+  let t0=0;
+  (function loop(t){
+    requestAnimationFrame(loop);
+    if(!inView)return;
+    const dt=t0?Math.min(0.05,(t-t0)/1000):0.016; t0=t; const ts=t*0.001;
+    const pp = (innerWidth>=981) ? dronePP : 0.45;       // mobile: settled centred pose
+    for(let i=0;i<props.length;i++)props[i].rotateOnAxis(props[i].userData.ax,dt*16);   // rotors spin in-plane about their own hub
+    pose(pp,ts);
+    draw();
+  })(0);
+})();
+
+/* ===== dragonfly cursor follower (lerp + bank toward movement) ===== */
+(function(){
+  const fly=document.getElementById('dragonfly');
+  if(!fly||reduce||matchMedia('(hover:none)').matches)return;
+  let mx=innerWidth/2,my=innerHeight/2,fx=mx,fy=my,px=fx,py=fy,ang=0,running=false;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;fly.classList.add('show');if(!running){running=true;requestAnimationFrame(loop);}},{passive:true});
+  addEventListener('mouseout',e=>{if(!e.relatedTarget)fly.classList.remove('show');});
+  function loop(){
+    fx+=(mx-fx)*0.14;fy+=(my-fy)*0.14;
+    const vx=fx-px,vy=fy-py;px=fx;py=fy;
+    if(Math.hypot(vx,vy)>0.5){
+      const target=Math.atan2(vy,vx)*180/Math.PI+90;     /* image head points up */
+      let diff=((target-ang+540)%360)-180;ang+=diff*0.18;
+    }
+    fly.style.transform='translate('+fx+'px,'+fy+'px) translate(-50%,-50%) rotate('+ang+'deg)';
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>
